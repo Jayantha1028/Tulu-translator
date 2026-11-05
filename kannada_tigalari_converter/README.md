@@ -31,22 +31,45 @@ A complete Python library, CLI, and Web Transliterator Application for the **Tul
 
 ```
 .
-├── Mallige_Unicode_v2.ttf          # Official Unicode 16.0 Tulu-Tigalari font
-├── run_app.py                      # One-click launcher for the Web Transliterator
-└── kannada_tigalari_converter/
-    ├── __init__.py                 # Python package exports
-    ├── kannada_tigalari.py         # Kannada <-> Tigalari conversion engine
-    ├── tulu_phonetic.py            # Latin <-> Kannada phonetic transliteration engine
-    ├── transliterator.py           # Unified transliteration interface
-    ├── cli.py                      # CLI with multi-mode, debug, REPL, and --web
-    ├── test_converter.py           # Unit tests
-    └── web/                        # Web Transliterator (HTML + CSS + JS)
-        ├── index.html              # Main web UI
-        ├── style.css               # Responsive design & font styles
-        ├── app.js                  # Frontend controller
-        ├── transliterator.js       # Client-side JavaScript transliteration engine
-        └── fonts/
-            └── Mallige_Unicode_v2.ttf
+├── kannada_tigalari_converter/             # Core Python Engine & NLP Library
+│   ├── core/                               # Script Conversion & Phonetics
+│   │   ├── kannada_tigalari.py             # Kannada <-> Unicode 16.0 Tigalari converter
+│   │   ├── transliterator.py               # Unified script detector & transliterator
+│   │   └── tulu_phonetic.py                # Baraha / ITRANS Latin phonetic parser
+│   ├── lexicon/                            # Lexicons & Dictionaries
+│   │   ├── tulu_dictionary.py              # Modern Tulu dictionary & phonetic lookup
+│   │   ├── historical_dictionary.py        # 1886 Basel Mission historical dictionary
+│   │   ├── words_dataset_250.py            # 250-word benchmark corpus
+│   │   ├── words_dataset_1000.py           # 1,000-word benchmark corpus
+│   │   └── export_datasets_to_csv.py       # Automated CSV exporter
+│   ├── nlp/                                # Natural Language Processing
+│   │   ├── tulu_morphology.py              # Morphological analyzer, POS tagger, declensions
+│   │   └── tulu_nmt_pipeline.py            # NMT corpus aligner, benchmarks & metrics
+│   ├── asr/                                # Speech-to-Text & Audio Pipeline
+│   │   ├── tulu_audio_pipeline.py          # 16kHz audio loader, VAD trimming, Mel-spectrogram
+│   │   └── tulu_asr_engine.py              # Whisper-tiny ASR on Apple Silicon M4 MPS
+│   ├── scrapers/                           # Data Harvesting & Cleaning
+│   │   ├── tulu_web_scraper.py             # Wikipedia & Wiktionary harvesters
+│   │   ├── continuous_scraper.py           # Background crawler with resume checkpoints
+│   │   ├── data_cleaner.py                 # Unicode NFC normalizer & O(1) deduplicator
+│   │   ├── aatana_library_collector.py     # AATA PDF downloader & OCR pipeline
+│   │   └── aatana_books_catalog.json       # Catalog of 210 AATA digitized books
+│   ├── cli.py                              # Unified CLI interface
+│   └── __init__.py                         # Top-level API exports & backward compatibility
+├── web/                                    # Interactive Web Studio (Transliterator + ASR)
+│   ├── index.html                          # Main Web UI Studio
+│   ├── style.css                           # Modern responsive styling
+│   ├── app.js                              # Client controller with live microphone recording
+│   ├── transliterator.js                   # Client-side JavaScript transliterator
+│   ├── dictionary.js                       # Modern dictionary in-browser database
+│   ├── historical_dict.js                  # 1886 historical lexicon database
+│   ├── aatana_books.js                     # Digital library catalog data
+│   └── fonts/Mallige_Unicode_v2.ttf        # Embedded Unicode 16.0 Tigalari font
+├── datasets/                               # Curated CSV Datasets (75,000+ clean entries)
+├── tests/                                  # 149 Unit Test Suites across all submodules
+├── downloads/                              # Cached OCR and PDF downloads (git-ignored)
+├── run_app.py                              # Quick Web Studio launcher
+└── run_tests.py                            # Unified test runner
 ```
 
 ---

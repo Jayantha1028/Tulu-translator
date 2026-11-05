@@ -1,4 +1,4 @@
-const AATANA_BOOKS_CATALOG = [
+[
   {
     "id": 1,
     "title": "Sodara-habba",
@@ -1259,37 +1259,4 @@ const AATANA_BOOKS_CATALOG = [
     "pdf_path": "https://aatana.org/wp-content/uploads/Books/Christ-devere-vaakya.pdf",
     "pdf_url": "https://aatana.org/wp-content/uploads/Books/Christ-devere-vaakya.pdf"
   }
-];
-
-const AATANA_OCR_SAMPLES = [
-  {
-    "source_book": "Sodara Habba (K.L. Kundanthaya)",
-    "kannada": "ತುಳುನಾಡಿನಲ್ಲಿ ಪರ್ಬ ಅಥವಾ ಹಬ್ಬ ಎಂದರೆ ಅದು ದೀಪಾವಳಿ.",
-    "tigalari": "𑎡𑎻𑎳𑎻𑎥𑎸𑎞𑎹𑎥𑎭𑏐𑎭𑎹 𑎦𑎬𑏐𑎨 𑎀𑎢𑎮𑎸 𑎲𑎨𑏐𑎨 𑎊𑏌𑎣𑎬𑏁 𑎀𑎣𑎻 𑎣𑎺𑎦𑎸𑎮𑎳𑎹.",
-    "phonetic": "tuLunaaDinalli parba athavaa habba eMdare adu deepaavaLi."
-  },
-  {
-    "source_book": "Sodara Habba (K.L. Kundanthaya)",
-    "kannada": "ಜನಪ್ರಿಯ ಅರಸ ಬಲೀಂದ್ರನನ್ನು ಬರಮಾಡಿಕೊಂಡು ಆತನಿಗೆ ಬಲಿ ಸಮರ್ಪಿಸಿ ಪೊಲಿ ಹರಕೆಗೊಳ್ಳುವ ಸಂದರ್ಭ.",
-    "tigalari": "𑎙𑎥𑎦𑏐𑎬𑎹𑎫 𑎀𑎬𑎱 𑎨𑎭𑎺𑏌𑎣𑏐𑎬𑎥𑎥𑏐𑎥𑎻 𑎨𑎬𑎪𑎸𑎞𑎹𑎒𑏆𑏌𑎞𑎻 𑎁𑎡𑎥𑎹𑎔𑏁 𑎨𑎭𑎹 𑎱𑎪𑎬𑏐𑎦𑎹𑎱𑎹 𑎦𑏆𑎭𑎹 𑎲𑎬𑎒𑏁𑎔𑏆𑎳𑏐𑎳𑎻𑎮 𑎱𑎌𑎣𑎬𑏐𑎨.",
-    "phonetic": "janapriya arasa baleeMdranannu baramaaDikoMDu aatanige bali samarpisi poli harakegoLLuva saMdarbha."
-  },
-  {
-    "source_book": "Tulu-NMT FLORES Benchmark",
-    "kannada": "ತುಳು ಕರ್ನಾಟಕ ಬುಕ್ಕ ಕೇರಳೊಡು ಪಾತೆರುನ ಒಂಜಿ ದ್ರಾವಿಡ ಬಾಸೆ.",
-    "tigalari": "𑎡𑎻𑎳𑎻 𑎒𑎬𑏐𑎥𑎸𑎜𑎒 𑎨𑎻𑎒𑏐𑎒 𑎒𑏂𑎬𑎳𑏆𑎞𑎻 𑎦𑎸𑎡𑏁𑎬𑎻𑎥 𑎏𑏌𑎙𑎹 𑎣𑏐𑎬𑎸𑎮𑎹𑎞 𑎨𑎸𑎱𑏁.",
-    "phonetic": "tuLu karnaaTaka bukka kEraLoDu paateruna oMji draaviDa baase."
-  },
-  {
-    "source_book": "Tulu-NMT FLORES Benchmark",
-    "kannada": "ಕೋಡೆ್ ಮಸ್ತ್ ಬರ್ಸ ಬತ್ತ್ಂಡ್.",
-    "tigalari": "𑎒𑏇𑎞𑏁𑏎 𑎪𑎱𑏐𑎡𑏎 𑎨𑎬𑏐𑎱 𑎨𑎡𑏐𑎡𑏎𑏌𑎞𑏎.",
-    "phonetic": "kODae mast barsa battMD."
-  },
-  {
-    "source_book": "Tulu-NMT FLORES Benchmark",
-    "kannada": "ಈರೆನ ಪುದರ್ ದಾದ?",
-    "tigalari": "𑎃𑎬𑏁𑎥 𑎦𑎻𑎣𑎬𑏎 𑎣𑎸𑎣?",
-    "phonetic": "eerena pudar daada?"
-  }
-];
+]

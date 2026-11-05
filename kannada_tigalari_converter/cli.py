@@ -117,9 +117,9 @@ def launch_web(port=8080):
     import io
     import cgi
 
-    web_dir = os.path.join(CURRENT_DIR, "web")
+    web_dir = os.path.join(PARENT_DIR, "web")
     if not os.path.isdir(web_dir):
-        web_dir = os.path.join(PARENT_DIR, "web")
+        web_dir = os.path.join(CURRENT_DIR, "web")
 
     if not os.path.isdir(web_dir):
         print(f"Error: Web directory not found at {web_dir}")

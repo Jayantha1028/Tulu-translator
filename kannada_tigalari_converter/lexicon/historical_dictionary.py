@@ -1,8 +1,12 @@
-/**
- * Historical Tulu Dictionary (Rev. August Männer, Basel Mission Press, 1886)
- */
+"""
+Historical Tulu Dictionary Corpus
+Compiled from Rev. August Männer's landmark "Tulu-English Dictionary"
+(Published by Basel Mission Press, Mangalore, 1886).
+"""
 
-const HISTORICAL_TULU_CORPUS = [
+from typing import Dict, List, Optional
+
+HISTORICAL_TULU_CORPUS: List[Dict[str, any]] = [
   {
     "id": 1,
     "tulu_kannada": "ಅಗೆಲ್",
@@ -2043,21 +2047,25 @@ const HISTORICAL_TULU_CORPUS = [
     "domain": "Qualities & Senses",
     "source": "Rev. August Männer (1886), Basel Mission Press, Mangalore"
   }
-];
+]
 
-function searchHistoricalDictionary(query, domain, pos) {
-  const q = (query || "").trim().toLowerCase();
-  return HISTORICAL_TULU_CORPUS.filter(item => {
-    if (domain && domain !== "all" && item.domain !== domain) return false;
-    if (pos && pos !== "all" && item.part_of_speech !== pos) return false;
-    if (!q) return true;
-    return item.english.toLowerCase().includes(q) ||
-           item.tulu_kannada.includes(q) ||
-           item.tulu_latin.toLowerCase().includes(q) ||
-           item.domain.toLowerCase().includes(q);
-  });
-}
-
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { HISTORICAL_TULU_CORPUS, searchHistoricalDictionary };
-}
+def search_historical_dictionary(query: str, domain: Optional[str] = None, pos: Optional[str] = None) -> List[Dict[str, any]]:
+    """
+    Searches the 1886 Basel Mission Tulu-English Dictionary corpus.
+    """
+    q = (query or "").strip().lower()
+    results = []
+    for item in HISTORICAL_TULU_CORPUS:
+        if domain and domain.lower() != "all" and item["domain"].lower() != domain.lower():
+            continue
+        if pos and pos.lower() != "all" and item["part_of_speech"].lower() != pos.lower():
+            continue
+        if not q:
+            results.append(item)
+            continue
+        if (q in item["english"].lower() or
+            q in item["tulu_kannada"] or
+            q in item["tulu_latin"].lower() or
+            q in item["domain"].lower()):
+            results.append(item)
+    return results

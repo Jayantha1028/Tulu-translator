@@ -54,3 +54,4 @@ exclude = ["tests*", "web*", "datasets*"]
 
 [tool.setuptools.package-data]
 "kannada_tigalari_converter" = ["*.json", "aatana_books_catalog.json"]
+"kannada_tigalari_converter.scrapers" = ["*.json", "aatana_books_catalog.json"]
