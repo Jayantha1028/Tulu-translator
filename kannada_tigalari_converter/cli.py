@@ -343,6 +343,18 @@ def main():
         help="Transcribe spoken Tulu audio file (WAV/MP3/M4A) to Kannada, Tigalari, Latin, and English"
     )
     parser.add_argument(
+        "--train-asr", action="store_true",
+        help="Fine-tune Whisper with LoRA on paired Tulu acoustic speech samples on Apple Silicon MPS"
+    )
+    parser.add_argument(
+        "--train-samples", type=int, default=50,
+        help="Number of paired speech samples to synthesize/train (default: 50)"
+    )
+    parser.add_argument(
+        "--epochs", type=int, default=3,
+        help="Number of training epochs (default: 3)"
+    )
+    parser.add_argument(
         "-p", "--port", type=int, default=8080,
         help="Port for web server (default: 8080)"
     )
@@ -519,6 +531,11 @@ def main():
         print(f"  Confidence Score    : {res.confidence * 100:.1f}%")
         print(f"  Inference Latency   : {res.latency_ms:.1f} ms")
         print(f"  Hardware Engine     : {res.device}")
+        return
+
+    if args.train_asr:
+        from kannada_tigalari_converter.asr.tulu_asr_trainer import train_tulu_asr
+        train_tulu_asr(num_samples=args.train_samples, epochs=args.epochs)
         return
 
     # ── Morphological Analyzer Handlers ──

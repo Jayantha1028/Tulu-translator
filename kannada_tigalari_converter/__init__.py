@@ -59,6 +59,8 @@ from .asr import (
     SyntheticTuluAudioGenerator,
     TuluSpeechRecognizer,
     TuluASRResult,
+    TuluASRTrainer,
+    train_tulu_asr,
 )
 
 # 5. Scrapers & Data Cleaners
@@ -138,6 +140,8 @@ __all__ = [
     "SyntheticTuluAudioGenerator",
     "TuluSpeechRecognizer",
     "TuluASRResult",
+    "TuluASRTrainer",
+    "train_tulu_asr",
     # Scrapers
     "TuluWikiHarvester",
     "WiktionaryTuluHarvester",

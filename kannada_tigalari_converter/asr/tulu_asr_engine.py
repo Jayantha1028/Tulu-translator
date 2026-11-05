@@ -24,7 +24,8 @@ import numpy as np
 # Ensure project imports
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
-for p in (CURRENT_DIR, PARENT_DIR):
+ROOT_DIR = os.path.dirname(PARENT_DIR)
+for p in (CURRENT_DIR, PARENT_DIR, ROOT_DIR):
     if p not in sys.path:
         sys.path.insert(0, p)
 
@@ -127,6 +128,17 @@ class TuluSpeechRecognizer:
                     torch_dtype=dtype,
                     low_cpu_mem_usage=True,
                 ).to(torch_device)
+
+                # Auto-load fine-tuned Tulu LoRA adapter if present
+                lora_dir = os.path.join(ROOT_DIR, "models", "tulu_whisper_lora")
+                if os.path.isdir(lora_dir) and os.path.isfile(os.path.join(lora_dir, "adapter_config.json")):
+                    try:
+                        from peft import PeftModel
+                        self.model = PeftModel.from_pretrained(self.model, lora_dir)
+                        print(f"[Tulu ASR] Activated fine-tuned Tulu LoRA adapter weights from '{lora_dir}'")
+                    except Exception as err:
+                        print(f"[Tulu ASR] Info: Base Whisper loaded (LoRA note: {err})")
+
                 self.model.eval()
                 print(f"[Tulu ASR] Loaded neural Whisper engine '{self.model_name}' on device '{self.device}'")
             except Exception as e:
