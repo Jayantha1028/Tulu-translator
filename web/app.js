@@ -116,6 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let match = null;
     let isEnglishInput = false;
 
+    function norm(s) {
+      return (s || '').toLowerCase()
+        .replace(/aa/g, 'a').replace(/ee/g, 'e').replace(/ii/g, 'i')
+        .replace(/oo/g, 'o').replace(/uu/g, 'u').replace(/[^a-z]/g, '');
+    }
+
     // A. Check if input is Kannada
     if (script === 'kannada') {
       isEnglishInput = false;
@@ -160,21 +166,25 @@ document.addEventListener('DOMContentLoaded', () => {
       match = TULU_DICTIONARY_1000.find(i => i.tulu_kannada === kn);
       isEnglishInput = false;
     } else {
-      // Latin script input: Could be an English query (e.g. "water", "house", "hello")
-      // OR a phonetic Tulu/Kannada string (e.g. "solmelu", "illa", "barsa")
+      // Latin script input: Could be an English word (e.g. "water", "house", "hello")
+      // OR a phonetic Tulu/Kannada word (e.g. "solmelu", "namaskara", "illa", "barsa")
       const lower = input.toLowerCase();
+      const normInput = norm(lower);
 
-      // Check 1: Phonetic Tulu match (e.g. 'solmelu', 'illa')
+      // Check 1: Phonetic Tulu match (exact and normalized long/short vowels)
       match = TULU_DICTIONARY_1000.find(i => i.tulu_latin.toLowerCase() === lower);
+      if (!match) {
+        match = TULU_DICTIONARY_1000.find(i => norm(i.tulu_latin) === normInput);
+      }
 
-      // Check 2: English meaning match (e.g. 'hello', 'water', 'house', 'thank you')
+      // Check 2: English meaning match (e.g. 'hello', 'water', 'house', 'thank you', 'how are you')
       if (!match) {
         // Exact English word match or word boundary search
         match = TULU_DICTIONARY_1000.find(i => {
           const eng = i.english.toLowerCase();
           const cleanEng = eng.replace(/\(tulu\)|\(kannada\)/g, '').trim();
           const parts = cleanEng.split(/[\/,;]+/).map(p => p.trim());
-          return parts.includes(lower) || eng === lower;
+          return parts.includes(lower) || cleanEng === lower || eng === lower;
         });
 
         // Substring / keyword match if exact failed
@@ -193,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Check 3: Also search 1886 historical dictionary if not found in modern
       if (!match && typeof HISTORICAL_TULU_CORPUS !== 'undefined' && Array.isArray(HISTORICAL_TULU_CORPUS)) {
         const histMatch = HISTORICAL_TULU_CORPUS.find(i => {
-          return i.english.toLowerCase().includes(lower) || i.tulu_latin.toLowerCase() === lower;
+          return norm(i.tulu_latin) === normInput || i.english.toLowerCase().includes(lower);
         });
         if (histMatch) {
           match = {
@@ -202,7 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
             english: histMatch.english,
             category: `Historical 1886: ${histMatch.domain || 'Lexicon'}`
           };
-          if (histMatch.english.toLowerCase().includes(lower)) isEnglishInput = true;
+          if (histMatch.english.toLowerCase().includes(lower) && !histMatch.tulu_latin.toLowerCase().includes(lower)) {
+            isEnglishInput = true;
+          }
         }
       }
     }
@@ -265,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast(`Copied translation: ${textToCopy}`);
       }
     });
-  }
   }
 
   // Event Listeners
