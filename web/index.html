@@ -141,11 +141,22 @@
           <span class="mic-icon" id="asrMicIcon">🎤</span>
           <span id="asrRecordText">Record Voice</span>
         </button>
+        <div id="asrRecordingIndicator" class="asr-rec-indicator" style="display: none;">
+          <span class="rec-dot"></span>
+          <span id="asrTimer" class="asr-timer-text">00:00</span>
+          <canvas id="asrVisualizer" width="180" height="32" class="asr-canvas"></canvas>
+        </div>
         <label class="asr-upload-btn action-btn" title="Upload audio file (WAV, MP3, M4A, WebM)">
           📁 Upload Audio
           <input type="file" id="asrFileInput" accept="audio/*" style="display: none;">
         </label>
         <span id="asrStatus" class="asr-status-text">Ready. Speak in Tulu or click Try Sample.</span>
+      </div>
+
+      <!-- Audio Playback Preview Bar -->
+      <div id="asrAudioPreviewBox" class="asr-preview-box" style="display: none;">
+        <div class="preview-label">🔊 Last Captured Audio:</div>
+        <audio id="asrAudioPreview" controls class="asr-audio-element"></audio>
       </div>
 
       <!-- Live ASR Result Card -->

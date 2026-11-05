@@ -159,16 +159,20 @@ class AudioPreprocessor:
             rms = np.sqrt(np.mean(frame ** 2))
             energies.append(rms)
 
+        # Adaptive threshold based on audio peak to avoid clipping soft speech
+        max_energy = max(energies) if energies else 0.0
+        effective_threshold = max(0.005, min(threshold, max_energy * 0.10))
+
         # Find first and last frames above threshold
         start_frame = 0
         for i, e in enumerate(energies):
-            if e > threshold:
+            if e > effective_threshold:
                 start_frame = max(0, i - 1)
                 break
 
         end_frame = num_frames
         for i in range(num_frames - 1, -1, -1):
-            if energies[i] > threshold:
+            if energies[i] > effective_threshold:
                 end_frame = min(num_frames, i + 2)
                 break
 

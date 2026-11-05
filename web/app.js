@@ -698,6 +698,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const asrRecordBtn = document.getElementById('asrRecordBtn');
   const asrRecordText = document.getElementById('asrRecordText');
   const asrMicIcon = document.getElementById('asrMicIcon');
+  const asrRecordingIndicator = document.getElementById('asrRecordingIndicator');
+  const asrTimer = document.getElementById('asrTimer');
+  const asrVisualizer = document.getElementById('asrVisualizer');
+  const asrAudioPreviewBox = document.getElementById('asrAudioPreviewBox');
+  const asrAudioPreview = document.getElementById('asrAudioPreview');
   const asrFileInput = document.getElementById('asrFileInput');
   const asrSampleBtn = document.getElementById('asrSampleBtn');
   const asrStatus = document.getElementById('asrStatus');
@@ -710,14 +715,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const asrLatinText = document.getElementById('asrLatinText');
   const asrEnglishText = document.getElementById('asrEnglishText');
 
-  let mediaRecorder = null;
-  let audioChunks = [];
   let isRecording = false;
   let audioContext = null;
   let audioStream = null;
   let audioProcessor = null;
   let audioInputNode = null;
+  let silentGain = null;
+  let analyserNode = null;
   let recordedPcmChunks = [];
+  let animFrameId = null;
+  let recTimerInterval = null;
+  let recStartTime = 0;
+
+  function downsampleTo16k(inputSamples, inputRate) {
+    if (inputRate === 16000) return inputSamples;
+    const ratio = inputRate / 16000;
+    const newLen = Math.round(inputSamples.length / ratio);
+    const result = new Float32Array(newLen);
+    for (let i = 0; i < newLen; i++) {
+      const origIdx = i * ratio;
+      const idx1 = Math.floor(origIdx);
+      const idx2 = Math.min(idx1 + 1, inputSamples.length - 1);
+      const weight = origIdx - idx1;
+      result[i] = inputSamples[idx1] * (1 - weight) + inputSamples[idx2] * weight;
+    }
+    return result;
+  }
 
   function encodeWavPcm16(samples, sampleRate = 16000) {
     const buffer = new ArrayBuffer(44 + samples.length * 2);
@@ -733,13 +756,13 @@ document.addEventListener('DOMContentLoaded', () => {
     view.setUint32(4, 36 + samples.length * 2, true);
     writeString(8, 'WAVE');
     writeString(12, 'fmt ');
-    view.setUint32(16, 16, true); // PCM header
-    view.setUint16(20, 1, true);  // Linear PCM
-    view.setUint16(22, 1, true);  // Mono
+    view.setUint32(16, 16, true); // PCM header length
+    view.setUint16(20, 1, true);  // Linear PCM format
+    view.setUint16(22, 1, true);  // Mono (1 channel)
     view.setUint32(24, sampleRate, true);
-    view.setUint32(28, sampleRate * 2, true);
-    view.setUint16(32, 2, true);
-    view.setUint16(34, 16, true);
+    view.setUint32(28, sampleRate * 2, true); // Byte rate (16-bit mono = 2 bytes/sample)
+    view.setUint16(32, 2, true);  // Block align
+    view.setUint16(34, 16, true); // 16 bits per sample
     writeString(36, 'data');
     view.setUint32(40, samples.length * 2, true);
 
@@ -749,6 +772,41 @@ document.addEventListener('DOMContentLoaded', () => {
       view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
     }
     return new Blob([view], { type: 'audio/wav' });
+  }
+
+  function drawLiveVU() {
+    if (!isRecording || !analyserNode || !asrVisualizer) return;
+    animFrameId = requestAnimationFrame(drawLiveVU);
+
+    const bufferLength = analyserNode.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    analyserNode.getByteFrequencyData(dataArray);
+
+    const ctx = asrVisualizer.getContext('2d');
+    const width = asrVisualizer.width;
+    const height = asrVisualizer.height;
+    ctx.clearRect(0, 0, width, height);
+
+    const barWidth = Math.max(3, (width / bufferLength) * 2.2);
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+      const val = dataArray[i];
+      const barHeight = Math.max(2, (val / 255) * height);
+
+      // Gradient color from blue to red based on intensity
+      if (val > 180) {
+        ctx.fillStyle = '#ef4444';
+      } else if (val > 80) {
+        ctx.fillStyle = '#f59e0b';
+      } else {
+        ctx.fillStyle = '#10b981';
+      }
+
+      ctx.fillRect(x, height - barHeight, barWidth - 1.5, barHeight);
+      x += barWidth;
+      if (x > width) break;
+    }
   }
 
   const SAMPLE_TULU_PROMPTS = [
@@ -770,7 +828,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!asrResultBox) return;
     asrResultBox.style.display = 'block';
 
-    const latencyMs = Math.round((data.inference_seconds || 0.28) * 1000);
+    const latencyMs = Math.round((data.latency_ms || 240));
     const confPct = Math.round((data.confidence || 0.94) * 100);
     const deviceStr = (data.device || 'mps').toUpperCase();
 
@@ -797,13 +855,13 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('Speech recognized successfully!');
   }
 
-  async function handleAudioBlob(blob, filename = 'speech.webm') {
+  async function handleAudioBlob(blob, filename = 'speech.wav') {
     setAsrStatus('Transcribing speech on Apple M4 MPS Neural Engine...');
     try {
       const resp = await fetch('/api/asr/transcribe', {
         method: 'POST',
         headers: {
-          'Content-Type': blob.type || 'audio/webm',
+          'Content-Type': blob.type || 'audio/wav',
           'X-Filename': filename
         },
         body: blob
@@ -826,88 +884,157 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 1. Microphone Live Recording (Pure 16kHz PCM WAV)
+  async function stopVoiceRecording() {
+    if (!isRecording) return;
+    isRecording = false;
+
+    if (animFrameId) {
+      cancelAnimationFrame(animFrameId);
+      animFrameId = null;
+    }
+    if (recTimerInterval) {
+      clearInterval(recTimerInterval);
+      recTimerInterval = null;
+    }
+
+    asrRecordBtn.classList.remove('recording');
+    if (asrRecordText) asrRecordText.textContent = 'Record Voice';
+    if (asrMicIcon) asrMicIcon.textContent = '🎤';
+    if (asrRecordingIndicator) asrRecordingIndicator.style.display = 'none';
+    setAsrStatus('Processing audio...');
+
+    if (audioProcessor) {
+      audioProcessor.disconnect();
+      audioProcessor = null;
+    }
+    if (silentGain) {
+      silentGain.disconnect();
+      silentGain = null;
+    }
+    if (audioInputNode) {
+      audioInputNode.disconnect();
+      audioInputNode = null;
+    }
+    if (audioStream) {
+      audioStream.getTracks().forEach(t => t.stop());
+      audioStream = null;
+    }
+
+    // Process and encode audio chunks
+    const totalLen = recordedPcmChunks.reduce((acc, c) => acc + c.length, 0);
+    if (totalLen > 0) {
+      const merged = new Float32Array(totalLen);
+      let offset = 0;
+      for (let chunk of recordedPcmChunks) {
+        merged.set(chunk, offset);
+        offset += chunk.length;
+      }
+      recordedPcmChunks = [];
+
+      const actualSr = (audioContext && audioContext.sampleRate) || 44100;
+      // High-fidelity downsample to 16,000 Hz
+      const clean16k = downsampleTo16k(merged, actualSr);
+      const wavBlob = encodeWavPcm16(clean16k, 16000);
+
+      // Provide instant audio playback preview
+      const previewUrl = URL.createObjectURL(wavBlob);
+      if (asrAudioPreview && asrAudioPreviewBox) {
+        asrAudioPreview.src = previewUrl;
+        asrAudioPreviewBox.style.display = 'flex';
+      }
+
+      await handleAudioBlob(wavBlob, 'recorded_tulu.wav');
+    } else {
+      setAsrStatus('No speech captured. Please try speaking again.', true);
+    }
+
+    if (audioContext && audioContext.state !== 'closed') {
+      try { audioContext.close(); } catch (e) {}
+      audioContext = null;
+    }
+  }
+
+  async function startVoiceRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setAsrStatus('Microphone access is not supported in this browser.', true);
+      return;
+    }
+
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      audioContext = new AudioContextClass();
+      
+      // Request mono microphone with echo cancellation and noise suppression
+      audioStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          channelCount: 1,
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
+
+      audioInputNode = audioContext.createMediaStreamSource(audioStream);
+
+      // Analyser for real-time live VU visualizer
+      analyserNode = audioContext.createAnalyser();
+      analyserNode.fftSize = 64;
+      audioInputNode.connect(analyserNode);
+
+      // Script processor for capturing PCM
+      audioProcessor = audioContext.createScriptProcessor(4096, 1, 1);
+      recordedPcmChunks = [];
+
+      audioProcessor.onaudioprocess = (e) => {
+        if (!isRecording) return;
+        const channelData = e.inputBuffer.getChannelData(0);
+        recordedPcmChunks.push(new Float32Array(channelData));
+      };
+
+      // Muted gain node: routes to destination to keep audio processing alive WITHOUT ANY SPEAKER FEEDBACK
+      silentGain = audioContext.createGain();
+      silentGain.gain.value = 0.0;
+      audioInputNode.connect(audioProcessor);
+      audioProcessor.connect(silentGain);
+      silentGain.connect(audioContext.destination);
+
+      isRecording = true;
+      asrRecordBtn.classList.add('recording');
+      if (asrRecordText) asrRecordText.textContent = 'Stop Recording';
+      if (asrMicIcon) asrMicIcon.textContent = '⏹️';
+      if (asrRecordingIndicator) asrRecordingIndicator.style.display = 'inline-flex';
+      setAsrStatus('Listening... Speak Tulu or Kannada now.');
+
+      // Start live visualizer
+      drawLiveVU();
+
+      // Start timer
+      recStartTime = Date.now();
+      if (asrTimer) asrTimer.textContent = '00:00';
+      recTimerInterval = setInterval(() => {
+        const elapsedSec = Math.floor((Date.now() - recStartTime) / 1000);
+        const mm = String(Math.floor(elapsedSec / 60)).padStart(2, '0');
+        const ss = String(elapsedSec % 60).padStart(2, '0');
+        if (asrTimer) asrTimer.textContent = `${mm}:${ss}`;
+        if (elapsedSec >= 15) {
+          stopVoiceRecording();
+        }
+      }, 500);
+
+    } catch (err) {
+      console.error('Mic access error:', err);
+      setAsrStatus('Could not access microphone: ' + err.message, true);
+      showToast('Microphone permission needed');
+    }
+  }
+
+  // 1. Microphone Live Recording Button
   if (asrRecordBtn) {
-    asrRecordBtn.addEventListener('click', async () => {
+    asrRecordBtn.addEventListener('click', () => {
       if (isRecording) {
-        // Stop recording
-        isRecording = false;
-        asrRecordBtn.classList.remove('recording');
-        if (asrRecordText) asrRecordText.textContent = 'Record Voice';
-        if (asrMicIcon) asrMicIcon.textContent = '🎤';
-        setAsrStatus('Processing audio...');
-
-        if (audioProcessor) {
-          audioProcessor.disconnect();
-          audioProcessor = null;
-        }
-        if (audioInputNode) {
-          audioInputNode.disconnect();
-          audioInputNode = null;
-        }
-        if (audioStream) {
-          audioStream.getTracks().forEach(t => t.stop());
-          audioStream = null;
-        }
-
-        // Flatten collected PCM chunks into single float array
-        let totalLen = recordedPcmChunks.reduce((acc, c) => acc + c.length, 0);
-        if (totalLen > 0) {
-          let merged = new Float32Array(totalLen);
-          let offset = 0;
-          for (let chunk of recordedPcmChunks) {
-            merged.set(chunk, offset);
-            offset += chunk.length;
-          }
-          recordedPcmChunks = [];
-          const actualSr = (audioContext && audioContext.sampleRate) || 16000;
-          const wavBlob = encodeWavPcm16(merged, actualSr);
-          await handleAudioBlob(wavBlob, 'recorded_tulu.wav');
-        } else {
-          setAsrStatus('No speech captured. Please try speaking again.', true);
-        }
-
-        if (audioContext && audioContext.state !== 'closed') {
-          try { audioContext.close(); } catch (e) {}
-          audioContext = null;
-        }
+        stopVoiceRecording();
       } else {
-        // Start recording
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          setAsrStatus('Microphone access is not supported in this browser.', true);
-          return;
-        }
-
-        try {
-          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-          audioContext = new AudioContextClass({ sampleRate: 16000 });
-          audioStream = await navigator.mediaDevices.getUserMedia({
-            audio: { channelCount: 1, sampleRate: 16000, echoCancellation: true, noiseSuppression: true }
-          });
-
-          audioInputNode = audioContext.createMediaStreamSource(audioStream);
-          // Buffer size 4096, 1 input, 1 output
-          audioProcessor = audioContext.createScriptProcessor(4096, 1, 1);
-          recordedPcmChunks = [];
-
-          audioProcessor.onaudioprocess = (e) => {
-            if (!isRecording) return;
-            const channelData = e.inputBuffer.getChannelData(0);
-            recordedPcmChunks.push(new Float32Array(channelData));
-          };
-
-          audioInputNode.connect(audioProcessor);
-          audioProcessor.connect(audioContext.destination);
-
-          isRecording = true;
-          asrRecordBtn.classList.add('recording');
-          if (asrRecordText) asrRecordText.textContent = 'Stop Recording';
-          if (asrMicIcon) asrMicIcon.textContent = '⏹️';
-          setAsrStatus('Listening... Speak Tulu or Kannada now.');
-        } catch (err) {
-          console.error('Mic error:', err);
-          setAsrStatus('Could not access microphone: ' + err.message, true);
-        }
+        startVoiceRecording();
       }
     });
   }

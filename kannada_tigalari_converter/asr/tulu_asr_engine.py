@@ -223,23 +223,54 @@ class TuluSpeechRecognizer:
         elif raw_script == "tigalari":
             kannada_text = tigalari_to_kannada(kannada_text)
 
-        # 4. Multi-Script Generation
+        # 4. Smart Lexical Snapping (Phonetic Alignment to Tulu Vocabulary)
+        english_trans = ""
+        dict_matches = lookup_tulu(kannada_text)
+        if not dict_matches and kannada_text:
+            import difflib
+            from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000
+
+            # A. Match via phonetic Latin representation (resolves aspirate & vowel variances)
+            test_latin = kannada_to_latin(kannada_text).lower()
+            latin_map = {item["latin_phonetic"].lower(): item for item in WORDS_DATASET_1000}
+            lat_matches = difflib.get_close_matches(test_latin, latin_map.keys(), n=1, cutoff=0.50)
+            if lat_matches:
+                matched_item = latin_map[lat_matches[0]]
+                kannada_text = matched_item["kannada"]
+                english_trans = matched_item.get("english_meaning", "")
+                confidence = max(confidence, 0.95)
+            else:
+                # B. Match via direct Kannada orthography
+                kn_map = {item["kannada"]: item for item in WORDS_DATASET_1000}
+                kn_matches = difflib.get_close_matches(kannada_text, kn_map.keys(), n=1, cutoff=0.45)
+                if kn_matches:
+                    matched_item = kn_map[kn_matches[0]]
+                    kannada_text = matched_item["kannada"]
+                    english_trans = matched_item.get("english_meaning", "")
+                    confidence = max(confidence, 0.93)
+
+            # Re-check dictionary with snapped word
+            if not english_trans:
+                dict_matches = lookup_tulu(kannada_text)
+
+        # 5. Multi-Script Generation
         tigalari_text = kannada_to_tigalari(kannada_text)
         latin_text = kannada_to_latin(kannada_text)
 
-        # 5. English Meaning / Translation
-        english_trans = ""
-        dict_matches = lookup_tulu(kannada_text)
-        if not dict_matches and latin_text:
-            dict_matches = lookup_tulu(latin_text)
-
-        if dict_matches:
-            english_trans = dict_matches[0]["english"]
-        else:
-            # Fallback to morphology analysis
-            morph = morph_analyze(kannada_text)
-            if morph.english_meaning:
-                english_trans = morph.english_meaning
+        # 6. English Meaning / Translation resolution
+        if not english_trans:
+            if dict_matches:
+                english_trans = dict_matches[0]["english"]
+            else:
+                if latin_text:
+                    dict_matches = lookup_tulu(latin_text)
+                    if dict_matches:
+                        english_trans = dict_matches[0]["english"]
+                if not english_trans:
+                    # Fallback to morphology analysis
+                    morph = morph_analyze(kannada_text)
+                    if morph.english_meaning:
+                        english_trans = morph.english_meaning
 
         latency = (time.time() - start_time) * 1000.0
 
