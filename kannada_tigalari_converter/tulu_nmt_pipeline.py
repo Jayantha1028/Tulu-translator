@@ -11,7 +11,7 @@ import re
 import math
 import unicodedata
 from collections import Counter
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Optional, Set
 
 # Ensure package paths
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -86,16 +86,34 @@ class ParallelCorpusBuilder:
     """
     Builds and manages parallel datasets for English <-> Tulu and Kannada <-> Tulu.
     Exports into JSONL format compatible with Hugging Face datasets and IndicBARTSS.
+    Applies data cleansing and O(1) fingerprint deduplication on every insert.
     """
 
     def __init__(self):
         self.data: List[Dict[str, str]] = []
+        self.seen_fingerprints: Set[str] = set()
 
-    def add_pair(self, english: str, tulu_kannada: str, kannada: Optional[str] = None):
-        """Adds a parallel pair and automatically computes Tigalari and Latin phonetics."""
-        clean_en = english.strip()
-        clean_tcy = tulu_kannada.strip()
-        clean_kan = (kannada or clean_tcy).strip()
+    def add_pair(self, english: str, tulu_kannada: str, kannada: Optional[str] = None) -> bool:
+        """
+        Cleans and adds a parallel pair with automatic deduplication.
+        Returns True if inserted, False if duplicate or invalid.
+        """
+        try:
+            from .data_cleaner import DataCleaner
+        except ImportError:
+            from data_cleaner import DataCleaner
+
+        clean_en = DataCleaner.clean_text(english)
+        clean_tcy = DataCleaner.clean_text(tulu_kannada)
+        clean_kan = DataCleaner.clean_text(kannada or tulu_kannada)
+
+        if not clean_en or not clean_tcy:
+            return False
+
+        # Fingerprint deduplication key based on English + Tulu pair
+        fp = DataCleaner.compute_fingerprint(f"{clean_en}:::{clean_tcy}")
+        if fp in self.seen_fingerprints:
+            return False
 
         tigalari = kannada_to_tigalari(clean_tcy)
         phonetic = kannada_to_latin(clean_tcy)
@@ -109,6 +127,8 @@ class ParallelCorpusBuilder:
             "tcy_Phonetic": phonetic
         }
         self.data.append(entry)
+        self.seen_fingerprints.add(fp)
+        return True
 
     def export_splits(self, output_dir: str, train_ratio: float = 0.8, dev_ratio: float = 0.1):
         """Exports data into train.jsonl, dev.jsonl, and test.jsonl."""

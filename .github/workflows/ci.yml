@@ -48,7 +48,7 @@ jobs:
         pip install -r requirements.txt
         pip install build twine
 
-    - name: Run Complete 129-Unit Test Suite
+    - name: Run Complete 140-Unit Test Suite
       run: |
         python run_tests.py
 
@@ -61,6 +61,7 @@ jobs:
         python kannada_tigalari_converter/cli.py --decline "ಇಲ್ಲ"
         python kannada_tigalari_converter/cli.py --conjugate "ಬಲೆ"
         python kannada_tigalari_converter/cli.py --lookup "water"
+        python kannada_tigalari_converter/cli.py --status-corpus
 
     - name: Verify Package Build (sdist & wheel)
       run: |

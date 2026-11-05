@@ -277,69 +277,66 @@ def export_harvested_to_csv(wiki_limit: int = 30) -> Dict[str, int]:
     summary["wiktionary_tulu_lemmas.csv"] = len(wikt_lemmas)
     print(f"✓ Saved {len(wikt_lemmas)} lemmas to {wikt_csv}")
 
-    # 3. Create Master Consolidated Tulu Corpus
+    # 3. Create Master Consolidated Tulu Corpus with Data Cleansing & Deduplication
     master_csv = os.path.join(DATASETS_DIR, "tulu_master_consolidated_corpus.csv")
-    master_count = 0
-    with open(master_csv, "w", encoding="utf-8", newline="") as f_out:
-        writer = csv.writer(f_out)
-        writer.writerow(["id", "source_type", "source_name", "tulu_kannada", "tulu_tigalari", "tulu_latin", "english_meaning"])
+    from kannada_tigalari_converter.data_cleaner import DeduplicatedDataset
+    master_dataset = DeduplicatedDataset(
+        filepath=master_csv,
+        fieldnames=["id", "source_type", "source_name", "tulu_kannada", "tulu_tigalari", "tulu_latin", "english_meaning"],
+        key_field="tulu_kannada",
+        auto_save=False,
+    )
 
-        # Add 1,000 words
-        from kannada_tigalari_converter.words_dataset_1000 import WORDS_DATASET_1000
-        for item in WORDS_DATASET_1000:
-            master_count += 1
-            writer.writerow([
-                master_count,
-                "Lexicon",
-                item.get("category", ""),
-                item.get("kannada", ""),
-                item.get("expected_tigalari", ""),
-                item.get("latin_phonetic", ""),
-                item.get("english_meaning", "")
-            ])
+    # Add 1,000 words
+    from kannada_tigalari_converter.words_dataset_1000 import WORDS_DATASET_1000
+    for item in WORDS_DATASET_1000:
+        master_dataset.insert({
+            "source_type": "Lexicon",
+            "source_name": item.get("category", ""),
+            "tulu_kannada": item.get("kannada", ""),
+            "tulu_tigalari": item.get("expected_tigalari", ""),
+            "tulu_latin": item.get("latin_phonetic", ""),
+            "english_meaning": item.get("english_meaning", "")
+        }, min_words=1, min_chars=1, min_kannada_ratio=0.3)
 
-        # Add 1886 Historical Lexicon
-        from kannada_tigalari_converter.historical_dictionary import HISTORICAL_TULU_CORPUS
-        for item in HISTORICAL_TULU_CORPUS:
-            master_count += 1
-            writer.writerow([
-                master_count,
-                "Historical 1886",
-                item.get("domain", ""),
-                item.get("tulu_kannada", ""),
-                item.get("tulu_tigalari", ""),
-                item.get("tulu_latin", ""),
-                item.get("english", "")
-            ])
+    # Add 1886 Historical Lexicon
+    from kannada_tigalari_converter.historical_dictionary import HISTORICAL_TULU_CORPUS
+    for item in HISTORICAL_TULU_CORPUS:
+        master_dataset.insert({
+            "source_type": "Historical 1886",
+            "source_name": item.get("domain", ""),
+            "tulu_kannada": item.get("tulu_kannada", ""),
+            "tulu_tigalari": item.get("tulu_tigalari", ""),
+            "tulu_latin": item.get("tulu_latin", ""),
+            "english_meaning": item.get("english", "")
+        }, min_words=1, min_chars=1, min_kannada_ratio=0.3)
 
-        # Add Wikipedia sentences
-        for item in wiki_sentences:
-            master_count += 1
-            writer.writerow([
-                master_count,
-                "Wikipedia",
-                item.get("source", ""),
-                item.get("tulu_kannada", ""),
-                item.get("tulu_tigalari", ""),
-                item.get("tulu_latin", ""),
-                ""
-            ])
+    # Add Wikipedia sentences
+    for item in wiki_sentences:
+        master_dataset.insert({
+            "source_type": "Wikipedia",
+            "source_name": item.get("source", ""),
+            "tulu_kannada": item.get("tulu_kannada", ""),
+            "tulu_tigalari": item.get("tulu_tigalari", ""),
+            "tulu_latin": item.get("tulu_latin", ""),
+            "english_meaning": ""
+        }, min_words=2, min_chars=4, min_kannada_ratio=0.35)
 
-        # Add Wiktionary lemmas
-        for item in wikt_lemmas:
-            master_count += 1
-            writer.writerow([
-                master_count,
-                "Wiktionary",
-                item.get("source", ""),
-                item.get("tulu_kannada", ""),
-                item.get("tulu_tigalari", ""),
-                item.get("tulu_latin", ""),
-                ""
-            ])
+    # Add Wiktionary lemmas
+    for item in wikt_lemmas:
+        master_dataset.insert({
+            "source_type": "Wiktionary",
+            "source_name": item.get("source", ""),
+            "tulu_kannada": item.get("tulu_kannada", ""),
+            "tulu_tigalari": item.get("tulu_tigalari", ""),
+            "tulu_latin": item.get("tulu_latin", ""),
+            "english_meaning": ""
+        }, min_words=1, min_chars=1, min_kannada_ratio=0.3)
 
-    summary["tulu_master_consolidated_corpus.csv"] = master_count
-    print(f"✓ Saved {master_count} entries to {master_csv}")
+    master_dataset.save_all()
+    st = master_dataset.stats()
+    summary["tulu_master_consolidated_corpus.csv"] = len(master_dataset.records)
+    print(f"✓ Saved {len(master_dataset.records)} unique entries to {master_csv} (Filtered: {st['duplicates_dropped']} dupes, {st['invalid_dropped']} invalid)")
 
     return summary
 

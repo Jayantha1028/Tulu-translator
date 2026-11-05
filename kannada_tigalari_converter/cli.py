@@ -20,6 +20,7 @@ import webbrowser
 # Ensure import works anywhere
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PARENT_DIR = os.path.dirname(CURRENT_DIR)
+DATASETS_DIR = os.path.join(PARENT_DIR, "datasets")
 for p in (CURRENT_DIR, PARENT_DIR):
     if p not in sys.path:
         sys.path.insert(0, p)
@@ -231,6 +232,18 @@ def main():
         help="Harvest internet corpus across Wikipedia & Wiktionary and update master CSV (default: 50 articles)"
     )
     parser.add_argument(
+        "--scrape-continuous", action="store_true",
+        help="Run autonomous background scraper with O(1) deduplication until target is reached (default target: 50,000)"
+    )
+    parser.add_argument(
+        "--target", type=int, default=50000,
+        help="Target records for continuous scraper (default: 50,000)"
+    )
+    parser.add_argument(
+        "--status-corpus", action="store_true",
+        help="Display health and deduplication stats of the master corpus"
+    )
+    parser.add_argument(
         "-p", "--port", type=int, default=8080,
         help="Port for web server (default: 8080)"
     )
@@ -367,6 +380,30 @@ def main():
         print("\nAll datasets updated:")
         for k, v in res.items():
             print(f"  ✓ {k:<38}: {v:>6} records")
+        return
+
+    if args.status_corpus:
+        from kannada_tigalari_converter.data_cleaner import DeduplicatedDataset
+        master_csv = os.path.join(DATASETS_DIR, "tulu_master_consolidated_corpus.csv")
+        ds = DeduplicatedDataset(filepath=master_csv)
+        st = ds.stats()
+        print("=" * 65)
+        print("  Tulu Master Corpus Health & Deduplication Telemetry")
+        print("=" * 65)
+        print(f"  Total Clean Records     : {st['total_records']:,}")
+        print(f"  Unique Fingerprints     : {st['unique_fingerprints']:,}")
+        print(f"  Duplicates Discarded    : {st['duplicates_dropped']:,}")
+        print(f"  Invalid / Low Density   : {st['invalid_dropped']:,}")
+        print(f"  Master File Path        : {master_csv}")
+        return
+
+    if args.scrape_continuous:
+        from kannada_tigalari_converter.continuous_scraper import ContinuousCorpusHarvester
+        harvester = ContinuousCorpusHarvester(target_records=args.target)
+        try:
+            harvester.run()
+        except KeyboardInterrupt:
+            print("\n[Harvester] Paused by user. Checkpoint saved. Run again anytime to resume!")
         return
 
     # ── Morphological Analyzer Handlers ──
