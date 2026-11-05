@@ -8007,15 +8007,52 @@ const TULU_DICTIONARY_1000 = [
 
 function searchTuluDictionary(query, category) {
   if (!query && (!category || category === 'all')) return TULU_DICTIONARY_1000.slice(0, 100);
-  const q = (query || '').trim().toLowerCase();
-  return TULU_DICTIONARY_1000.filter(item => {
+  const rawQ = (query || '').trim();
+  const q = rawQ.toLowerCase();
+
+  const direct = TULU_DICTIONARY_1000.filter(item => {
     const matchCat = (!category || category === 'all' || item.category === category);
     if (!q) return matchCat;
     const matchText = item.english.toLowerCase().includes(q) ||
-                      item.tulu_kannada.includes(q) ||
+                      item.tulu_kannada.includes(rawQ) ||
                       item.tulu_latin.toLowerCase().includes(q);
     return matchCat && matchText;
   });
+
+  if (direct.length > 0) return direct;
+
+  // Lightweight Morphological Lemmatizer Fallback for inflected queries (e.g. ಇಲ್ಲಡ್ -> ಇಲ್ಲ)
+  const nounSuffixes = [
+    { kn: 'ೊಟ್ಟುಗು', tag: 'Sociative (with)' },
+    { kn: 'ರ್ದ್', tag: 'Ablative (from)' },
+    { kn: 'ಡ್ದ್', tag: 'Ablative (from)' },
+    { kn: 'ರ್ದು', tag: 'Ablative (from)' },
+    { kn: 'ಡ್', tag: 'Locative (in/at)' },
+    { kn: 'ಡು', tag: 'Locative (in/at)' },
+    { kn: 'ಟ್', tag: 'Locative (in/at)' },
+    { kn: 'ದ', tag: 'Genitive (of)' },
+    { kn: 'ನ', tag: 'Genitive (of)' },
+    { kn: 'ಗ್', tag: 'Dative (to/for)' },
+    { kn: 'ಗು', tag: 'Dative (to/for)' },
+    { kn: 'ಕ್', tag: 'Dative (to/for)' },
+    { kn: 'ನ್', tag: 'Accusative' },
+    { kn: 'ನು', tag: 'Accusative' },
+  ];
+
+  for (const suf of nounSuffixes) {
+    if (rawQ.endsWith(suf.kn) && rawQ.length > suf.kn.length) {
+      const stem = rawQ.slice(0, -suf.kn.length);
+      const matches = TULU_DICTIONARY_1000.filter(item => item.tulu_kannada === stem);
+      if (matches.length > 0) {
+        return matches.map(m => Object.assign({}, m, {
+          english: `[${suf.tag}] ` + m.english,
+          category: `Morphology: ${suf.tag}`
+        }));
+      }
+    }
+  }
+
+  return [];
 }
 
 if (typeof module !== 'undefined' && module.exports) {

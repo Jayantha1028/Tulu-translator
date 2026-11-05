@@ -36,6 +36,10 @@ try:
     from kannada_tigalari_converter.tulu_nmt_pipeline import load_nmt_benchmark_corpus, NMTMetrics
     from kannada_tigalari_converter.export_datasets_to_csv import export_all_csvs
     from kannada_tigalari_converter.tulu_web_scraper import TuluWikiHarvester, WiktionaryTuluHarvester, export_harvested_to_csv
+    from kannada_tigalari_converter.tulu_morphology import (
+        analyze as morph_analyze, analyze_sentence, lemmatize,
+        pos_tag, decline_noun, conjugate_verb, Case,
+    )
 except ImportError:
     from transliterator import (
         transliterate,
@@ -48,6 +52,10 @@ except ImportError:
     from tulu_nmt_pipeline import load_nmt_benchmark_corpus, NMTMetrics
     from export_datasets_to_csv import export_all_csvs
     from tulu_web_scraper import TuluWikiHarvester, WiktionaryTuluHarvester, export_harvested_to_csv
+    from tulu_morphology import (
+        analyze as morph_analyze, analyze_sentence, lemmatize,
+        pos_tag, decline_noun, conjugate_verb, Case,
+    )
 
 
 def run_interactive(from_script="auto", to_script="tigalari", debug=False):
@@ -227,6 +235,28 @@ def main():
         help="Port for web server (default: 8080)"
     )
 
+    # ── Morphological Analyzer Commands ──
+    parser.add_argument(
+        "--analyze", dest="analyze_word", type=str, default=None,
+        help="Morphologically analyze a Tulu word (e.g. --analyze ಇಲ್ಲಗ್)"
+    )
+    parser.add_argument(
+        "--analyze-sentence", dest="analyze_sent", type=str, default=None,
+        help="Morphologically analyze every word in a Tulu sentence"
+    )
+    parser.add_argument(
+        "--lemmatize", dest="lemmatize_word", type=str, default=None,
+        help="Lemmatize a Tulu word — strip inflection to recover base form"
+    )
+    parser.add_argument(
+        "--decline", dest="decline_word", type=str, default=None,
+        help="Generate full 8-case declension table for a Tulu noun"
+    )
+    parser.add_argument(
+        "--conjugate", dest="conjugate_word", type=str, default=None,
+        help="Generate conjugation paradigm for a Tulu verb"
+    )
+
     args = parser.parse_args()
 
     if args.lookup_word:
@@ -337,6 +367,81 @@ def main():
         print("\nAll datasets updated:")
         for k, v in res.items():
             print(f"  ✓ {k:<38}: {v:>6} records")
+        return
+
+    # ── Morphological Analyzer Handlers ──
+    if args.analyze_word:
+        result = morph_analyze(args.analyze_word)
+        print("=" * 65)
+        print("  Tulu Morphological Analysis")
+        print("=" * 65)
+        print(f"  Input    : {result.surface_word} ({result.surface_latin})")
+        print(f"  Lemma    : {result.lemma_kannada} ({result.lemma_latin})")
+        print(f"  Tigalari : {result.lemma_tigalari}")
+        print(f"  POS      : {result.pos.value}")
+        print(f"  Tag      : {result.tag_string()}")
+        if result.case:
+            print(f"  Case     : {result.case.value}")
+        if result.tense:
+            print(f"  Tense    : {result.tense.value}")
+        if result.person:
+            print(f"  Person   : {result.person.value}")
+        if result.number:
+            print(f"  Number   : {result.number.value}")
+        if result.mood and result.mood.value != "indicative":
+            print(f"  Mood     : {result.mood.value}")
+        if result.is_negative:
+            print(f"  Negative : Yes")
+        if result.english_meaning:
+            print(f"  Meaning  : {result.english_meaning}")
+        print(f"  Confidence: {result.confidence:.0%}")
+        print(f"  Morphemes: {' + '.join(m.tag + '(' + m.latin + ')' for m in result.morphemes)}")
+        print("=" * 65)
+        return
+
+    if args.analyze_sent:
+        results = analyze_sentence(args.analyze_sent)
+        print("=" * 65)
+        print("  Tulu Sentence Morphological Analysis")
+        print("=" * 65)
+        for i, r in enumerate(results, 1):
+            print(f"\n  [{i}] {r.surface_word} ({r.surface_latin})")
+            print(f"      Lemma: {r.lemma_kannada} | POS: {r.pos.value} | Tag: {r.tag_string()}")
+            if r.english_meaning:
+                print(f"      Meaning: {r.english_meaning}")
+        print("\n" + "=" * 65)
+        return
+
+    if args.lemmatize_word:
+        lemma = lemmatize(args.lemmatize_word)
+        print(f"  {args.lemmatize_word} → {lemma}")
+        return
+
+    if args.decline_word:
+        table = decline_noun(args.decline_word)
+        print("=" * 70)
+        print(f"  Noun Declension: {table.lemma_kannada} ({table.lemma_latin})")
+        print("=" * 70)
+        for case in Case:
+            forms = table.forms[case]
+            for f in forms:
+                print(f"  {case.value:14s} : {f['kannada']:15s} ({f['latin']:15s}) {f['tigalari']}")
+        print("=" * 70)
+        return
+
+    if args.conjugate_word:
+        table = conjugate_verb(args.conjugate_word)
+        print("=" * 70)
+        print(f"  Verb Conjugation: {table.lemma_kannada} ({table.lemma_latin})")
+        print("=" * 70)
+        for slot in sorted(table.forms):
+            f = table.forms[slot]
+            print(f"  {slot:12s} : {f['kannada']:15s} ({f['latin']:15s}) {f['tigalari']}")
+        if table.irregular_forms:
+            print("\n  Known Irregular Forms:")
+            for slot, f in sorted(table.irregular_forms.items()):
+                print(f"  {slot:12s} : {f['kannada']:15s} ({f['latin']:15s}) {f['tigalari']}")
+        print("=" * 70)
         return
 
     if args.web:

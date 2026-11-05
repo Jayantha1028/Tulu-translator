@@ -132,6 +132,44 @@ def export_all_csvs(output_dir: str = None) -> dict:
     except Exception as e:
         print(f"Warning: OCR export skipped ({e})")
 
+    # 7. Tulu Morphological Paradigms (Noun Declensions & Verb Conjugations)
+    csv_morph = os.path.join(output_dir, "tulu_morphology_paradigms.csv")
+    try:
+        from kannada_tigalari_converter.tulu_morphology import decline_noun, conjugate_verb, Case
+        core_nouns = ["ಇಲ್ಲ", "ಕುಡ್ಲ", "ಮರ", "ಊರು", "ಸುದೆ", "ಕಡಲ್", "ನೀರ್", "ಪೂ", "ಕೈ", "ಕಣ್ಣ್"]
+        core_verbs = ["ಬಲೆ", "ಪೋಲೆ", "ತಿನ್ಲೆ", "ಪರ್ಲೆ", "ತೂಲೆ", "ಮಲ್ಪುಲೆ", "ಕಲ್ಪುಲೆ", "ಪನ್ಲೆ", "ಬರೆಪುಲೆ", "ಓದುಲೆ"]
+
+        records = []
+        rec_id = 1
+        for n in core_nouns:
+            tbl = decline_noun(n)
+            for case in Case:
+                for f in tbl.forms[case]:
+                    records.append([
+                        rec_id, "noun", tbl.lemma_kannada, tbl.lemma_latin,
+                        f"case_{case.value}", f["kannada"], f["latin"], f["tigalari"]
+                    ])
+                    rec_id += 1
+
+        for v in core_verbs:
+            tbl = conjugate_verb(v)
+            for slot, f in tbl.forms.items():
+                records.append([
+                    rec_id, "verb", tbl.lemma_kannada, tbl.lemma_latin,
+                    f"conj_{slot}", f["kannada"], f["latin"], f["tigalari"]
+                ])
+                rec_id += 1
+
+        with open(csv_morph, "w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["id", "pos", "lemma_kannada", "lemma_latin", "slot_tag", "inflected_kannada", "inflected_latin", "inflected_tigalari"])
+            for r in records:
+                writer.writerow(r)
+
+        exported_files["tulu_morphology_paradigms.csv"] = len(records)
+    except Exception as e:
+        print(f"Warning: Morphology CSV export skipped ({e})")
+
     return exported_files
 
 

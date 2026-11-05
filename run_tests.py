@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Unified Test Runner for Tulu-Tigalari & Kannada Transliteration Project.
-Runs all 35 unit test suites across core converter, 250 words, 1,000 words,
-AATA Library OCR collector, and Tulu-NMT pipeline.
+Runs all 93 unit test suites across core converter, 250 words, 1,000 words,
+AATA Library OCR collector, Tulu-NMT pipeline, and Tulu Morphological Analyzer.
 """
 
 import os

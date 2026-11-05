@@ -45,6 +45,16 @@ from .tulu_web_scraper import (
     WiktionaryTuluHarvester,
     export_harvested_to_csv,
 )
+from .tulu_morphology import (
+    analyze as morphological_analyze,
+    analyze_sentence,
+    lemmatize,
+    pos_tag,
+    decline_noun,
+    conjugate_verb,
+    POS, Case, Tense, Person, Number, Mood,
+    MorphAnalysis, DeclensionTable, ConjugationTable,
+)
 
 __all__ = [
     "kannada_to_tigalari",
@@ -74,4 +84,19 @@ __all__ = [
     "TuluWikiHarvester",
     "WiktionaryTuluHarvester",
     "export_harvested_to_csv",
+    "morphological_analyze",
+    "analyze_sentence",
+    "lemmatize",
+    "pos_tag",
+    "decline_noun",
+    "conjugate_verb",
+    "POS",
+    "Case",
+    "Tense",
+    "Person",
+    "Number",
+    "Mood",
+    "MorphAnalysis",
+    "DeclensionTable",
+    "ConjugationTable",
 ]

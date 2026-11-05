@@ -17,6 +17,12 @@ A complete Python library, CLI, and Web Transliterator Application for the **Tul
   - Ottakshara / geminates / conjunct stacking using Unicode 16.0 `U+113D0` (*TULU-TIGALARI CONJOINER*).
   - Standalone pure consonants using `U+113CE` (*TULU-TIGALARI SIGN VIRAMA*).
   - Lossless bidirectional round-trips with short/long E & O separation.
+- **Tulu Morphological Analyzer & Lemmatizer (ತುಳು ರೂಪಿಮಾ ವಿಶ್ಲೇಷಣೆ):**
+  - **Lemmatization:** Deconstruct inflected words to recover canonical dictionary base lemmas (e.g. `ಇಲ್ಲಡ್` $\rightarrow$ `ಇಲ್ಲ`, `ಕುಡ್ಲಗ್` $\rightarrow$ `ಕುಡ್ಲ`, `ಬರ್ಪೆ` $\rightarrow$ `ಬಲೆ`).
+  - **8-Case Noun Declension Engine:** Full Dravidian case inflection (Nominative, Accusative, Dative, Genitive, Locative, Ablative, Instrumental, Sociative) across Kannada, Tigalari, and Latin phonetic representations.
+  - **Verb Paradigm Conjugator:** Tense $\times$ Person $\times$ Number $\times$ Polarity paradigms, negative forms (`-ಿಜಿ`), obligatives (`-ೊಡು`), infinitives (`-ಯೆರೆ`), and gerunds (`-ನಗ`).
+  - **Morpheme Parsing & POS Tagging:** Deep grammatical decomposition with human-readable tags (e.g. `NOUN.LOC`, `VERB.PRS.1SG`).
+  - **Morphologically-Aware Dictionary Lookup:** Lexicon lookups seamlessly identify inflected words and return lemma entries annotated with case and inflection details.
 - **Interactive Web Transliterator Application:**
   - Runs in any modern browser with instant zero-latency transliteration as you type.
   - Self-contained embedded **Mallige Unicode v2** font via `@font-face` so Tulu-Tigalari script renders natively without needing system font installation.
@@ -112,6 +118,13 @@ python3 kannada_tigalari_converter/cli.py "𑎥𑎪𑎱𑏐𑎒𑎸𑎬" --rever
 
 # Search 1,000-word modern dictionary
 python3 kannada_tigalari_converter/cli.py --lookup "water"
+
+# Morphological analysis of inflected Tulu words
+python3 kannada_tigalari_converter/cli.py --analyze "ಇಲ್ಲಡ್"
+python3 kannada_tigalari_converter/cli.py --lemmatize "ಬರ್ಪೆ"
+python3 kannada_tigalari_converter/cli.py --decline "ಇಲ್ಲ"
+python3 kannada_tigalari_converter/cli.py --conjugate "ಬಲೆ"
+python3 kannada_tigalari_converter/cli.py --analyze-sentence "ಯಾನ್ ಇಲ್ಲಗ್ ಬರ್ಪೆ"
 
 # Search 1886 Basel Mission Historical Tulu Dictionary (Rev. August Männer)
 python3 kannada_tigalari_converter/cli.py --historical "agel"
