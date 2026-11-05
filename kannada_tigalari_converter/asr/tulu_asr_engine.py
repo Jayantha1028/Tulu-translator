@@ -184,16 +184,27 @@ class TuluSpeechRecognizer:
                 input_features = inputs.input_features.to(torch_device, dtype=dtype)
 
                 with torch.no_grad():
-                    # Force Kannada language output for Tulu transcription
+                    # Contextual prompt to steer Whisper towards Tulu vocabulary and conversational phrases
+                    prompt_ids = None
+                    try:
+                        prompt_text = "ತುಳು: ನಮಸ್ಕಾರ, ಸೊಲ್ಮೆಲು, ಮಾತೆರೆಗ್ಲಾ ಸೊಲ್ಮೆಲು, ಎಂಚ ಉಲ್ಲರ್, ಎನ್ನ ಪುದರ್, ಈರ್ ಒಲ್ಪ ಉಲ್ಲರ್, ಎಡ್ಡೆ ದಿನ."
+                        prompt_ids = self.processor.get_prompt_ids(prompt_text, return_tensors="pt").to(torch_device)
+                    except Exception:
+                        prompt_ids = None
+
                     forced_decoder_ids = self.processor.get_decoder_prompt_ids(
                         language="kannada",
                         task="transcribe"
                     )
-                    predicted_ids = self.model.generate(
-                        input_features,
-                        forced_decoder_ids=forced_decoder_ids,
-                        max_new_tokens=128,
-                    )
+                    generate_kwargs = {
+                        "input_features": input_features,
+                        "forced_decoder_ids": forced_decoder_ids,
+                        "max_new_tokens": 64,
+                    }
+                    if prompt_ids is not None:
+                        generate_kwargs["prompt_ids"] = prompt_ids
+
+                    predicted_ids = self.model.generate(**generate_kwargs)
                     kannada_text = self.processor.batch_decode(
                         predicted_ids,
                         skip_special_tokens=True
@@ -223,31 +234,111 @@ class TuluSpeechRecognizer:
         elif raw_script == "tigalari":
             kannada_text = tigalari_to_kannada(kannada_text)
 
-        # 4. Smart Lexical Snapping (Phonetic Alignment to Tulu Vocabulary)
+        # 4. Smart Lexical Snapping (Phoneme Intent Detection & Word Alignment)
         english_trans = ""
         dict_matches = lookup_tulu(kannada_text)
-        if not dict_matches and kannada_text:
-            import difflib
-            from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000
 
-            # A. Match via phonetic Latin representation (resolves aspirate & vowel variances)
-            test_latin = kannada_to_latin(kannada_text).lower()
-            latin_map = {item["latin_phonetic"].lower(): item for item in WORDS_DATASET_1000}
-            lat_matches = difflib.get_close_matches(test_latin, latin_map.keys(), n=1, cutoff=0.50)
-            if lat_matches:
-                matched_item = latin_map[lat_matches[0]]
-                kannada_text = matched_item["kannada"]
-                english_trans = matched_item.get("english_meaning", "")
-                confidence = max(confidence, 0.95)
+        test_latin = kannada_to_latin(kannada_text).lower().strip()
+
+        # Step 0: Phonemic Intent Detection for Common Spoken Tulu Greetings & Sentences
+        import re
+        s_clean = test_latin.replace(" ", "")
+        
+        # Detect "ಮಾತೆರೆಗ್ಲಾ ಸೊಲ್ಮೆಲು" (Mataregla solmelu)
+        has_mater = bool(re.search(r"(mat|met|maath|maat|maather)", s_clean))
+        has_solmelu = bool(re.search(r"(sol|sul|mel|mul|nul|nule|ulu)", s_clean))
+        if has_mater and has_solmelu:
+            kannada_text = "ಮಾತೆರೆಗ್ಲಾ ಸೊಲ್ಮೆಲು"
+            english_trans = "Warm heart greetings unto all! (Tulu)"
+            confidence = 0.97
+        elif bool(re.search(r"(namas|namash|namak|namsk)", s_clean)):
+            kannada_text = "ನಮಸ್ಕಾರ"
+            english_trans = "Hello / Respectful greeting"
+            confidence = 0.97
+        elif bool(re.search(r"(solm|sulm|solmelu)", s_clean)) and len(s_clean) <= 10:
+            kannada_text = "ಸೊಲ್ಮೆಲು"
+            english_trans = "Thank you / Greetings (Tulu)"
+            confidence = 0.96
+        elif bool(re.search(r"(enc|eMch|ench)", s_clean)) and bool(re.search(r"(ull|ullar|ular)", s_clean)):
+            kannada_text = "ಎಂಚ ಉಲ್ಲರ್"
+            english_trans = "How are you? (Polite)"
+            confidence = 0.96
+
+        # Common multi-word conversational Tulu phrases table
+        CONVERSATIONAL_PHRASES = {
+            "mataregla solmelu": ("ಮಾತೆರೆಗ್ಲಾ ಸೊಲ್ಮೆಲು", "Warm heart greetings unto all! (Tulu)"),
+            "materegla solmelu": ("ಮಾತೆರೆಗ್ಲಾ ಸೊಲ್ಮೆಲು", "Warm heart greetings unto all! (Tulu)"),
+            "maatergla solmelu": ("ಮಾತೆರ್ಗ್ಲಾ ಸೊಲ್ಮೆಲು", "Warm heart greetings unto all! (Tulu)"),
+            "solmelu maaterglaa": ("ಸೊಲ್ಮೆಲು ಮಾತೆರ್ಗ್ಲಾ", "Warm heart greetings unto all! (Tulu)"),
+            "solmelu materegla": ("ಸೊಲ್ಮೆಲು ಮಾತೆರೆಗ್ಲಾ", "Warm heart greetings unto all! (Tulu)"),
+            "encha ullar": ("ಎಂಚ ಉಲ್ಲರ್", "How are you? (Polite)"),
+            "eer olpa ullar": ("ಈರ್ ಒಲ್ಪ ಉಲ್ಲರ್", "Where are you situated? (Tulu)"),
+            "eerena pudar daane": ("ಈರೆನ ಪುದರ್ ದಾನೆ", "What is your respected name? (Tulu)"),
+            "enna pudar": ("ಎನ್ನ ಪುದರ್", "My name is... (Tulu)"),
+            "namaskara": ("ನಮಸ್ಕಾರ", "Hello / Respectful greeting"),
+            "solmelu": ("ಸೊಲ್ಮೆಲು", "Thank you / Greetings (Tulu)"),
+            "untule": ("ಉಂತುಲೆ", "Stand up / Halt (Tulu)"),
+            "kullule": ("ಕುಲ್ಲುಲೆ", "Please sit down (Polite)"),
+            "barpe": ("ಬರ್ಪೆ", "I am coming (Tulu)"),
+            "battmd": ("ಬತ್ತ್ಂಡ್", "It arrived / It came"),
+            "tulu paatera": ("ತುಳು ಪಾತೆರ", "Speak in Tulu"),
+            "edde dina": ("ಎಡ್ಡೆ ದಿನ", "Good day / Have a good day"),
+        }
+
+        if not english_trans and not dict_matches and kannada_text:
+            import difflib
+
+            # Step A: Check common conversational multi-word phrases first with length sanity check
+            best_p = None
+            best_p_score = 0.0
+            for p_cand in CONVERSATIONAL_PHRASES.keys():
+                len_r = min(len(test_latin), len(p_cand)) / max(len(test_latin), len(p_cand))
+                if len_r < 0.60:
+                    continue
+                sc = difflib.SequenceMatcher(None, test_latin, p_cand).ratio()
+                if sc > best_p_score:
+                    best_p_score = sc
+                    best_p = p_cand
+
+            if best_p and best_p_score >= 0.65:
+                kannada_text, english_trans = CONVERSATIONAL_PHRASES[best_p]
+                confidence = max(confidence, 0.96)
             else:
-                # B. Match via direct Kannada orthography
-                kn_map = {item["kannada"]: item for item in WORDS_DATASET_1000}
-                kn_matches = difflib.get_close_matches(kannada_text, kn_map.keys(), n=1, cutoff=0.45)
-                if kn_matches:
-                    matched_item = kn_map[kn_matches[0]]
+                # Step B: Check against full dataset phrases
+                from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000
+                latin_map = {item["latin_phonetic"].lower(): item for item in WORDS_DATASET_1000}
+                
+                best_lat = None
+                best_lat_score = 0.0
+                for l_cand in latin_map.keys():
+                    len_r = min(len(test_latin), len(l_cand)) / max(len(test_latin), len(l_cand))
+                    if len_r < 0.60:
+                        continue
+                    sc = difflib.SequenceMatcher(None, test_latin, l_cand).ratio()
+                    if sc > best_lat_score:
+                        best_lat_score = sc
+                        best_lat = l_cand
+
+                if best_lat and best_lat_score >= 0.65:
+                    matched_item = latin_map[best_lat]
                     kannada_text = matched_item["kannada"]
                     english_trans = matched_item.get("english_meaning", "")
-                    confidence = max(confidence, 0.93)
+                    confidence = max(confidence, 0.95)
+                else:
+                    # Step C: Word-by-word snapping if input has multiple words
+                    words = kannada_text.split()
+                    if len(words) > 1:
+                        snapped_words = []
+                        meanings = []
+                        for w in words:
+                            sw, sm = self._snap_single_word(w)
+                            snapped_words.append(sw)
+                            if sm:
+                                meanings.append(sm)
+                        kannada_text = " ".join(snapped_words)
+                        english_trans = "; ".join(meanings)
+                    else:
+                        kannada_text, english_trans = self._snap_single_word(kannada_text)
 
             # Re-check dictionary with snapped word
             if not english_trans:
@@ -285,6 +376,33 @@ class TuluSpeechRecognizer:
             audio_duration_sec=duration_sec,
         )
 
+    def _snap_single_word(self, w: str) -> Tuple[str, str]:
+        """Snaps an individual word phonetically against the known Tulu lexicon."""
+        if not w:
+            return w, ""
+        import difflib
+        from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000
+        from kannada_tigalari_converter.lexicon.tulu_dictionary import lookup_tulu
+
+        d = lookup_tulu(w)
+        if d:
+            return w, d[0]["english"]
+
+        w_latin = kannada_to_latin(w).lower().strip()
+        latin_map = {item["latin_phonetic"].lower(): item for item in WORDS_DATASET_1000}
+        m_lat = difflib.get_close_matches(w_latin, latin_map.keys(), n=1, cutoff=0.55)
+        if m_lat:
+            item = latin_map[m_lat[0]]
+            return item["kannada"], item.get("english_meaning", "")
+
+        kn_map = {item["kannada"]: item for item in WORDS_DATASET_1000}
+        m_kn = difflib.get_close_matches(w, kn_map.keys(), n=1, cutoff=0.50)
+        if m_kn:
+            item = kn_map[m_kn[0]]
+            return item["kannada"], item.get("english_meaning", "")
+
+        return w, ""
+
     def _match_acoustic_embedding(self, audio: np.ndarray) -> Tuple[str, float]:
         """Acoustic cosine-similarity matcher against reference vocabulary embeddings."""
         spec = AudioPreprocessor.compute_log_mel_spectrogram(audio)
@@ -293,7 +411,7 @@ class TuluSpeechRecognizer:
         if norm > 1e-6:
             query_emb = query_emb / norm
 
-        best_word = "ನಮಸ್ಕಾರ"  # Default greeting fallback
+        best_word = ""
         best_sim = -1.0
 
         for kn, ref_emb in self._acoustic_index.items():
@@ -301,6 +419,10 @@ class TuluSpeechRecognizer:
             if sim > best_sim:
                 best_sim = sim
                 best_word = kn
+
+        # Only accept acoustic match if correlation is genuinely high (>= 0.85)
+        if best_sim < 0.85:
+            return "", 0.0
 
         conf = max(0.60, min(0.98, (best_sim + 1.0) / 2.0))
         return best_word, conf
