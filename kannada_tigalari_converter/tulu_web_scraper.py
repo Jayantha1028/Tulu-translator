@@ -146,19 +146,36 @@ class TuluWikiHarvester:
 
     @classmethod
     def harvest(cls, max_articles: int = 50) -> List[Dict]:
-        """Harvests up to max_articles from Tulu Wikipedia and extracts sentences."""
-        pages, _ = cls.list_articles(limit=max_articles)
+        """Harvests up to max_articles from Tulu Wikipedia with pagination and extracts clean sentences."""
+        all_pages = []
+        cont_token = None
+        remaining = max_articles
+
+        while remaining > 0:
+            fetch_limit = min(remaining, 500)
+            pages, cont_token = cls.list_articles(limit=fetch_limit, cont_token=cont_token)
+            if not pages:
+                break
+            all_pages.extend(pages)
+            remaining -= len(pages)
+            if not cont_token:
+                break
+
         # Filter out stub-like titles
-        filtered_pages = [p for p in pages if len(p.get("title", "")) > 2]
-        page_ids = [p["pageid"] for p in filtered_pages]
+        filtered_pages = [p for p in all_pages if len(p.get("title", "")) > 2]
+        page_ids = [p["pageid"] for p in filtered_pages][:max_articles]
 
         extracted_sentences = []
         sentence_id = 1
 
-        # Fetch in batches of 15
-        for i in range(0, len(page_ids), 15):
-            batch_ids = page_ids[i:i + 15]
-            contents = cls.fetch_articles_content(batch_ids)
+        # Fetch in batches of 20
+        for i in range(0, len(page_ids), 20):
+            batch_ids = page_ids[i:i + 20]
+            try:
+                contents = cls.fetch_articles_content(batch_ids)
+            except Exception as e:
+                print(f"Warning: Failed batch {i}-{i+20}: {e}")
+                continue
 
             for title, raw_content in contents.items():
                 sentences = cls.clean_wiki_text(raw_content)
@@ -176,7 +193,7 @@ class TuluWikiHarvester:
                     })
                     sentence_id += 1
 
-            time.sleep(0.3)  # Be polite to Wikimedia servers
+            time.sleep(0.15)  # Be polite to Wikimedia servers
 
         return extracted_sentences
 

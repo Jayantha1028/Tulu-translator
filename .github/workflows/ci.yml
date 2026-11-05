@@ -1,0 +1,62 @@
+name: Tulu Translator CI & Package Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test on Python ${{ matrix.python-version }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install System Dependencies (Tesseract OCR)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y tesseract-ocr tesseract-ocr-kan
+
+    - name: Install System Dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install tesseract tesseract-lang
+
+    - name: Install Package & Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install build twine
+
+    - name: Run Complete 93-Unit Test Suite
+      run: |
+        python run_tests.py
+
+    - name: Test CLI Interface
+      run: |
+        python kannada_tigalari_converter/cli.py "solmelu" --to kannada
+        python kannada_tigalari_converter/cli.py "ನಮಸ್ಕಾರ" --to tigalari
+        python kannada_tigalari_converter/cli.py --analyze "ಇಲ್ಲಡ್"
+        python kannada_tigalari_converter/cli.py --lemmatize "ಬರ್ಪೆ"
+        python kannada_tigalari_converter/cli.py --decline "ಇಲ್ಲ"
+        python kannada_tigalari_converter/cli.py --conjugate "ಬಲೆ"
+        python kannada_tigalari_converter/cli.py --lookup "water"
+
+    - name: Verify Package Build (sdist & wheel)
+      run: |
+        python -m build
+        python -m twine check dist/*

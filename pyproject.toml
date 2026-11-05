@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tulu-translit"
+version = "1.0.0"
+description = "Tulu-Tigalari & Kannada Transliteration, Morphological Engine & NMT Corpus Suite"
+readme = "README.md"
+authors = [{ name = "Jayantha Nayak", email = "jayanthanayak1028@gmail.com" }]
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+keywords = ["tulu", "tigalari", "kannada", "transliteration", "unicode16", "nlp", "morphology", "linguistics"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Text Processing :: Linguistic",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.optional-dependencies]
+ocr = [
+    "pytesseract>=0.3.10",
+    "pymupdf>=1.22.0",
+    "pillow>=9.5.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "build>=1.0.0",
+    "twine>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Jayantha1028/Tulu-translator"
+Documentation = "https://github.com/Jayantha1028/Tulu-translator#readme"
+Repository = "https://github.com/Jayantha1028/Tulu-translator"
+Issues = "https://github.com/Jayantha1028/Tulu-translator/issues"
+
+[project.scripts]
+tulu-translit = "kannada_tigalari_converter.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["kannada_tigalari_converter*"]
+exclude = ["tests*", "web*", "datasets*"]
+
+[tool.setuptools.package-data]
+"kannada_tigalari_converter" = ["*.json", "aatana_books_catalog.json"]
