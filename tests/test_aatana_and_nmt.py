@@ -17,6 +17,9 @@ from kannada_tigalari_converter.aatana_library_collector import (
     search_books,
     clean_raw_ocr_text,
     segment_tulu_sentences,
+    download_book,
+    ocr_image,
+    is_url,
 )
 from kannada_tigalari_converter.tulu_nmt_pipeline import (
     TuluNMTConfig,
@@ -121,6 +124,20 @@ class TestAataAndNMT(unittest.TestCase):
         self.assertIn("ಅಂಗಡಿ ಗೊಬ್ಬು", sentences[0])
         self.assertNotIn("==", sentences[0])
         self.assertNotIn("'''", sentences[0])
+
+
+    def test_universal_book_downloader_url_check(self):
+        self.assertTrue(is_url("https://archive.org/download/item/book.pdf"))
+        self.assertTrue(is_url("http://example.com/doc.pdf"))
+        self.assertFalse(is_url("/local/path/to/book.pdf"))
+        self.assertFalse(is_url("12"))
+
+    def test_universal_book_downloader_local_file(self):
+        local_sample = os.path.join(CURRENT_DIR, "..", "kannada_tigalari_converter", "downloads", "Sodara-habba.pdf")
+        if os.path.isfile(local_sample):
+            resolved = download_book(local_sample)
+            self.assertTrue(os.path.isfile(resolved))
+            self.assertEqual(os.path.abspath(local_sample), resolved)
 
 
 if __name__ == "__main__":
