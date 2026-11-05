@@ -237,22 +237,27 @@ class SyntheticTuluAudioGenerator:
     """
 
     @classmethod
-    def synthesize_to_wav(cls, text_kannada: str, output_wav_path: str) -> bool:
+    def synthesize_to_wav(cls, text_kannada: str, output_wav_path: str, rate: Optional[int] = None) -> bool:
         """
         Synthesizes a sentence in Kannada script into a 16kHz WAV file.
         Uses native macOS 'say -v Soumya' (Kannada voice) if available,
         or falls back to an acoustic waveform generator.
+        :param rate: Speaking rate in WPM (e.g. 150=slow, 175=normal, 205=fast).
         """
         os.makedirs(os.path.dirname(os.path.abspath(output_wav_path)), exist_ok=True)
         temp_aiff = output_wav_path.replace(".wav", ".aiff")
 
         # 1. Attempt macOS native Kannada voice
         try:
+            cmd = ["say", "-v", "Soumya"]
+            if rate:
+                cmd.extend(["-r", str(rate)])
+            cmd.extend([text_kannada, "-o", temp_aiff])
             res = subprocess.run(
-                ["say", "-v", "Soumya", text_kannada, "-o", temp_aiff],
+                cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                timeout=10,
+                timeout=12,
             )
             if res.returncode == 0 and os.path.exists(temp_aiff):
                 # Load, normalize to 16kHz mono, and write WAV

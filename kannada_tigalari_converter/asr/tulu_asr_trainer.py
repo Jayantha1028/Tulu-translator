@@ -249,6 +249,20 @@ class TuluASRTrainer:
                             })
 
         print(f"[Tulu Trainer] Prepared {len(samples)} paired speech samples.")
+
+        # Parallel pre-synthesis of missing audio samples
+        missing = [s for s in samples if not os.path.isfile(s["audio_path"])]
+        if missing:
+            print(f"[Tulu Trainer] Synthesizing {len(missing)} missing audio samples in parallel (8 workers, varied speaking rates)...")
+            from concurrent.futures import ThreadPoolExecutor
+            def _synth(item):
+                rate = random.choice([150, 175, 205])
+                SyntheticTuluAudioGenerator.synthesize_to_wav(item["text_kannada"], item["audio_path"], rate=rate)
+
+            with ThreadPoolExecutor(max_workers=8) as pool:
+                list(pool.map(_synth, missing))
+            print(f"[Tulu Trainer] Audio pre-synthesis complete ({len(samples)} total audio clips ready).")
+
         random.seed(42)
         random.shuffle(samples)
 
@@ -356,7 +370,19 @@ class TuluASRTrainer:
             print(f"--> Epoch {epoch} Done in {epoch_dur:.1f}s | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f}\n")
 
         total_duration = time.time() - start_time
-        print(f"[Tulu Trainer] Training completed in {total_duration:.1f}s.")
+        print(f"[Tulu Trainer] Training loop completed in {total_duration:.1f}s.")
+
+        # Compute final evaluation metrics (WER & CER)
+        print("[Tulu Trainer] Running validation evaluation (WER & CER)...")
+        eval_metrics = self.evaluate_metrics(val_loader)
+        history["eval_metrics"] = eval_metrics
+        print(f"  Character Error Rate (CER): {eval_metrics['cer'] * 100:.1f}%")
+        print(f"  Word Error Rate (WER)     : {eval_metrics['wer'] * 100:.1f}%")
+        if eval_metrics.get("sample_pred"):
+            print("\n  Sample Decoded Predictions:")
+            for p, r in zip(eval_metrics["sample_pred"][:2], eval_metrics["sample_ref"][:2]):
+                print(f"    Target    : {r}")
+                print(f"    Recognized: {p}")
 
         # Save LoRA adapter weights
         self.save_adapter(history)
@@ -365,8 +391,44 @@ class TuluASRTrainer:
             "epochs": epochs,
             "train_loss": history["train_loss"],
             "val_loss": history["val_loss"],
+            "wer": eval_metrics["wer"],
+            "cer": eval_metrics["cer"],
             "output_dir": self.output_dir,
             "duration_sec": total_duration,
+        }
+
+    def evaluate_metrics(self, val_loader: DataLoader) -> Dict[str, Any]:
+        """Evaluates WER and CER on the validation set."""
+        self.model.eval()
+        predictions = []
+        references = []
+
+        with torch.no_grad():
+            for batch in val_loader:
+                input_features = batch["input_features"].to(self.device)
+                labels = batch["labels"].to(self.device)
+
+                # Generate transcriptions with greedy search
+                predicted_ids = self.model.generate(
+                    input_features,
+                    max_new_tokens=128,
+                )
+                pred_texts = self.processor.batch_decode(predicted_ids, skip_special_tokens=True)
+
+                label_ids = labels.clone()
+                label_ids[label_ids == -100] = self.processor.tokenizer.pad_token_id
+                ref_texts = self.processor.batch_decode(label_ids, skip_special_tokens=True)
+
+                predictions.extend([p.strip() for p in pred_texts])
+                references.extend([r.strip() for r in ref_texts])
+
+        wer = jiwer.wer(references, predictions) if jiwer and len(references) > 0 else 0.0
+        cer = jiwer.cer(references, predictions) if jiwer and len(references) > 0 else 0.0
+        return {
+            "wer": round(float(wer), 4),
+            "cer": round(float(cer), 4),
+            "sample_pred": predictions[:3],
+            "sample_ref": references[:3],
         }
 
     def save_adapter(self, history: Dict[str, Any]):
