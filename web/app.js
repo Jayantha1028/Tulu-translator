@@ -82,6 +82,190 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error(err);
       targetOutput.value = text;
     }
+
+    // Update Live Bilingual Translation Section
+    updateLiveTranslation(text);
+  }
+
+  // -------------------------------------------------------------
+  // Live English <-> Kannada Translation Engine
+  // -------------------------------------------------------------
+  const translationCard = document.getElementById('translationCard');
+  const transDirection = document.getElementById('transDirection');
+  const transPrimaryText = document.getElementById('transPrimaryText');
+  const transPhoneticText = document.getElementById('transPhoneticText');
+  const transSecondaryText = document.getElementById('transSecondaryText');
+  const transTags = document.getElementById('transTags');
+  const copyTranslationBtn = document.getElementById('copyTranslationBtn');
+
+  function updateLiveTranslation(rawInput) {
+    if (!translationCard) return;
+    const input = (rawInput || '').trim();
+    if (!input) {
+      translationCard.style.display = 'none';
+      return;
+    }
+
+    const script = detectScript(input);
+    const hasDict = (typeof TULU_DICTIONARY_1000 !== 'undefined' && Array.isArray(TULU_DICTIONARY_1000));
+    if (!hasDict) {
+      translationCard.style.display = 'none';
+      return;
+    }
+
+    let match = null;
+    let isEnglishInput = false;
+
+    // A. Check if input is Kannada
+    if (script === 'kannada') {
+      isEnglishInput = false;
+      // Direct Kannada lemma match
+      match = TULU_DICTIONARY_1000.find(i => i.tulu_kannada === input);
+
+      // Morphological suffix check if direct match fails
+      if (!match) {
+        const nounSuffixes = [
+          { kn: 'ೊಟ್ಟುಗು', tag: 'Sociative (with)' },
+          { kn: 'ರ್ದ್', tag: 'Ablative (from)' },
+          { kn: 'ಡ್ದ್', tag: 'Ablative (from)' },
+          { kn: 'ರ್ದು', tag: 'Ablative (from)' },
+          { kn: 'ಡ್', tag: 'Locative (in/at)' },
+          { kn: 'ಡು', tag: 'Locative (in/at)' },
+          { kn: 'ಟ್', tag: 'Locative (in/at)' },
+          { kn: 'ದ', tag: 'Genitive (of)' },
+          { kn: 'ನ', tag: 'Genitive (of)' },
+          { kn: 'ಗ್', tag: 'Dative (to/for)' },
+          { kn: 'ಗು', tag: 'Dative (to/for)' },
+          { kn: 'ಕ್', tag: 'Dative (to/for)' },
+          { kn: 'ನ್', tag: 'Accusative' },
+          { kn: 'ನು', tag: 'Accusative' },
+        ];
+        for (const suf of nounSuffixes) {
+          if (input.endsWith(suf.kn) && input.length > suf.kn.length) {
+            const stem = input.slice(0, -suf.kn.length);
+            const foundStem = TULU_DICTIONARY_1000.find(i => i.tulu_kannada === stem);
+            if (foundStem) {
+              match = Object.assign({}, foundStem, {
+                morphTag: suf.tag,
+                inflectedForm: input
+              });
+              break;
+            }
+          }
+        }
+      }
+    } else if (script === 'tigalari') {
+      // Tigalari input -> convert to Kannada first then lookup
+      const kn = transliterate(input, 'tigalari', 'kannada');
+      match = TULU_DICTIONARY_1000.find(i => i.tulu_kannada === kn);
+      isEnglishInput = false;
+    } else {
+      // Latin script input: Could be an English query (e.g. "water", "house", "hello")
+      // OR a phonetic Tulu/Kannada string (e.g. "solmelu", "illa", "barsa")
+      const lower = input.toLowerCase();
+
+      // Check 1: Phonetic Tulu match (e.g. 'solmelu', 'illa')
+      match = TULU_DICTIONARY_1000.find(i => i.tulu_latin.toLowerCase() === lower);
+
+      // Check 2: English meaning match (e.g. 'hello', 'water', 'house', 'thank you')
+      if (!match) {
+        // Exact English word match or word boundary search
+        match = TULU_DICTIONARY_1000.find(i => {
+          const eng = i.english.toLowerCase();
+          const cleanEng = eng.replace(/\(tulu\)|\(kannada\)/g, '').trim();
+          const parts = cleanEng.split(/[\/,;]+/).map(p => p.trim());
+          return parts.includes(lower) || eng === lower;
+        });
+
+        // Substring / keyword match if exact failed
+        if (!match && lower.length >= 3) {
+          match = TULU_DICTIONARY_1000.find(i => {
+            const eng = i.english.toLowerCase();
+            return eng.includes(lower);
+          });
+        }
+
+        if (match) {
+          isEnglishInput = true;
+        }
+      }
+
+      // Check 3: Also search 1886 historical dictionary if not found in modern
+      if (!match && typeof HISTORICAL_TULU_CORPUS !== 'undefined' && Array.isArray(HISTORICAL_TULU_CORPUS)) {
+        const histMatch = HISTORICAL_TULU_CORPUS.find(i => {
+          return i.english.toLowerCase().includes(lower) || i.tulu_latin.toLowerCase() === lower;
+        });
+        if (histMatch) {
+          match = {
+            tulu_kannada: histMatch.tulu_kannada,
+            tulu_latin: histMatch.tulu_latin,
+            english: histMatch.english,
+            category: `Historical 1886: ${histMatch.domain || 'Lexicon'}`
+          };
+          if (histMatch.english.toLowerCase().includes(lower)) isEnglishInput = true;
+        }
+      }
+    }
+
+    if (!match) {
+      translationCard.style.display = 'none';
+      return;
+    }
+
+    // Populate translation card UI
+    translationCard.style.display = 'block';
+    transTags.innerHTML = '';
+
+    if (isEnglishInput) {
+      // English input -> Show Kannada & Tulu translation
+      transDirection.textContent = 'English ➔ Kannada / Tulu';
+      transPrimaryText.textContent = match.tulu_kannada;
+      transPrimaryText.className = 'trans-primary kannada';
+      transPhoneticText.textContent = `/${match.tulu_latin}/`;
+      transSecondaryText.innerHTML = `<strong>English:</strong> ${match.english}`;
+
+      // Category tag
+      const catTag = document.createElement('span');
+      catTag.className = 'trans-tag';
+      catTag.textContent = match.category;
+      transTags.appendChild(catTag);
+
+    } else {
+      // Kannada / Tulu input -> Show English translation
+      transDirection.textContent = 'Kannada / Tulu ➔ English';
+      transPrimaryText.textContent = match.english;
+      transPrimaryText.className = 'trans-primary';
+      transPhoneticText.textContent = `${match.tulu_kannada} (${match.tulu_latin})`;
+      transSecondaryText.innerHTML = `<strong>Tulu / Kannada Lemma:</strong> ${match.tulu_kannada}`;
+
+      // Category tag
+      const catTag = document.createElement('span');
+      catTag.className = 'trans-tag';
+      catTag.textContent = match.category;
+      transTags.appendChild(catTag);
+
+      // Morphological inflection tag if applicable
+      if (match.morphTag) {
+        const morphTag = document.createElement('span');
+        morphTag.className = 'trans-tag morph';
+        morphTag.textContent = `Case: ${match.morphTag}`;
+        transTags.appendChild(morphTag);
+      }
+    }
+  }
+
+  if (copyTranslationBtn) {
+    copyTranslationBtn.addEventListener('click', async () => {
+      const textToCopy = transPrimaryText ? transPrimaryText.textContent : '';
+      if (!textToCopy) return;
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        showToast(`Copied translation: ${textToCopy}`);
+      } catch (e) {
+        showToast(`Copied translation: ${textToCopy}`);
+      }
+    });
+  }
   }
 
   // Event Listeners

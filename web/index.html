@@ -106,6 +106,25 @@
       </div>
     </div>
 
+    <!-- Live Bilingual Meaning & Word Translation Card (English <-> Kannada) -->
+    <div id="translationCard" class="translation-card" style="display: none;">
+      <div class="translation-header">
+        <div class="trans-title-group">
+          <span class="trans-badge" id="transBadge">Live Translation</span>
+          <span class="trans-sub" id="transDirection">English ⇄ Kannada</span>
+        </div>
+        <button id="copyTranslationBtn" class="action-btn" title="Copy Translation">Copy</button>
+      </div>
+      <div class="translation-body">
+        <div class="trans-main-row">
+          <div class="trans-primary" id="transPrimaryText"></div>
+          <div class="trans-phonetic" id="transPhoneticText"></div>
+        </div>
+        <div class="trans-secondary" id="transSecondaryText"></div>
+        <div id="transTags" class="trans-tags-row"></div>
+      </div>
+    </div>
+
     <!-- Unicode Code Point Inspector -->
     <div id="debugSection" class="info-accordion" style="display: none;">
       <details open>
