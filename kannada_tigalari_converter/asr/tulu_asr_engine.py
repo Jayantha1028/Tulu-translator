@@ -101,6 +101,13 @@ class TuluSpeechRecognizer:
 
     def _init_engine(self):
         """Initializes acoustic and neural model components."""
+        # Cap PyTorch intra-op threads to prevent CPU overheating
+        if torch is not None:
+            try:
+                torch.set_num_threads(2)
+            except Exception:
+                pass
+
         # Seed acoustic index from core vocabulary for zero-download / offline inference
         from kannada_tigalari_converter.words_dataset_250 import WORDS_DATASET_250
         for item in WORDS_DATASET_250:
@@ -192,6 +199,10 @@ class TuluSpeechRecognizer:
                         skip_special_tokens=True
                     )[0].strip()
                     confidence = 0.94
+
+                    # Clean up GPU buffers immediately to keep system cool
+                    if self.device == "mps" and hasattr(torch, "mps"):
+                        torch.mps.empty_cache()
             except Exception as e:
                 print(f"[Tulu ASR] Neural decode notice: {e}, falling back to acoustic matcher.")
 

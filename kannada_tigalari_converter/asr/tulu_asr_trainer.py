@@ -153,6 +153,7 @@ class TuluASRTrainer:
         lora_r: int = 16,
         lora_alpha: int = 32,
         lora_dropout: float = 0.05,
+        low_power: bool = True,
     ):
         self.model_name = model_name
         self.output_dir = output_dir or os.path.join(ROOT_DIR, "models", "tulu_whisper_lora")
@@ -160,6 +161,14 @@ class TuluASRTrainer:
         self.lora_r = lora_r
         self.lora_alpha = lora_alpha
         self.lora_dropout = lora_dropout
+        self.low_power = low_power
+
+        # In low-power mode, cap PyTorch CPU threads to 2 to minimize SoC heating
+        if torch is not None and self.low_power:
+            try:
+                torch.set_num_threads(2)
+            except Exception:
+                pass
 
         self.processor = None
         self.model = None
@@ -253,13 +262,14 @@ class TuluASRTrainer:
         # Parallel pre-synthesis of missing audio samples
         missing = [s for s in samples if not os.path.isfile(s["audio_path"])]
         if missing:
-            print(f"[Tulu Trainer] Synthesizing {len(missing)} missing audio samples in parallel (8 workers, varied speaking rates)...")
+            workers = 2 if getattr(self, "low_power", False) else 4
+            print(f"[Tulu Trainer] Synthesizing {len(missing)} missing audio samples ({workers} workers, thermal-optimized)...")
             from concurrent.futures import ThreadPoolExecutor
             def _synth(item):
                 rate = random.choice([150, 175, 205])
                 SyntheticTuluAudioGenerator.synthesize_to_wav(item["text_kannada"], item["audio_path"], rate=rate)
 
-            with ThreadPoolExecutor(max_workers=8) as pool:
+            with ThreadPoolExecutor(max_workers=workers) as pool:
                 list(pool.map(_synth, missing))
             print(f"[Tulu Trainer] Audio pre-synthesis complete ({len(samples)} total audio clips ready).")
 
@@ -369,6 +379,12 @@ class TuluASRTrainer:
             history["epoch_times"].append(epoch_dur)
             print(f"--> Epoch {epoch} Done in {epoch_dur:.1f}s | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f}\n")
 
+            # Thermal management: free Metal GPU cache and pause briefly if low-power mode is enabled
+            if self.device == "mps" and hasattr(torch, "mps"):
+                torch.mps.empty_cache()
+            if self.low_power:
+                time.sleep(1.0)
+
         total_duration = time.time() - start_time
         print(f"[Tulu Trainer] Training loop completed in {total_duration:.1f}s.")
 
@@ -458,9 +474,10 @@ def train_tulu_asr(
     batch_size: int = 4,
     learning_rate: float = 1e-3,
     output_dir: Optional[str] = None,
+    low_power: bool = True,
 ) -> Dict[str, Any]:
     """Convenience functional interface for CLI and scripts."""
-    trainer = TuluASRTrainer(output_dir=output_dir)
+    trainer = TuluASRTrainer(output_dir=output_dir, low_power=low_power)
     return trainer.train(
         num_samples=num_samples,
         epochs=epochs,
@@ -477,6 +494,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch-size", type=int, default=4, help="Batch size per step (default: 4)")
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate (default: 0.001)")
     parser.add_argument("--output", type=str, default=None, help="Output directory for saved LoRA adapter")
+    parser.add_argument("--low-power", action="store_true", default=True, help="Limit threads and release GPU buffers to minimize heat (default: True)")
     args = parser.parse_args()
 
     train_tulu_asr(
@@ -485,4 +503,5 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
         learning_rate=args.lr,
         output_dir=args.output,
+        low_power=args.low_power,
     )
