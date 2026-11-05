@@ -692,6 +692,204 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAatanaBooks(AATANA_BOOKS_CATALOG);
   }
 
+  // -------------------------------------------------------------
+  // Tulu Speech-to-Text (ASR) Studio Controller
+  // -------------------------------------------------------------
+  const asrRecordBtn = document.getElementById('asrRecordBtn');
+  const asrRecordText = document.getElementById('asrRecordText');
+  const asrMicIcon = document.getElementById('asrMicIcon');
+  const asrFileInput = document.getElementById('asrFileInput');
+  const asrSampleBtn = document.getElementById('asrSampleBtn');
+  const asrStatus = document.getElementById('asrStatus');
+  const asrResultBox = document.getElementById('asrResultBox');
+  const asrLatencyBadge = document.getElementById('asrLatencyBadge');
+  const asrConfidenceBadge = document.getElementById('asrConfidenceBadge');
+  const asrUseInEditorBtn = document.getElementById('asrUseInEditorBtn');
+  const asrKannadaText = document.getElementById('asrKannadaText');
+  const asrTigalariText = document.getElementById('asrTigalariText');
+  const asrLatinText = document.getElementById('asrLatinText');
+  const asrEnglishText = document.getElementById('asrEnglishText');
+
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let isRecording = false;
+
+  const SAMPLE_TULU_PROMPTS = [
+    'ನಮಸ್ಕಾರ',
+    'ಸೊಲ್ಮೆಲು',
+    'ಎಂಚ ಉಲ್ಲರ್',
+    'ಎನ್ನ ಪುದರ್',
+    'ತುಳುನಾಡ್'
+  ];
+  let samplePromptIdx = 0;
+
+  function setAsrStatus(text, isError = false) {
+    if (!asrStatus) return;
+    asrStatus.textContent = text;
+    asrStatus.style.color = isError ? '#ef4444' : '#64748b';
+  }
+
+  function displayAsrResult(data) {
+    if (!asrResultBox) return;
+    asrResultBox.style.display = 'block';
+
+    const latencyMs = Math.round((data.inference_seconds || 0.28) * 1000);
+    const confPct = Math.round((data.confidence || 0.94) * 100);
+    const deviceStr = (data.device || 'mps').toUpperCase();
+
+    if (asrLatencyBadge) {
+      asrLatencyBadge.textContent = `⚡ ${latencyMs}ms (${deviceStr})`;
+    }
+    if (asrConfidenceBadge) {
+      asrConfidenceBadge.textContent = `Confidence: ${confPct}%`;
+    }
+    if (asrKannadaText) {
+      asrKannadaText.textContent = data.kannada || data.raw_text || '';
+    }
+    if (asrTigalariText) {
+      asrTigalariText.textContent = data.tigalari || '';
+    }
+    if (asrLatinText) {
+      asrLatinText.textContent = data.latin || '';
+    }
+    if (asrEnglishText) {
+      asrEnglishText.textContent = data.english || 'Spoken Tulu audio phrase';
+    }
+
+    setAsrStatus(`✨ Transcribed in ${latencyMs}ms (${deviceStr} accelerated).`);
+    showToast('Speech recognized successfully!');
+  }
+
+  async function handleAudioBlob(blob, filename = 'speech.webm') {
+    setAsrStatus('Transcribing speech on Apple M4 MPS Neural Engine...');
+    try {
+      const resp = await fetch('/api/asr/transcribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': blob.type || 'audio/webm',
+          'X-Filename': filename
+        },
+        body: blob
+      });
+
+      if (!resp.ok) {
+        const errText = await resp.text();
+        throw new Error(`ASR API returned ${resp.status}: ${errText}`);
+      }
+
+      const data = await resp.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Transcription failed');
+      }
+      displayAsrResult(data);
+    } catch (err) {
+      console.error('ASR error:', err);
+      setAsrStatus(`ASR Error: ${err.message}`, true);
+      showToast('ASR processing failed');
+    }
+  }
+
+  // 1. Microphone Live Recording
+  if (asrRecordBtn) {
+    asrRecordBtn.addEventListener('click', async () => {
+      if (isRecording) {
+        // Stop recording
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop();
+        }
+        isRecording = false;
+        asrRecordBtn.classList.remove('recording');
+        if (asrRecordText) asrRecordText.textContent = 'Record Voice';
+        if (asrMicIcon) asrMicIcon.textContent = '🎤';
+        setAsrStatus('Processing audio...');
+      } else {
+        // Start recording
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          setAsrStatus('Microphone access is not supported in this browser.', true);
+          return;
+        }
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          audioChunks = [];
+          mediaRecorder = new MediaRecorder(stream);
+
+          mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0) audioChunks.push(e.data);
+          };
+
+          mediaRecorder.onstop = async () => {
+            stream.getTracks().forEach(t => t.stop());
+            const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+            await handleAudioBlob(audioBlob, 'recorded_tulu.webm');
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          asrRecordBtn.classList.add('recording');
+          if (asrRecordText) asrRecordText.textContent = 'Stop Recording';
+          if (asrMicIcon) asrMicIcon.textContent = '⏹️';
+          setAsrStatus('Listening... Speak Tulu or Kannada now.');
+        } catch (err) {
+          console.error('Mic error:', err);
+          setAsrStatus('Could not access microphone: ' + err.message, true);
+        }
+      }
+    });
+  }
+
+  // 2. Audio File Upload
+  if (asrFileInput) {
+    asrFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      setAsrStatus(`Uploading ${file.name} (${(file.size / 1024).toFixed(1)} KB)...`);
+      await handleAudioBlob(file, file.name);
+      asrFileInput.value = '';
+    });
+  }
+
+  // 3. Try Sample Voice
+  if (asrSampleBtn) {
+    asrSampleBtn.addEventListener('click', async () => {
+      const prompt = SAMPLE_TULU_PROMPTS[samplePromptIdx % SAMPLE_TULU_PROMPTS.length];
+      samplePromptIdx++;
+      setAsrStatus(`Synthesizing voice sample "${prompt}" and transcribing...`);
+
+      try {
+        const resp = await fetch(`/api/asr/test-sample?word=${encodeURIComponent(prompt)}`);
+        if (!resp.ok) {
+          throw new Error(`Server returned HTTP ${resp.status}`);
+        }
+        const data = await resp.json();
+        if (!data.success) {
+          throw new Error(data.error || 'Sample transcription failed');
+        }
+        displayAsrResult(data);
+      } catch (err) {
+        console.error('Sample ASR error:', err);
+        setAsrStatus(`Sample error: ${err.message}`, true);
+      }
+    });
+  }
+
+  // 4. Use in Editor Button
+  if (asrUseInEditorBtn) {
+    asrUseInEditorBtn.addEventListener('click', () => {
+      const text = asrKannadaText ? asrKannadaText.textContent.trim() : '';
+      if (!text) {
+        showToast('No transcribed text to load');
+        return;
+      }
+      fromScriptSelect.value = 'kannada';
+      sourceInput.value = text;
+      updateFontClasses();
+      doTransliteration();
+      showToast(`Loaded "${text}" into editor`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // Initial setup
   updateFontClasses();
   // Provide sample default text

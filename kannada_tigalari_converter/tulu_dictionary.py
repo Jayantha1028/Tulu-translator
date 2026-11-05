@@ -23,6 +23,13 @@ TULU_DICTIONARY: List[Dict[str, str]] = [
 ]
 
 
+def _norm_phonetic(s: str) -> str:
+    """Normalize short/long vowels for forgiving phonetic matching."""
+    return (s.lower()
+            .replace("aa", "a").replace("ee", "e").replace("ii", "i")
+            .replace("oo", "o").replace("uu", "u").replace("sh", "s"))
+
+
 def lookup_tulu(query: str, category: Optional[str] = None, enable_morphology: bool = True) -> List[Dict]:
     """
     Looks up a word in the Tulu dictionary by English meaning, Kannada text,
@@ -40,13 +47,16 @@ def lookup_tulu(query: str, category: Optional[str] = None, enable_morphology: b
 
     cat_filter = category.lower() if category and category.lower() != "all" else None
     matches = []
+    norm_q = _norm_phonetic(q)
 
     for item in TULU_DICTIONARY:
         if cat_filter and item["category"].lower() != cat_filter:
             continue
+        item_latin = item["tulu_latin"].lower()
         if (q in item["english"].lower() or
             raw_q in item["tulu_kannada"] or
-            q in item["tulu_latin"].lower()):
+            q in item_latin or
+            norm_q == _norm_phonetic(item_latin)):
             matches.append(dict(item))
 
     # If direct matches found without inflection analysis, return them

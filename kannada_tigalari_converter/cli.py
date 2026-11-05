@@ -109,22 +109,117 @@ def run_interactive(from_script="auto", to_script="tigalari", debug=False):
 
 
 def launch_web(port=8080):
-    """Launches the local web transliterator UI in browser."""
+    """Launches the local web transliterator & ASR speech studio in browser."""
     import http.server
     import socketserver
     import threading
+    import json
+    import io
+    import cgi
 
     web_dir = os.path.join(CURRENT_DIR, "web")
     if not os.path.isdir(web_dir):
-        # Check workspace web folder
         web_dir = os.path.join(PARENT_DIR, "web")
 
     if not os.path.isdir(web_dir):
         print(f"Error: Web directory not found at {web_dir}")
         return
 
-    os.chdir(web_dir)
-    handler = http.server.SimpleHTTPRequestHandler
+    # Lazy-load recognizer instance
+    _speech_recognizer = None
+
+    def get_recognizer():
+        nonlocal _speech_recognizer
+        if _speech_recognizer is None:
+            from kannada_tigalari_converter.tulu_asr_engine import TuluSpeechRecognizer
+            _speech_recognizer = TuluSpeechRecognizer()
+        return _speech_recognizer
+
+    class TuluWebRequestHandler(http.server.SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=web_dir, **kwargs)
+
+        def do_POST(self):
+            if self.path == "/api/asr/transcribe":
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+
+                    content_type = self.headers.get("Content-Type", "")
+                    audio_bytes = None
+
+                    if "application/json" in content_type:
+                        import base64
+                        payload = json.loads(body.decode("utf-8"))
+                        b64_data = payload.get("audio_base64", "")
+                        if "," in b64_data:
+                            b64_data = b64_data.split(",")[1]
+                        audio_bytes = base64.b64decode(b64_data)
+                    elif "multipart/form-data" in content_type:
+                        # Simple boundary-based extractor
+                        boundary = content_type.split("boundary=")[-1].strip().encode()
+                        parts = body.split(b"--" + boundary)
+                        for part in parts:
+                            if b'filename="' in part or b'name="audio"' in part:
+                                header_end = part.find(b"\r\n\r\n")
+                                if header_end != -1:
+                                    audio_bytes = part[header_end + 4:].rstrip(b"\r\n")
+                                    break
+                    else:
+                        # Raw audio payload
+                        audio_bytes = body
+
+                    if not audio_bytes:
+                        self._send_json({"error": "No audio data received"}, status=400)
+                        return
+
+                    recognizer = get_recognizer()
+                    res = recognizer.transcribe(audio_bytes)
+                    self._send_json({
+                        "success": True,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
+            self._send_json({"error": "Not found"}, status=404)
+
+        def do_GET(self):
+            if self.path.startswith("/api/asr/test-sample"):
+                try:
+                    import urllib.parse
+                    parsed = urllib.parse.urlparse(self.path)
+                    params = urllib.parse.parse_qs(parsed.query)
+                    word = params.get("word", ["ನಮಸ್ಕಾರ"])[0]
+
+                    from kannada_tigalari_converter.tulu_audio_pipeline import SyntheticTuluAudioGenerator
+                    sample_path = "/tmp/tulu_web_sample.wav"
+                    SyntheticTuluAudioGenerator.synthesize_to_wav(word, sample_path)
+
+                    recognizer = get_recognizer()
+                    res = recognizer.transcribe(sample_path)
+                    self._send_json({
+                        "success": True,
+                        "sample_word": word,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
+            super().do_GET()
+
+        def _send_json(self, data: dict, status: int = 200):
+            response = json.dumps(data, ensure_ascii=False).encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(response)))
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(response)
+
+    handler = TuluWebRequestHandler
 
     # Find free port if 8080 is taken
     import socket
@@ -137,7 +232,7 @@ def launch_web(port=8080):
 
     httpd = socketserver.TCPServer(("", port), handler)
     url = f"http://localhost:{port}/index.html"
-    print(f"Serving Tulu Transliterator at {url}")
+    print(f"Serving Tulu Transliterator & Speech Studio at {url}")
     print("Press Ctrl+C to stop the web server.\n")
 
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
@@ -242,6 +337,10 @@ def main():
     parser.add_argument(
         "--status-corpus", action="store_true",
         help="Display health and deduplication stats of the master corpus"
+    )
+    parser.add_argument(
+        "--transcribe", dest="transcribe_audio", type=str, default=None,
+        help="Transcribe spoken Tulu audio file (WAV/MP3/M4A) to Kannada, Tigalari, Latin, and English"
     )
     parser.add_argument(
         "-p", "--port", type=int, default=8080,
@@ -404,6 +503,22 @@ def main():
             harvester.run()
         except KeyboardInterrupt:
             print("\n[Harvester] Paused by user. Checkpoint saved. Run again anytime to resume!")
+        return
+
+    if args.transcribe_audio:
+        from kannada_tigalari_converter.tulu_asr_engine import TuluSpeechRecognizer
+        recognizer = TuluSpeechRecognizer()
+        res = recognizer.transcribe(args.transcribe_audio)
+        print("=" * 65)
+        print("  🎙️  Tulu Speech-to-Text Recognition Output")
+        print("=" * 65)
+        print(f"  Kannada Transcript  : {res.kannada}")
+        print(f"  Tigalari Unicode 16 : {res.tigalari}")
+        print(f"  Phonetic Latin      : {res.latin}")
+        print(f"  English Meaning     : {res.english or '(No definition found)'}")
+        print(f"  Confidence Score    : {res.confidence * 100:.1f}%")
+        print(f"  Inference Latency   : {res.latency_ms:.1f} ms")
+        print(f"  Hardware Engine     : {res.device}")
         return
 
     # ── Morphological Analyzer Handlers ──

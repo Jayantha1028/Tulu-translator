@@ -125,6 +125,59 @@
       </div>
     </div>
 
+    <!-- 🎙️ Tulu Speech-to-Text Studio (Speech-LLM ASR) -->
+    <div class="speech-studio-card">
+      <div class="speech-header">
+        <div class="speech-title-group">
+          <span class="speech-badge">🎙️ Tulu Speech-to-Text Studio</span>
+          <span class="speech-sub">LLM-Powered Native Voice Recognition (M4 MPS Accelerated)</span>
+        </div>
+        <div class="speech-actions-top">
+          <button id="asrSampleBtn" class="action-btn" title="Synthesize and transcribe a sample Tulu voice">▶ Try Sample Voice</button>
+        </div>
+      </div>
+      <div class="speech-controls-row">
+        <button id="asrRecordBtn" class="asr-record-btn" title="Click to start microphone recording">
+          <span class="mic-icon" id="asrMicIcon">🎤</span>
+          <span id="asrRecordText">Record Voice</span>
+        </button>
+        <label class="asr-upload-btn action-btn" title="Upload audio file (WAV, MP3, M4A, WebM)">
+          📁 Upload Audio
+          <input type="file" id="asrFileInput" accept="audio/*" style="display: none;">
+        </label>
+        <span id="asrStatus" class="asr-status-text">Ready. Speak in Tulu or click Try Sample.</span>
+      </div>
+
+      <!-- Live ASR Result Card -->
+      <div id="asrResultBox" class="asr-result-box" style="display: none;">
+        <div class="asr-result-header">
+          <div class="asr-meta-tags">
+            <span id="asrLatencyBadge" class="asr-badge latency">⚡ 280ms (M4 MPS)</span>
+            <span id="asrConfidenceBadge" class="asr-badge conf">Confidence: 94%</span>
+          </div>
+          <button id="asrUseInEditorBtn" class="action-btn primary" title="Insert recognized speech into main editor">⬇ Use in Editor</button>
+        </div>
+        <div class="asr-scripts-grid">
+          <div class="asr-script-item">
+            <div class="asr-script-label">Kannada Script (ಕನ್ನಡ)</div>
+            <div id="asrKannadaText" class="asr-script-content kannada-font"></div>
+          </div>
+          <div class="asr-script-item">
+            <div class="asr-script-label">Tulu-Tigalari (Unicode 16.0)</div>
+            <div id="asrTigalariText" class="asr-script-content tigalari-font"></div>
+          </div>
+          <div class="asr-script-item">
+            <div class="asr-script-label">Latin Phonetics</div>
+            <div id="asrLatinText" class="asr-script-content font-mono"></div>
+          </div>
+          <div class="asr-script-item">
+            <div class="asr-script-label">English Translation</div>
+            <div id="asrEnglishText" class="asr-script-content trans-en"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Unicode Code Point Inspector -->
     <div id="debugSection" class="info-accordion" style="display: none;">
       <details open>
