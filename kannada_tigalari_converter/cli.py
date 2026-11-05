@@ -115,7 +115,6 @@ def launch_web(port=8080):
     import threading
     import json
     import io
-    import cgi
 
     web_dir = os.path.join(PARENT_DIR, "web")
     if not os.path.isdir(web_dir):

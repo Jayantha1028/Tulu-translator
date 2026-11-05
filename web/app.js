@@ -713,6 +713,43 @@ document.addEventListener('DOMContentLoaded', () => {
   let mediaRecorder = null;
   let audioChunks = [];
   let isRecording = false;
+  let audioContext = null;
+  let audioStream = null;
+  let audioProcessor = null;
+  let audioInputNode = null;
+  let recordedPcmChunks = [];
+
+  function encodeWavPcm16(samples, sampleRate = 16000) {
+    const buffer = new ArrayBuffer(44 + samples.length * 2);
+    const view = new DataView(buffer);
+
+    function writeString(offset, string) {
+      for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
+      }
+    }
+
+    writeString(0, 'RIFF');
+    view.setUint32(4, 36 + samples.length * 2, true);
+    writeString(8, 'WAVE');
+    writeString(12, 'fmt ');
+    view.setUint32(16, 16, true); // PCM header
+    view.setUint16(20, 1, true);  // Linear PCM
+    view.setUint16(22, 1, true);  // Mono
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    writeString(36, 'data');
+    view.setUint32(40, samples.length * 2, true);
+
+    let offset = 44;
+    for (let i = 0; i < samples.length; i++, offset += 2) {
+      let s = Math.max(-1, Math.min(1, samples[i]));
+      view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+    }
+    return new Blob([view], { type: 'audio/wav' });
+  }
 
   const SAMPLE_TULU_PROMPTS = [
     'ನಮಸ್ಕಾರ',
@@ -789,19 +826,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 1. Microphone Live Recording
+  // 1. Microphone Live Recording (Pure 16kHz PCM WAV)
   if (asrRecordBtn) {
     asrRecordBtn.addEventListener('click', async () => {
       if (isRecording) {
         // Stop recording
-        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-          mediaRecorder.stop();
-        }
         isRecording = false;
         asrRecordBtn.classList.remove('recording');
         if (asrRecordText) asrRecordText.textContent = 'Record Voice';
         if (asrMicIcon) asrMicIcon.textContent = '🎤';
         setAsrStatus('Processing audio...');
+
+        if (audioProcessor) {
+          audioProcessor.disconnect();
+          audioProcessor = null;
+        }
+        if (audioInputNode) {
+          audioInputNode.disconnect();
+          audioInputNode = null;
+        }
+        if (audioStream) {
+          audioStream.getTracks().forEach(t => t.stop());
+          audioStream = null;
+        }
+
+        // Flatten collected PCM chunks into single float array
+        let totalLen = recordedPcmChunks.reduce((acc, c) => acc + c.length, 0);
+        if (totalLen > 0) {
+          let merged = new Float32Array(totalLen);
+          let offset = 0;
+          for (let chunk of recordedPcmChunks) {
+            merged.set(chunk, offset);
+            offset += chunk.length;
+          }
+          recordedPcmChunks = [];
+          const actualSr = (audioContext && audioContext.sampleRate) || 16000;
+          const wavBlob = encodeWavPcm16(merged, actualSr);
+          await handleAudioBlob(wavBlob, 'recorded_tulu.wav');
+        } else {
+          setAsrStatus('No speech captured. Please try speaking again.', true);
+        }
+
+        if (audioContext && audioContext.state !== 'closed') {
+          try { audioContext.close(); } catch (e) {}
+          audioContext = null;
+        }
       } else {
         // Start recording
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -810,21 +879,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          audioChunks = [];
-          mediaRecorder = new MediaRecorder(stream);
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          audioContext = new AudioContextClass({ sampleRate: 16000 });
+          audioStream = await navigator.mediaDevices.getUserMedia({
+            audio: { channelCount: 1, sampleRate: 16000, echoCancellation: true, noiseSuppression: true }
+          });
 
-          mediaRecorder.ondataavailable = (e) => {
-            if (e.data.size > 0) audioChunks.push(e.data);
+          audioInputNode = audioContext.createMediaStreamSource(audioStream);
+          // Buffer size 4096, 1 input, 1 output
+          audioProcessor = audioContext.createScriptProcessor(4096, 1, 1);
+          recordedPcmChunks = [];
+
+          audioProcessor.onaudioprocess = (e) => {
+            if (!isRecording) return;
+            const channelData = e.inputBuffer.getChannelData(0);
+            recordedPcmChunks.push(new Float32Array(channelData));
           };
 
-          mediaRecorder.onstop = async () => {
-            stream.getTracks().forEach(t => t.stop());
-            const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
-            await handleAudioBlob(audioBlob, 'recorded_tulu.webm');
-          };
+          audioInputNode.connect(audioProcessor);
+          audioProcessor.connect(audioContext.destination);
 
-          mediaRecorder.start();
           isRecording = true;
           asrRecordBtn.classList.add('recording');
           if (asrRecordText) asrRecordText.textContent = 'Stop Recording';
