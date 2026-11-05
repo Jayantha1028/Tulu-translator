@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tulu Transliterator | ತುಳು ಅನುವಾದಕ (Unicode 16.0)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand-badge">Official Unicode 16.0 Standard</div>
+      <h1>
+        <span>Tulu Transliterator</span>
+        <span class="tigalari-hero">𑎡𑎻𑎭𑎻</span>
+        <span>(ತುಳು ಅನುವಾದಕ)</span>
+      </h1>
+      <p class="subtitle">
+        Phonetic English / Latin ⇄ Kannada (ಕನ್ನಡ) ⇄ Tulu-Tigalari (ತಿಗಳಾರಿ ಲಿಪಿ)
+      </p>
+    </header>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="select-group">
+        <label for="fromScript">Source:</label>
+        <select id="fromScript">
+          <option value="auto">Auto Detect</option>
+          <option value="latin" selected>English / Latin (Phonetic)</option>
+          <option value="kannada">Kannada (ಕನ್ನಡ)</option>
+          <option value="tigalari">Tulu-Tigalari (ತಿಗಳಾರಿ)</option>
+        </select>
+      </div>
+
+      <button id="swapBtn" class="swap-btn" title="Swap scripts" aria-label="Swap scripts">⇄</button>
+
+      <div class="select-group">
+        <label for="toScript">Target:</label>
+        <select id="toScript">
+          <option value="tigalari" selected>Tulu-Tigalari (ತಿಗಳಾರಿ)</option>
+          <option value="kannada">Kannada (ಕನ್ನಡ)</option>
+          <option value="latin">English / Latin</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Quick Presets & Tulu Phrases -->
+    <div class="quick-row">
+      <span class="quick-label">Tulu Phrases:</span>
+      <button class="quick-chip" data-phrase="solmelu" data-script="latin">ಸೊಲ್ಮೆಲು (Solmelu)</button>
+      <button class="quick-chip" data-phrase="namaskaara" data-script="latin">ನಮಸ್ಕಾರ (Hello)</button>
+      <button class="quick-chip" data-phrase="Eer encha ullar?" data-script="latin">ಈರ್ ಎಂಚ ಉಲ್ಲರ್? (How are you?)</button>
+      <button class="quick-chip" data-phrase="enna pudar " data-script="latin">ಎನ್ನ ಪುದರ್ ... (My name is)</button>
+      <button class="quick-chip" data-phrase="kODae barsa batthnd" data-script="latin">ಕೋಡೆ್ ಬರ್ಸ ಬತ್ತ್ಂಡ್ (Yesterday rained)</button>
+      <button class="quick-chip" data-phrase="tuLu baase" data-script="latin">ತುಳು ಬಾಸೆ (Tulu language)</button>
+    </div>
+
+    <!-- Character Palette for Special Characters -->
+    <div class="quick-row">
+      <span class="quick-label">Special Characters:</span>
+      <button class="char-chip" data-char="ೆ್" title="Tulu open-e sound (ae)">ೆ್ (Tulu ae)</button>
+      <button class="char-chip" data-char="್" title="Virama / Halant">್ (Halant)</button>
+      <button class="char-chip" data-char="ಂ" title="Anusvara">ಂ (Anusvara)</button>
+      <button class="char-chip" data-char="ಃ" title="Visarga">ಃ (Visarga)</button>
+      <button class="char-chip" data-char="ಳ" title="Retroflex La">ಳ (La)</button>
+      <button class="char-chip" data-char="ಱ" title="Alveolar Ra">ಱ (Rra)</button>
+      <button class="char-chip" data-char="ೞ" title="Retroflex Liquid Zha">ೞ (Zha)</button>
+      <button class="char-chip" data-char="ಞ" title="Palatal Nasal Nya">ಞ (Nya)</button>
+      <button class="char-chip" data-char="ಙ" title="Velar Nasal Nga">ಙ (Nga)</button>
+    </div>
+
+    <!-- Main Side-by-Side Transliterator Panels -->
+    <div class="panels-grid">
+      <!-- Input Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Input Text</span>
+          <div class="panel-actions">
+            <button id="clearBtn" class="action-btn" title="Clear input">Clear</button>
+          </div>
+        </div>
+        <textarea id="sourceInput" placeholder="Type or paste here (e.g. solmelu, tuLu, namaskara)..." spellcheck="false"></textarea>
+        <!-- Real-time Candidate Suggestion Bar -->
+        <div id="suggestionBar" class="suggestion-bar" style="display: none;"></div>
+        <div class="panel-footer">
+          <span id="sourceCount">0 chars</span>
+          <span>Phonetic typing enabled</span>
+        </div>
+      </div>
+
+      <!-- Output Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Transliterated Output</span>
+          <div class="panel-actions">
+            <button id="exportImgBtn" class="action-btn" title="Download as high-resolution PNG image">📷 Export Image</button>
+            <button id="copyBtn" class="action-btn primary" title="Copy text">Copy Output</button>
+          </div>
+        </div>
+        <textarea id="targetOutput" class="tigalari-font" readonly placeholder="Output will appear here..."></textarea>
+        <div class="panel-footer">
+          <span id="targetCount">0 chars</span>
+          <span>Rendered with Mallige Unicode Font</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unicode Code Point Inspector -->
+    <div id="debugSection" class="info-accordion" style="display: none;">
+      <details open>
+        <summary class="accordion-summary">
+          <span>🔍 Unicode 16.0 Tigalari Code Point Inspector</span>
+          <span>▼</span>
+        </summary>
+        <div class="accordion-content">
+          <div id="codepointContainer" class="codepoints-grid"></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Typing Guide & Cheat Sheet -->
+    <div class="info-accordion">
+      <details>
+        <summary class="accordion-summary">
+          <span>📖 Phonetic Typing Guide & Cheat Sheet (Baraha / Aatana Conventions)</span>
+          <span>▼</span>
+        </summary>
+        <div class="accordion-content">
+          <p>You can type phonetically using standard English letters. Here are common mappings:</p>
+
+          <table class="cheat-table">
+            <thead>
+              <tr>
+                <th>Type (Latin)</th>
+                <th>Kannada</th>
+                <th>Tulu-Tigalari</th>
+                <th>Sound / Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>a</code> / <code>aa</code> (or <code>A</code>)</td>
+                <td class="kannada">ಅ / ಆ</td>
+                <td class="tigalari">𑎀 / 𑎁</td>
+                <td>Short and Long 'A'</td>
+              </tr>
+              <tr>
+                <td><code>i</code> / <code>ee</code> (or <code>I</code>)</td>
+                <td class="kannada">ಇ / ಈ</td>
+                <td class="tigalari">𑎂 / 𑎃</td>
+                <td>Short 'I' and Long 'II'</td>
+              </tr>
+              <tr>
+                <td><code>u</code> / <code>oo</code> (or <code>U</code>)</td>
+                <td class="kannada">ಉ / ಊ</td>
+                <td class="tigalari">𑎄 / 𑎅</td>
+                <td>Short 'U' and Long 'UU'</td>
+              </tr>
+              <tr>
+                <td><code>e</code> / <code>E</code></td>
+                <td class="kannada">ಎ / ಏ</td>
+                <td class="tigalari">𑎊 / 𑎋</td>
+                <td>Short 'E' and Long 'EE'</td>
+              </tr>
+              <tr>
+                <td><code>ae</code> (or <code>kODae</code>)</td>
+                <td class="kannada">ಎ್ / ಕೋಡೆ್</td>
+                <td class="tigalari">𑎊𑏎 / 𑎒𑏆𑎞𑏁𑏎</td>
+                <td><strong>Tulu open 'ae' sound</strong> (represented with halant after 'e')</td>
+              </tr>
+              <tr>
+                <td><code>o</code> / <code>O</code></td>
+                <td class="kannada">ಒ / ಓ</td>
+                <td class="tigalari">𑎏 / 𑎐</td>
+                <td>Short 'O' and Long 'OO'</td>
+              </tr>
+              <tr>
+                <td><code>ai</code> / <code>au</code></td>
+                <td class="kannada">ಐ / ಔ</td>
+                <td class="tigalari">𑎎 / 𑎑</td>
+                <td>Diphthongs AI and AU</td>
+              </tr>
+              <tr>
+                <td><code>k</code>, <code>kh</code>, <code>g</code>, <code>gh</code></td>
+                <td class="kannada">ಕ, ಖ, ಗ, ಘ</td>
+                <td class="tigalari">𑎒, 𑎓, 𑎔, 𑎕</td>
+                <td>Velar Consonants</td>
+              </tr>
+              <tr>
+                <td><code>T</code>, <code>Th</code>, <code>D</code>, <code>Dh</code>, <code>N</code></td>
+                <td class="kannada">ಟ, ಠ, ಡ, ಢ, ಣ</td>
+                <td class="tigalari">𑎜, 𑎝, 𑎞, 𑎟, 𑎠</td>
+                <td>Retroflex Consonants (use capital letters)</td>
+              </tr>
+              <tr>
+                <td><code>t</code>, <code>th</code>, <code>d</code>, <code>dh</code>, <code>n</code></td>
+                <td class="kannada">ತ, ಥ, ದ, ಧ, ನ</td>
+                <td class="tigalari">𑎡, 𑎢, 𑎣, 𑎤, 𑎥</td>
+                <td>Dental Consonants</td>
+              </tr>
+              <tr>
+                <td><code>L</code>, <code>zh</code>, <code>rr</code></td>
+                <td class="kannada">ಳ, ೞ, ಱ</td>
+                <td class="tigalari">𑎳, 𑎵, 𑎴</td>
+                <td>Special Dravidian Consonants</td>
+              </tr>
+              <tr>
+                <td><code>M</code> / <code>H</code></td>
+                <td class="kannada">ಂ / ಃ</td>
+                <td class="tigalari">𑏌 / 𑏍</td>
+                <td>Anusvara / Visarga</td>
+              </tr>
+              <tr>
+                <td><code>ska</code> in <code>namaskara</code></td>
+                <td class="kannada">ಸ್ಕ</td>
+                <td class="tigalari">𑎱𑏐𑎒</td>
+                <td>Automatic conjunct stack via Conjoiner <code>U+113D0</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- Tulu Vocabulary & Word Meaning Dictionary -->
+    <div class="info-accordion">
+      <details>
+        <summary class="accordion-summary">
+          <span>📚 Tulu Vocabulary Dictionary & Word Translator (ತುಳು ಶಬ್ದಕೋಶ)</span>
+          <span>▼</span>
+        </summary>
+        <div class="accordion-content">
+          <p style="margin-bottom: 12px; color: var(--text-secondary);">
+            Search English, Kannada, or Tulu words to find native Tulu vocabulary and click any word to insert it directly into the editor:
+          </p>
+          <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;">
+            <input type="text" id="dictSearchInput" placeholder="Search 1,000 words (e.g. thank you, water, food, mother, rain, come, today)..." style="flex: 1; min-width: 240px; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.95rem; outline: none;">
+            <select id="dictCategorySelect" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.95rem; background: white; cursor: pointer; outline: none;">
+              <option value="all">All 19 Categories (1,000 Words)</option>
+              <option value="Greetings & Pleasantries">Greetings & Pleasantries</option>
+              <option value="Family & Kinship">Family & Kinship</option>
+              <option value="Food & Dining">Food & Dining</option>
+              <option value="Nature & Geography">Nature & Geography</option>
+              <option value="Animals & Birds">Animals & Birds</option>
+              <option value="Anatomy & Health">Anatomy & Health</option>
+              <option value="House & Objects">House & Objects</option>
+              <option value="Time & Numbers">Time & Numbers</option>
+              <option value="Verbs & Actions">Verbs & Actions</option>
+              <option value="Adjectives & Special Ligatures">Adjectives & Special Ligatures</option>
+              <option value="Places & Geography of Tulunadu">Places & Geography of Tulunadu</option>
+              <option value="Tulu Verb Conjugations">Tulu Verb Conjugations</option>
+              <option value="Aksharamale & Gunintagalu Matrix">Aksharamale & Gunintagalu Matrix</option>
+              <option value="Complex Clusters & Ottakshara">Complex Clusters & Ottakshara</option>
+              <option value="Tulu Cultural Heritage">Tulu Cultural Heritage</option>
+              <option value="Tulu Distinctive Phonetics">Tulu Distinctive Phonetics (Open ae)</option>
+              <option value="Numbers & Numerals">Numbers & Numerals</option>
+              <option value="Tulu Conversational Sentences">Tulu Conversational Sentences</option>
+              <option value="Classical Kannada Vocabulary">Classical Kannada Vocabulary</option>
+            </select>
+          </div>
+          <div style="max-height: 280px; overflow-y: auto;">
+            <table class="cheat-table" id="dictTable">
+              <thead>
+                <tr>
+                  <th>English Meaning</th>
+                  <th>Kannada Meaning</th>
+                  <th>Tulu (Kannada Script)</th>
+                  <th>Tulu (Tigalari Script)</th>
+                  <th>Phonetic</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="dictTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Historical Basel Mission Dictionary (Rev. August Männer 1886) -->
+    <div class="info-accordion">
+      <details>
+        <summary class="accordion-summary">
+          <span>🏛️ Classical & Historical Tulu Lexicon (Rev. A. Männer, 1886 Basel Mission)</span>
+          <span>▼</span>
+        </summary>
+        <div class="accordion-content">
+          <p style="margin-bottom: 12px; color: var(--text-secondary);">
+            Explore classical, ritual, agrarian, and archaic Tulu vocabulary documented in Rev. August Männer's 1886 <em>Tulu-English Dictionary</em> (Basel Mission Press, Mangalore). Click <strong>Use</strong> to load any word into the transliterator:
+          </p>
+          <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;">
+            <input type="text" id="histSearchInput" placeholder="Search 204 historical terms (e.g. agel, bhuta, pola, paddy, ritual, hearth, boat)..." style="flex: 1; min-width: 240px; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.95rem; outline: none;">
+            <select id="histDomainSelect" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.95rem; background: white; cursor: pointer; outline: none;">
+              <option value="all">All 17 Domains (204 Entries)</option>
+              <option value="Agrarian & Domestic Ritual">Agrarian & Domestic Ritual</option>
+              <option value="Anatomy & Senses">Anatomy & Senses</option>
+              <option value="Animal Husbandry">Animal Husbandry</option>
+              <option value="Architecture & Tools">Architecture & Tools</option>
+              <option value="Artisans & Crafts">Artisans & Crafts</option>
+              <option value="Classical Tulu Verbs">Classical Tulu Verbs</option>
+              <option value="Domestic Life">Domestic Life</option>
+              <option value="Flora & Agriculture">Flora & Agriculture</option>
+              <option value="Food & Dining">Food & Dining</option>
+              <option value="Geography & Water">Geography & Water</option>
+              <option value="Marine & Maritime">Marine & Maritime</option>
+              <option value="Nature & Weather">Nature & Weather</option>
+              <option value="Paddy Cultivation">Paddy Cultivation</option>
+              <option value="Qualities & Senses">Qualities & Senses</option>
+              <option value="Ritual & Belief">Ritual & Belief</option>
+              <option value="Social & Kinship">Social & Kinship</option>
+              <option value="Time & Numbers">Time & Numbers</option>
+            </select>
+            <select id="histPosSelect" style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.95rem; background: white; cursor: pointer; outline: none;">
+              <option value="all">All Parts of Speech</option>
+              <option value="noun">Noun</option>
+              <option value="verb">Verb</option>
+              <option value="adjective">Adjective</option>
+              <option value="adverb">Adverb</option>
+            </select>
+          </div>
+          <div style="max-height: 320px; overflow-y: auto;">
+            <table class="cheat-table" id="histTable">
+              <thead>
+                <tr>
+                  <th>Tulu (Kannada)</th>
+                  <th>Tulu-Tigalari</th>
+                  <th>Phonetic</th>
+                  <th>POS</th>
+                  <th>Domain</th>
+                  <th>1886 English Meaning</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="histTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- AATA Digital Book Library & Tulu-NMT Explorer -->
+    <div class="info-accordion">
+      <details>
+        <summary class="accordion-summary">
+          <span>📚 AATA Digital Book Library (210 Books) &amp; Tulu-NMT Parallel Corpus</span>
+          <span>▼</span>
+        </summary>
+        <div class="accordion-content">
+          <p style="margin-bottom: 12px; color: var(--text-secondary);">
+            Explore digitized Tulu books from <a href="https://aatana.org/book-library/" target="_blank" rel="noopener">AATA Digital Library</a> processed with our Kannada OCR facility, alongside parallel sentences from the <a href="https://github.com/manunarayanan/Tulu-NMT" target="_blank" rel="noopener">Tulu-NMT</a> research benchmark (LREC-COLING 2024):
+          </p>
+
+          <h4 style="margin: 16px 0 8px 0; color: var(--primary);">Sample Sentences from AATA Books &amp; Tulu-NMT:</h4>
+          <div style="max-height: 240px; overflow-y: auto; margin-bottom: 20px;">
+            <table class="cheat-table">
+              <thead>
+                <tr>
+                  <th>Source Book</th>
+                  <th>Tulu (Kannada)</th>
+                  <th>Tulu-Tigalari</th>
+                  <th>Phonetic</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="aatanaSampleBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+
+          <h4 style="margin: 16px 0 8px 0; color: var(--primary);">Search 210 Digitized Books in AATA Library:</h4>
+          <div style="display: flex; gap: 10px; margin-bottom: 14px;">
+            <input type="text" id="aatanaBookSearchInput" placeholder="Search 210 books (e.g. yakshgana, vyakaran, sathi kamale, abbakka, panje)..." style="flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.95rem; outline: none;">
+          </div>
+          <div style="max-height: 260px; overflow-y: auto;">
+            <table class="cheat-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">ID</th>
+                  <th>Book Title</th>
+                  <th>Direct PDF Link</th>
+                  <th>OCR Command</th>
+                </tr>
+              </thead>
+              <tbody id="aatanaBookTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Font Download Banner -->
+    <div class="info-accordion">
+      <div style="padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: gap; gap: 12px;">
+        <div>
+          <strong>Tulu-Tigalari Font:</strong>
+          <span style="color: var(--text-secondary); margin-left: 8px;">Mallige Unicode v2 (Official Unicode 16.0 compatible font)</span>
+        </div>
+        <a href="fonts/Mallige_Unicode_v2.ttf" download="Mallige_Unicode_v2.ttf" class="action-btn primary" style="text-decoration: none;">Download Font (.ttf)</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        Built for the Tulu language community. Compatible with <a href="https://aatana.org/transliterate/" target="_blank" rel="noopener">AATA Transliterator</a> conventions &amp; Unicode 16.0.
+      </p>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <script src="transliterator.js"></script>
+  <script src="dictionary.js"></script>
+  <script src="historical_dict.js"></script>
+  <script src="aatana_books.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

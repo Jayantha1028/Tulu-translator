@@ -1,0 +1,1262 @@
+[
+  {
+    "id": 1,
+    "title": "Sodara-habba",
+    "pdf_path": "/flipbooks_pdfs/Sodara-habba.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Sodara-habba.pdf"
+  },
+  {
+    "id": 2,
+    "title": "tulu dilects",
+    "pdf_path": "/flipbooks_pdfs/tulu dilects_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/tulu dilects_watermark.pdf"
+  },
+  {
+    "id": 3,
+    "title": "Panje mangesharayaru",
+    "pdf_path": "/flipbooks_pdfs/Panje mangesharayaru_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Panje mangesharayaru_watermark.pdf"
+  },
+  {
+    "id": 4,
+    "title": "janapada samkruthi rupisuva baduku kelavu chinthanegalu",
+    "pdf_path": "/flipbooks_pdfs/janapada samkruthi rupisuva baduku kelavu chinthanegalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/janapada samkruthi rupisuva baduku kelavu chinthanegalu_watermark.pdf"
+  },
+  {
+    "id": 5,
+    "title": "Enku panamburu hoda haage",
+    "pdf_path": "/flipbooks_pdfs/Enku panamburu hoda haage_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Enku panamburu hoda haage_watermark.pdf"
+  },
+  {
+    "id": 6,
+    "title": "Naduvanalokadanade",
+    "pdf_path": "/flipbooks_pdfs/Naduvanalokadanade.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Naduvanalokadanade.pdf"
+  },
+  {
+    "id": 7,
+    "title": "Vishwa tuluvere kootolu",
+    "pdf_path": "/flipbooks_pdfs/Vishwa tuluvere kootolu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Vishwa tuluvere kootolu_watermark.pdf"
+  },
+  {
+    "id": 8,
+    "title": "Ullal rani abbakka",
+    "pdf_path": "/flipbooks_pdfs/Ullal rani abbakka_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ullal rani abbakka_watermark.pdf"
+  },
+  {
+    "id": 9,
+    "title": "Tulu yakshgana prasangol",
+    "pdf_path": "/flipbooks_pdfs/Tulu yakshgana prasangol_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tulu yakshgana prasangol_watermark.pdf"
+  },
+  {
+    "id": 10,
+    "title": "Tulu vyakaran",
+    "pdf_path": "/flipbooks_pdfs/Tulu vyakaran _watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tulu vyakaran _watermark.pdf"
+  },
+  {
+    "id": 11,
+    "title": "Tulu padyavali",
+    "pdf_path": "/flipbooks_pdfs/Tulu padyavali_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tulu padyavali_watermark.pdf"
+  },
+  {
+    "id": 12,
+    "title": "Sathi kamale",
+    "pdf_path": "/flipbooks_pdfs/Sathi kamale_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Sathi kamale_watermark.pdf"
+  },
+  {
+    "id": 13,
+    "title": "Ranga padolida padokulu",
+    "pdf_path": "/flipbooks_pdfs/Ranga padolida padokulu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ranga padolida padokulu_watermark.pdf"
+  },
+  {
+    "id": 14,
+    "title": "Panjeyavara kathegalu",
+    "pdf_path": "/flipbooks_pdfs/Panjeyavara kathegalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Panjeyavara kathegalu_watermark.pdf"
+  },
+  {
+    "id": 15,
+    "title": "Pada pad dana gonchil",
+    "pdf_path": "/flipbooks_pdfs/Pada pad dana gonchil_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Pada pad dana gonchil_watermark.pdf"
+  },
+  {
+    "id": 16,
+    "title": "Nirsaani",
+    "pdf_path": "/flipbooks_pdfs/Nirsaani_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Nirsaani_watermark.pdf"
+  },
+  {
+    "id": 17,
+    "title": "Madapperaavandi kabithelu",
+    "pdf_path": "/flipbooks_pdfs/Madapperaavandi kabithelu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Madapperaavandi kabithelu_watermark.pdf"
+  },
+  {
+    "id": 18,
+    "title": "Kempu Nenapu",
+    "pdf_path": "/flipbooks_pdfs/Kempu Nenapu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kempu Nenapu_watermark.pdf"
+  },
+  {
+    "id": 19,
+    "title": "Kathe kathe kala",
+    "pdf_path": "/flipbooks_pdfs/Kathe kathe kala_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kathe kathe kala_watermark.pdf"
+  },
+  {
+    "id": 20,
+    "title": "Kathe kabithe natako",
+    "pdf_path": "/flipbooks_pdfs/Kathe kabithe natako_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kathe kabithe natako_watermark.pdf"
+  },
+  {
+    "id": 21,
+    "title": "Kalembi",
+    "pdf_path": "/flipbooks_pdfs/Kalembi_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kalembi_watermark.pdf"
+  },
+  {
+    "id": 22,
+    "title": "Kaanige",
+    "pdf_path": "/flipbooks_pdfs/Kaanige_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kaanige_watermark.pdf"
+  },
+  {
+    "id": 23,
+    "title": "Janamarl",
+    "pdf_path": "/flipbooks_pdfs/Janamarl_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Janamarl_watermark.pdf"
+  },
+  {
+    "id": 24,
+    "title": "Ganapathi Rao Aigal Kruthigalu",
+    "pdf_path": "/flipbooks_pdfs/Ganapathi Rao Aigal Kruthigalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ganapathi Rao Aigal Kruthigalu_watermark.pdf"
+  },
+  {
+    "id": 25,
+    "title": "Ekka saka sinimada padokulu",
+    "pdf_path": "/flipbooks_pdfs/Ekka saka sinimada padokulu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ekka saka sinimada padokulu_watermark.pdf"
+  },
+  {
+    "id": 26,
+    "title": "Aliya santana kat da guttu",
+    "pdf_path": "/flipbooks_pdfs/Aliya santana kat da guttu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Aliya santana kat da guttu_watermark.pdf"
+  },
+  {
+    "id": 27,
+    "title": "Tululipioparichaya",
+    "pdf_path": "/flipbooks_pdfs/Tululipioparichaya.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tululipioparichaya.pdf"
+  },
+  {
+    "id": 28,
+    "title": "Manavathegeddaga",
+    "pdf_path": "/flipbooks_pdfs/Manavathegeddaga.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Manavathegeddaga.pdf"
+  },
+  {
+    "id": 29,
+    "title": "deepadakelagewatermark",
+    "pdf_path": "/flipbooks_pdfs/deepadakelagewatermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/deepadakelagewatermark.pdf"
+  },
+  {
+    "id": 30,
+    "title": "Anantavrata",
+    "pdf_path": "/flipbooks_pdfs/Anantavrata.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Anantavrata.pdf"
+  },
+  {
+    "id": 31,
+    "title": "uppugali",
+    "pdf_path": "/flipbooks_pdfs/uppugali__watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/uppugali__watermark.pdf"
+  },
+  {
+    "id": 32,
+    "title": "hridaya vachanagalu",
+    "pdf_path": "/flipbooks_pdfs/hridaya_vachanagalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/hridaya_vachanagalu_watermark.pdf"
+  },
+  {
+    "id": 33,
+    "title": "therinaya vachanagalu",
+    "pdf_path": "/flipbooks_pdfs/therinaya_vachanagalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/therinaya_vachanagalu_watermark.pdf"
+  },
+  {
+    "id": 34,
+    "title": "bhramana",
+    "pdf_path": "/flipbooks_pdfs/bhramana_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/bhramana_watermark.pdf"
+  },
+  {
+    "id": 35,
+    "title": "thambila",
+    "pdf_path": "/flipbooks_pdfs/thambila_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/thambila_watermark.pdf"
+  },
+  {
+    "id": 36,
+    "title": "bamakumara sandi",
+    "pdf_path": "/flipbooks_pdfs/bamakumara_sandi_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/bamakumara_sandi_watermark.pdf"
+  },
+  {
+    "id": 37,
+    "title": "arivina harikararu",
+    "pdf_path": "/flipbooks_pdfs/arivina_harikararu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/arivina_harikararu_watermark.pdf"
+  },
+  {
+    "id": 38,
+    "title": "yakshandola",
+    "pdf_path": "/flipbooks_pdfs/yakshandola_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/yakshandola_watermark.pdf"
+  },
+  {
+    "id": 39,
+    "title": "tulunada-kalkude-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/tulunada-kalkude-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/tulunada-kalkude-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 40,
+    "title": "karegaali",
+    "pdf_path": "/flipbooks_pdfs/karegaali_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/karegaali_watermark.pdf"
+  },
+  {
+    "id": 41,
+    "title": "tulu--natyarupakolu-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/tulu--natyarupakolu-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/tulu--natyarupakolu-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 42,
+    "title": "eluver-deyyar-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/eluver-deyyar-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/eluver-deyyar-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 43,
+    "title": "sanje-payanada-hadu-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/sanje-payanada-hadu-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/sanje-payanada-hadu-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 44,
+    "title": "edeyanantu-noorentu---amruta-someshwara",
+    "pdf_path": "/flipbooks_pdfs/edeyanantu-noorentu---amruta-someshwara_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/edeyanantu-noorentu---amruta-someshwara_watermark.pdf"
+  },
+  {
+    "id": 45,
+    "title": "rangitha-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/rangitha-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/rangitha-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 46,
+    "title": "avilu-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/avilu-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/avilu-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 47,
+    "title": "Tulu-Rhymes-Jokule-Ujjal",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/06/Tulu-Rhymes-Jokule-Ujjal.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/06/Tulu-Rhymes-Jokule-Ujjal.pdf"
+  },
+  {
+    "id": 48,
+    "title": "Kasturi-Kammena-Jokule-Padokulu-v1.01",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/06/Kasturi-Kammena-Jokule-Padokulu-v1.01.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/06/Kasturi-Kammena-Jokule-Padokulu-v1.01.pdf"
+  },
+  {
+    "id": 49,
+    "title": "aata sirisuddi volume1 issue1 10apr2024",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/04/aata_sirisuddi_volume1_issue1_10apr2024.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/04/aata_sirisuddi_volume1_issue1_10apr2024.pdf"
+  },
+  {
+    "id": 50,
+    "title": "aata tulu lipi gonchil egye 1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/02/aata_tulu_lipi_gonchil_egye_1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/02/aata_tulu_lipi_gonchil_egye_1.pdf"
+  },
+  {
+    "id": 51,
+    "title": "Giddi-Drama-Prelimns-Text-Final-30.8.2022",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Giddi-Drama-Prelimns-Text-Final-30.8.2022.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Giddi-Drama-Prelimns-Text-Final-30.8.2022.pdf"
+  },
+  {
+    "id": 52,
+    "title": "Devimahatme-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Devimahatme-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Devimahatme-1.pdf"
+  },
+  {
+    "id": 53,
+    "title": "Manna-Baajano",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Manna-Baajano.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Manna-Baajano.pdf"
+  },
+  {
+    "id": 54,
+    "title": "Puvempu-Book-Text-Paegs",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Puvempu-Book-Text-Paegs.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Puvempu-Book-Text-Paegs.pdf"
+  },
+  {
+    "id": 55,
+    "title": "CHENNE-ATAGALU-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/CHENNE-ATAGALU-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/CHENNE-ATAGALU-with-cover.pdf"
+  },
+  {
+    "id": 56,
+    "title": "Ole-Pataki-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Ole-Pataki-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Ole-Pataki-with-cover.pdf"
+  },
+  {
+    "id": 57,
+    "title": "Beera-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Beera-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Beera-with-cover.pdf"
+  },
+  {
+    "id": 58,
+    "title": "Singadana-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Singadana-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Singadana-with-cover.pdf"
+  },
+  {
+    "id": 59,
+    "title": "Tuluvere-Kushal-Kusel-with-Cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Tuluvere-Kushal-Kusel-with-Cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Tuluvere-Kushal-Kusel-with-Cover.pdf"
+  },
+  {
+    "id": 60,
+    "title": "TuluEnglisheDictionary",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/09/TuluEnglisheDictionary.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/09/TuluEnglisheDictionary.pdf"
+  },
+  {
+    "id": 61,
+    "title": "EnglishTulu Dictionary by Rev. A. Manner 1888",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/09/EnglishTulu_Dictionary_by_Rev._A._Manner_1888.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/09/EnglishTulu_Dictionary_by_Rev._A._Manner_1888.pdf"
+  },
+  {
+    "id": 62,
+    "title": "Tulu-prayers-dinata-prarthanelu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Tulu-prayers-dinata-prarthanelu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Tulu-prayers-dinata-prarthanelu.pdf"
+  },
+  {
+    "id": 63,
+    "title": "K.R.Rai-books Tulu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/K.R.Rai-books_Tulu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/K.R.Rai-books_Tulu.pdf"
+  },
+  {
+    "id": 64,
+    "title": "PraniVaidya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/PraniVaidya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/PraniVaidya.pdf"
+  },
+  {
+    "id": 65,
+    "title": "Simantooru-Narayana-shetty-20-sept-2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Simantooru-Narayana-shetty-20-sept-2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Simantooru-Narayana-shetty-20-sept-2.pdf"
+  },
+  {
+    "id": 66,
+    "title": "Gururaja-bhat-P.",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Gururaja-bhat-P..pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Gururaja-bhat-P..pdf"
+  },
+  {
+    "id": 67,
+    "title": "k-b-bhandari",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/k-b-bhandari.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/k-b-bhandari.pdf"
+  },
+  {
+    "id": 68,
+    "title": "kadala-kareta-kamala-chattopadyaya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kadala-kareta-kamala-chattopadyaya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kadala-kareta-kamala-chattopadyaya.pdf"
+  },
+  {
+    "id": 69,
+    "title": "appadadya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/appadadya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/appadadya.pdf"
+  },
+  {
+    "id": 70,
+    "title": "bharata-kavyo-paasaadi",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bharata-kavyo-paasaadi.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bharata-kavyo-paasaadi.pdf"
+  },
+  {
+    "id": 71,
+    "title": "kalase",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kalase.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kalase.pdf"
+  },
+  {
+    "id": 72,
+    "title": "abbakka-rani-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/abbakka-rani-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/abbakka-rani-1.pdf"
+  },
+  {
+    "id": 73,
+    "title": "eduru-katekulu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/eduru-katekulu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/eduru-katekulu.pdf"
+  },
+  {
+    "id": 74,
+    "title": "kaiyyar-kabitelu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kaiyyar-kabitelu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kaiyyar-kabitelu.pdf"
+  },
+  {
+    "id": 75,
+    "title": "PuliMunchi-Part2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part2.pdf"
+  },
+  {
+    "id": 76,
+    "title": "agoli-manjanne",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/agoli-manjanne.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/agoli-manjanne.pdf"
+  },
+  {
+    "id": 77,
+    "title": "akkerasu-siri",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/akkerasu-siri.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/akkerasu-siri.pdf"
+  },
+  {
+    "id": 78,
+    "title": "bannal-jokulena-katekulu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bannal-jokulena-katekulu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bannal-jokulena-katekulu.pdf"
+  },
+  {
+    "id": 79,
+    "title": "balakrishna-shetty-polali",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/balakrishna-shetty-polali.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/balakrishna-shetty-polali.pdf"
+  },
+  {
+    "id": 80,
+    "title": "Atadar-Pulinchedar-Ramayya-Shetre-Book",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Atadar-Pulinchedar-Ramayya-Shetre-Book.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Atadar-Pulinchedar-Ramayya-Shetre-Book.pdf"
+  },
+  {
+    "id": 81,
+    "title": "Shivananda-Karkera-books Tulu-111",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Shivananda-Karkera-books_Tulu.pdf-111.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Shivananda-Karkera-books_Tulu.pdf-111.pdf"
+  },
+  {
+    "id": 82,
+    "title": "bacchire-bajjeyi",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bacchire-bajjeyi.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bacchire-bajjeyi.pdf"
+  },
+  {
+    "id": 83,
+    "title": "badaka-bail-Parameshvaraiyyer",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/badaka-bail-Parameshvaraiyyer.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/badaka-bail-Parameshvaraiyyer.pdf"
+  },
+  {
+    "id": 84,
+    "title": "bayar-sankayya-bhagavater",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf"
+  },
+  {
+    "id": 85,
+    "title": "Rukkayajjer-Final-19-sept-2022",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Rukkayajjer-Final-19-sept-2022.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Rukkayajjer-Final-19-sept-2022.pdf"
+  },
+  {
+    "id": 86,
+    "title": "bhootala-pandya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bhootala-pandya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bhootala-pandya.pdf"
+  },
+  {
+    "id": 87,
+    "title": "Bolanthye-Urpel-book",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Bolanthye-Urpel-book.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Bolanthye-Urpel-book.pdf"
+  },
+  {
+    "id": 88,
+    "title": "daana-shoora-karne",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/daana-shoora-karne.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/daana-shoora-karne.pdf"
+  },
+  {
+    "id": 89,
+    "title": "Christ-devere-vaakya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Christ-devere-vaakya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Christ-devere-vaakya.pdf"
+  },
+  {
+    "id": 90,
+    "title": "dm-kulal-2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/dm-kulal-2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/dm-kulal-2.pdf"
+  },
+  {
+    "id": 91,
+    "title": "Guruva-Korager-2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Guruva-Korager-2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Guruva-Korager-2.pdf"
+  },
+  {
+    "id": 92,
+    "title": "kalkude-kallurti-jokle-kate",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kalkude-kallurti-jokle-kate.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kalkude-kallurti-jokle-kate.pdf"
+  },
+  {
+    "id": 93,
+    "title": "M-K-Seetharama-kulal19-sept-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/M-K-Seetharama-kulal19-sept-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/M-K-Seetharama-kulal19-sept-1.pdf"
+  },
+  {
+    "id": 94,
+    "title": "Natakada-Birse-Ananda-Shetty-Devika-Nagesh-4",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Natakada-Birse-Ananda-Shetty-Devika-Nagesh-4.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Natakada-Birse-Ananda-Shetty-Devika-Nagesh-4.pdf"
+  },
+  {
+    "id": 95,
+    "title": "PuliMunchi-Part3",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part3.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part3.pdf"
+  },
+  {
+    "id": 96,
+    "title": "Ganapayya-shetty-inner-pages",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Ganapayya-shetty-inner-pages.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Ganapayya-shetty-inner-pages.pdf"
+  },
+  {
+    "id": 97,
+    "title": "jokule-sanchi",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/jokule-sanchi.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/jokule-sanchi.pdf"
+  },
+  {
+    "id": 98,
+    "title": "Ananda-Bolar-19-sept-2022-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Ananda-Bolar-19-sept-2022-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Ananda-Bolar-19-sept-2022-1.pdf"
+  },
+  {
+    "id": 99,
+    "title": "abbage-darage",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/abbage-darage.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/abbage-darage.pdf"
+  },
+  {
+    "id": 100,
+    "title": "bangle-gudde-sannakkana-kate",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bangle-gudde-sannakkana-kate.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bangle-gudde-sannakkana-kate.pdf"
+  },
+  {
+    "id": 101,
+    "title": "bayar-sankayya-bhagavater",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf"
+  },
+  {
+    "id": 102,
+    "title": "aata sirisuddi volume1 issue1 10apr2024",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/04/aata_sirisuddi_volume1_issue1_10apr2024.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/04/aata_sirisuddi_volume1_issue1_10apr2024.pdf"
+  },
+  {
+    "id": 103,
+    "title": "aata tulu lipi gonchil egye 1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/02/aata_tulu_lipi_gonchil_egye_1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/02/aata_tulu_lipi_gonchil_egye_1.pdf"
+  },
+  {
+    "id": 104,
+    "title": "Panje mangesharayaru",
+    "pdf_path": "/flipbooks_pdfs/Panje mangesharayaru_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Panje mangesharayaru_watermark.pdf"
+  },
+  {
+    "id": 105,
+    "title": "Nirsaani",
+    "pdf_path": "/flipbooks_pdfs/Nirsaani_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Nirsaani_watermark.pdf"
+  },
+  {
+    "id": 106,
+    "title": "K.R.Rai-books Tulu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/K.R.Rai-books_Tulu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/K.R.Rai-books_Tulu.pdf"
+  },
+  {
+    "id": 107,
+    "title": "Simantooru-Narayana-shetty-20-sept-2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Simantooru-Narayana-shetty-20-sept-2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Simantooru-Narayana-shetty-20-sept-2.pdf"
+  },
+  {
+    "id": 108,
+    "title": "balakrishna-shetty-polali",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/balakrishna-shetty-polali.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/balakrishna-shetty-polali.pdf"
+  },
+  {
+    "id": 109,
+    "title": "Atadar-Pulinchedar-Ramayya-Shetre-Book",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Atadar-Pulinchedar-Ramayya-Shetre-Book.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Atadar-Pulinchedar-Ramayya-Shetre-Book.pdf"
+  },
+  {
+    "id": 110,
+    "title": "Shivananda-Karkera-books Tulu-111",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Shivananda-Karkera-books_Tulu.pdf-111.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Shivananda-Karkera-books_Tulu.pdf-111.pdf"
+  },
+  {
+    "id": 111,
+    "title": "badaka-bail-Parameshvaraiyyer",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/badaka-bail-Parameshvaraiyyer.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/badaka-bail-Parameshvaraiyyer.pdf"
+  },
+  {
+    "id": 112,
+    "title": "bayar-sankayya-bhagavater",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf"
+  },
+  {
+    "id": 113,
+    "title": "Rukkayajjer-Final-19-sept-2022",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Rukkayajjer-Final-19-sept-2022.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Rukkayajjer-Final-19-sept-2022.pdf"
+  },
+  {
+    "id": 114,
+    "title": "dm-kulal-2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/dm-kulal-2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/dm-kulal-2.pdf"
+  },
+  {
+    "id": 115,
+    "title": "Guruva-Korager-2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Guruva-Korager-2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Guruva-Korager-2.pdf"
+  },
+  {
+    "id": 116,
+    "title": "Gururaja-bhat-P.",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Gururaja-bhat-P..pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Gururaja-bhat-P..pdf"
+  },
+  {
+    "id": 117,
+    "title": "k-b-bhandari",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/k-b-bhandari.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/k-b-bhandari.pdf"
+  },
+  {
+    "id": 118,
+    "title": "kadala-kareta-kamala-chattopadyaya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kadala-kareta-kamala-chattopadyaya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kadala-kareta-kamala-chattopadyaya.pdf"
+  },
+  {
+    "id": 119,
+    "title": "M-K-Seetharama-kulal19-sept-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/M-K-Seetharama-kulal19-sept-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/M-K-Seetharama-kulal19-sept-1.pdf"
+  },
+  {
+    "id": 120,
+    "title": "Natakada-Birse-Ananda-Shetty-Devika-Nagesh-4",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Natakada-Birse-Ananda-Shetty-Devika-Nagesh-4.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Natakada-Birse-Ananda-Shetty-Devika-Nagesh-4.pdf"
+  },
+  {
+    "id": 121,
+    "title": "Ganapayya-shetty-inner-pages",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Ganapayya-shetty-inner-pages.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Ganapayya-shetty-inner-pages.pdf"
+  },
+  {
+    "id": 122,
+    "title": "Ananda-Bolar-19-sept-2022-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Ananda-Bolar-19-sept-2022-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Ananda-Bolar-19-sept-2022-1.pdf"
+  },
+  {
+    "id": 123,
+    "title": "bangle-gudde-sannakkana-kate",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bangle-gudde-sannakkana-kate.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bangle-gudde-sannakkana-kate.pdf"
+  },
+  {
+    "id": 124,
+    "title": "bayar-sankayya-bhagavater",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bayar-sankayya-bhagavater.pdf"
+  },
+  {
+    "id": 125,
+    "title": "Enku panamburu hoda haage",
+    "pdf_path": "/flipbooks_pdfs/Enku panamburu hoda haage_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Enku panamburu hoda haage_watermark.pdf"
+  },
+  {
+    "id": 126,
+    "title": "Sathi kamale",
+    "pdf_path": "/flipbooks_pdfs/Sathi kamale_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Sathi kamale_watermark.pdf"
+  },
+  {
+    "id": 127,
+    "title": "Panjeyavara kathegalu",
+    "pdf_path": "/flipbooks_pdfs/Panjeyavara kathegalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Panjeyavara kathegalu_watermark.pdf"
+  },
+  {
+    "id": 128,
+    "title": "Kempu Nenapu",
+    "pdf_path": "/flipbooks_pdfs/Kempu Nenapu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kempu Nenapu_watermark.pdf"
+  },
+  {
+    "id": 129,
+    "title": "Kathe kathe kala",
+    "pdf_path": "/flipbooks_pdfs/Kathe kathe kala_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kathe kathe kala_watermark.pdf"
+  },
+  {
+    "id": 130,
+    "title": "Manavathegeddaga",
+    "pdf_path": "/flipbooks_pdfs/Manavathegeddaga.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Manavathegeddaga.pdf"
+  },
+  {
+    "id": 131,
+    "title": "bamakumara sandi",
+    "pdf_path": "/flipbooks_pdfs/bamakumara_sandi_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/bamakumara_sandi_watermark.pdf"
+  },
+  {
+    "id": 132,
+    "title": "edeyanantu-noorentu---amruta-someshwara",
+    "pdf_path": "/flipbooks_pdfs/edeyanantu-noorentu---amruta-someshwara_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/edeyanantu-noorentu---amruta-someshwara_watermark.pdf"
+  },
+  {
+    "id": 133,
+    "title": "rangitha-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/rangitha-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/rangitha-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 134,
+    "title": "avilu-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/avilu-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/avilu-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 135,
+    "title": "agoli-manjanne",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/agoli-manjanne.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/agoli-manjanne.pdf"
+  },
+  {
+    "id": 136,
+    "title": "akkerasu-siri",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/akkerasu-siri.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/akkerasu-siri.pdf"
+  },
+  {
+    "id": 137,
+    "title": "bannal-jokulena-katekulu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bannal-jokulena-katekulu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bannal-jokulena-katekulu.pdf"
+  },
+  {
+    "id": 138,
+    "title": "bhootala-pandya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bhootala-pandya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bhootala-pandya.pdf"
+  },
+  {
+    "id": 139,
+    "title": "jokule-sanchi",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/jokule-sanchi.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/jokule-sanchi.pdf"
+  },
+  {
+    "id": 140,
+    "title": "abbage-darage",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/abbage-darage.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/abbage-darage.pdf"
+  },
+  {
+    "id": 141,
+    "title": "Tulu padyavali",
+    "pdf_path": "/flipbooks_pdfs/Tulu padyavali_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tulu padyavali_watermark.pdf"
+  },
+  {
+    "id": 142,
+    "title": "Ranga padolida padokulu",
+    "pdf_path": "/flipbooks_pdfs/Ranga padolida padokulu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ranga padolida padokulu_watermark.pdf"
+  },
+  {
+    "id": 143,
+    "title": "Pada pad dana gonchil",
+    "pdf_path": "/flipbooks_pdfs/Pada pad dana gonchil_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Pada pad dana gonchil_watermark.pdf"
+  },
+  {
+    "id": 144,
+    "title": "Madapperaavandi kabithelu",
+    "pdf_path": "/flipbooks_pdfs/Madapperaavandi kabithelu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Madapperaavandi kabithelu_watermark.pdf"
+  },
+  {
+    "id": 145,
+    "title": "Kathe kabithe natako",
+    "pdf_path": "/flipbooks_pdfs/Kathe kabithe natako_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kathe kabithe natako_watermark.pdf"
+  },
+  {
+    "id": 146,
+    "title": "Kaanige",
+    "pdf_path": "/flipbooks_pdfs/Kaanige_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kaanige_watermark.pdf"
+  },
+  {
+    "id": 147,
+    "title": "Ekka saka sinimada padokulu",
+    "pdf_path": "/flipbooks_pdfs/Ekka saka sinimada padokulu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ekka saka sinimada padokulu_watermark.pdf"
+  },
+  {
+    "id": 148,
+    "title": "uppugali",
+    "pdf_path": "/flipbooks_pdfs/uppugali__watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/uppugali__watermark.pdf"
+  },
+  {
+    "id": 149,
+    "title": "bhramana",
+    "pdf_path": "/flipbooks_pdfs/bhramana_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/bhramana_watermark.pdf"
+  },
+  {
+    "id": 150,
+    "title": "thambila",
+    "pdf_path": "/flipbooks_pdfs/thambila_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/thambila_watermark.pdf"
+  },
+  {
+    "id": 151,
+    "title": "karegaali",
+    "pdf_path": "/flipbooks_pdfs/karegaali_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/karegaali_watermark.pdf"
+  },
+  {
+    "id": 152,
+    "title": "sanje-payanada-hadu-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/sanje-payanada-hadu-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/sanje-payanada-hadu-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 153,
+    "title": "Tulu-Rhymes-Jokule-Ujjal",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/06/Tulu-Rhymes-Jokule-Ujjal.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/06/Tulu-Rhymes-Jokule-Ujjal.pdf"
+  },
+  {
+    "id": 154,
+    "title": "Kasturi-Kammena-Jokule-Padokulu-v1.01",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/06/Kasturi-Kammena-Jokule-Padokulu-v1.01.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/06/Kasturi-Kammena-Jokule-Padokulu-v1.01.pdf"
+  },
+  {
+    "id": 155,
+    "title": "Devimahatme-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Devimahatme-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Devimahatme-1.pdf"
+  },
+  {
+    "id": 156,
+    "title": "Manna-Baajano",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Manna-Baajano.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Manna-Baajano.pdf"
+  },
+  {
+    "id": 157,
+    "title": "Puvempu-Book-Text-Paegs",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Puvempu-Book-Text-Paegs.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Puvempu-Book-Text-Paegs.pdf"
+  },
+  {
+    "id": 158,
+    "title": "Beera-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Beera-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Beera-with-cover.pdf"
+  },
+  {
+    "id": 159,
+    "title": "kaiyyar-kabitelu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kaiyyar-kabitelu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kaiyyar-kabitelu.pdf"
+  },
+  {
+    "id": 160,
+    "title": "PuliMunchi-Part2",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part2.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part2.pdf"
+  },
+  {
+    "id": 161,
+    "title": "PuliMunchi-Part3",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part3.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/PuliMunchi-Part3.pdf"
+  },
+  {
+    "id": 162,
+    "title": "Tulu-Rhymes-Jokule-Ujjal",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/06/Tulu-Rhymes-Jokule-Ujjal.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/06/Tulu-Rhymes-Jokule-Ujjal.pdf"
+  },
+  {
+    "id": 163,
+    "title": "Kasturi-Kammena-Jokule-Padokulu-v1.01",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2024/06/Kasturi-Kammena-Jokule-Padokulu-v1.01.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2024/06/Kasturi-Kammena-Jokule-Padokulu-v1.01.pdf"
+  },
+  {
+    "id": 164,
+    "title": "appadadya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/appadadya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/appadadya.pdf"
+  },
+  {
+    "id": 165,
+    "title": "agoli-manjanne",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/agoli-manjanne.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/agoli-manjanne.pdf"
+  },
+  {
+    "id": 166,
+    "title": "bannal-jokulena-katekulu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bannal-jokulena-katekulu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bannal-jokulena-katekulu.pdf"
+  },
+  {
+    "id": 167,
+    "title": "bhootala-pandya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bhootala-pandya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bhootala-pandya.pdf"
+  },
+  {
+    "id": 168,
+    "title": "jokule-sanchi",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/jokule-sanchi.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/jokule-sanchi.pdf"
+  },
+  {
+    "id": 169,
+    "title": "kalkude-kallurti-jokle-kate",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kalkude-kallurti-jokle-kate.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kalkude-kallurti-jokle-kate.pdf"
+  },
+  {
+    "id": 170,
+    "title": "abbage-darage",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/abbage-darage.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/abbage-darage.pdf"
+  },
+  {
+    "id": 171,
+    "title": "bharata-kavyo-paasaadi",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bharata-kavyo-paasaadi.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bharata-kavyo-paasaadi.pdf"
+  },
+  {
+    "id": 172,
+    "title": "kalase",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/kalase.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/kalase.pdf"
+  },
+  {
+    "id": 173,
+    "title": "Ullal rani abbakka",
+    "pdf_path": "/flipbooks_pdfs/Ullal rani abbakka_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ullal rani abbakka_watermark.pdf"
+  },
+  {
+    "id": 174,
+    "title": "Janamarl",
+    "pdf_path": "/flipbooks_pdfs/Janamarl_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Janamarl_watermark.pdf"
+  },
+  {
+    "id": 175,
+    "title": "tulunada-kalkude-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/tulunada-kalkude-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/tulunada-kalkude-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 176,
+    "title": "tulu--natyarupakolu-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/tulu--natyarupakolu-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/tulu--natyarupakolu-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 177,
+    "title": "eluver-deyyar-by-amritha-someshwar",
+    "pdf_path": "/flipbooks_pdfs/eluver-deyyar-by-amritha-someshwar_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/eluver-deyyar-by-amritha-someshwar_watermark.pdf"
+  },
+  {
+    "id": 178,
+    "title": "Giddi-Drama-Prelimns-Text-Final-30.8.2022",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/11/Giddi-Drama-Prelimns-Text-Final-30.8.2022.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/11/Giddi-Drama-Prelimns-Text-Final-30.8.2022.pdf"
+  },
+  {
+    "id": 179,
+    "title": "abbakka-rani-1",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/abbakka-rani-1.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/abbakka-rani-1.pdf"
+  },
+  {
+    "id": 180,
+    "title": "Tulu yakshgana prasangol",
+    "pdf_path": "/flipbooks_pdfs/Tulu yakshgana prasangol_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tulu yakshgana prasangol_watermark.pdf"
+  },
+  {
+    "id": 181,
+    "title": "CHENNE-ATAGALU-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/CHENNE-ATAGALU-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/CHENNE-ATAGALU-with-cover.pdf"
+  },
+  {
+    "id": 182,
+    "title": "Ole-Pataki-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Ole-Pataki-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Ole-Pataki-with-cover.pdf"
+  },
+  {
+    "id": 183,
+    "title": "Singadana-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Singadana-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Singadana-with-cover.pdf"
+  },
+  {
+    "id": 184,
+    "title": "Tuluvere-Kushal-Kusel-with-Cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Tuluvere-Kushal-Kusel-with-Cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Tuluvere-Kushal-Kusel-with-Cover.pdf"
+  },
+  {
+    "id": 185,
+    "title": "eduru-katekulu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/eduru-katekulu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/eduru-katekulu.pdf"
+  },
+  {
+    "id": 186,
+    "title": "bangle-gudde-sannakkana-kate",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bangle-gudde-sannakkana-kate.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bangle-gudde-sannakkana-kate.pdf"
+  },
+  {
+    "id": 187,
+    "title": "Naduvanalokadanade",
+    "pdf_path": "/flipbooks_pdfs/Naduvanalokadanade.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Naduvanalokadanade.pdf"
+  },
+  {
+    "id": 188,
+    "title": "Kalembi",
+    "pdf_path": "/flipbooks_pdfs/Kalembi_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Kalembi_watermark.pdf"
+  },
+  {
+    "id": 189,
+    "title": "Ganapathi Rao Aigal Kruthigalu",
+    "pdf_path": "/flipbooks_pdfs/Ganapathi Rao Aigal Kruthigalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Ganapathi Rao Aigal Kruthigalu_watermark.pdf"
+  },
+  {
+    "id": 190,
+    "title": "Aliya santana kat da guttu",
+    "pdf_path": "/flipbooks_pdfs/Aliya santana kat da guttu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Aliya santana kat da guttu_watermark.pdf"
+  },
+  {
+    "id": 191,
+    "title": "daana-shoora-karne",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/daana-shoora-karne.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/daana-shoora-karne.pdf"
+  },
+  {
+    "id": 192,
+    "title": "Sodara-habba",
+    "pdf_path": "/flipbooks_pdfs/Sodara-habba.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Sodara-habba.pdf"
+  },
+  {
+    "id": 193,
+    "title": "janapada samkruthi rupisuva baduku kelavu chinthanegalu",
+    "pdf_path": "/flipbooks_pdfs/janapada samkruthi rupisuva baduku kelavu chinthanegalu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/janapada samkruthi rupisuva baduku kelavu chinthanegalu_watermark.pdf"
+  },
+  {
+    "id": 194,
+    "title": "Vishwa tuluvere kootolu",
+    "pdf_path": "/flipbooks_pdfs/Vishwa tuluvere kootolu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Vishwa tuluvere kootolu_watermark.pdf"
+  },
+  {
+    "id": 195,
+    "title": "deepadakelagewatermark",
+    "pdf_path": "/flipbooks_pdfs/deepadakelagewatermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/deepadakelagewatermark.pdf"
+  },
+  {
+    "id": 196,
+    "title": "arivina harikararu",
+    "pdf_path": "/flipbooks_pdfs/arivina_harikararu_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/arivina_harikararu_watermark.pdf"
+  },
+  {
+    "id": 197,
+    "title": "bacchire-bajjeyi",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/bacchire-bajjeyi.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/bacchire-bajjeyi.pdf"
+  },
+  {
+    "id": 198,
+    "title": "tulu dilects",
+    "pdf_path": "/flipbooks_pdfs/tulu dilects_watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/tulu dilects_watermark.pdf"
+  },
+  {
+    "id": 199,
+    "title": "Tulu vyakaran",
+    "pdf_path": "/flipbooks_pdfs/Tulu vyakaran _watermark.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tulu vyakaran _watermark.pdf"
+  },
+  {
+    "id": 200,
+    "title": "Tululipioparichaya",
+    "pdf_path": "/flipbooks_pdfs/Tululipioparichaya.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Tululipioparichaya.pdf"
+  },
+  {
+    "id": 201,
+    "title": "PraniVaidya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/PraniVaidya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/PraniVaidya.pdf"
+  },
+  {
+    "id": 202,
+    "title": "Anantavrata",
+    "pdf_path": "/flipbooks_pdfs/Anantavrata.pdf",
+    "pdf_url": "https://aatana.org/flipbooks_pdfs/Anantavrata.pdf"
+  },
+  {
+    "id": 203,
+    "title": "Bolanthye-Urpel-book",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Bolanthye-Urpel-book.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Bolanthye-Urpel-book.pdf"
+  },
+  {
+    "id": 204,
+    "title": "TuluEnglisheDictionary",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/09/TuluEnglisheDictionary.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/09/TuluEnglisheDictionary.pdf"
+  },
+  {
+    "id": 205,
+    "title": "EnglishTulu Dictionary by Rev. A. Manner 1888",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/09/EnglishTulu_Dictionary_by_Rev._A._Manner_1888.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/09/EnglishTulu_Dictionary_by_Rev._A._Manner_1888.pdf"
+  },
+  {
+    "id": 206,
+    "title": "CHENNE-ATAGALU-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/CHENNE-ATAGALU-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/CHENNE-ATAGALU-with-cover.pdf"
+  },
+  {
+    "id": 207,
+    "title": "Ole-Pataki-with-cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Ole-Pataki-with-cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Ole-Pataki-with-cover.pdf"
+  },
+  {
+    "id": 208,
+    "title": "Tuluvere-Kushal-Kusel-with-Cover",
+    "pdf_path": "https://aatana.org/wp-content/uploads/2023/10/Tuluvere-Kushal-Kusel-with-Cover.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/2023/10/Tuluvere-Kushal-Kusel-with-Cover.pdf"
+  },
+  {
+    "id": 209,
+    "title": "Tulu-prayers-dinata-prarthanelu",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Tulu-prayers-dinata-prarthanelu.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Tulu-prayers-dinata-prarthanelu.pdf"
+  },
+  {
+    "id": 210,
+    "title": "Christ-devere-vaakya",
+    "pdf_path": "https://aatana.org/wp-content/uploads/Books/Christ-devere-vaakya.pdf",
+    "pdf_url": "https://aatana.org/wp-content/uploads/Books/Christ-devere-vaakya.pdf"
+  }
+]

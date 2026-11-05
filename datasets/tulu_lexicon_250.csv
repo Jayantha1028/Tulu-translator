@@ -1,0 +1,251 @@
+id,category,english_meaning,tulu_kannada,tulu_tigalari,tulu_latin_phonetic
+1,Greetings & Pleasantries,Thank you / Greetings (Tulu),ಸೊಲ್ಮೆಲು,𑎱𑏆𑎭𑏐𑎪𑏁𑎭𑎻,solmelu
+2,Greetings & Pleasantries,Hello / Respectful greeting,ನಮಸ್ಕಾರ,𑎥𑎪𑎱𑏐𑎒𑎸𑎬,namaskaara
+3,Greetings & Pleasantries,Welcome,ಸ್ವಾಗತ,𑎱𑏐𑎮𑎸𑎔𑎡,svaagata
+4,Greetings & Pleasantries,Please (Tulu),ದಯಮಲ್ತ್,𑎣𑎫𑎪𑎭𑏐𑎡𑏎,dayamalt
+5,Greetings & Pleasantries,Yes (Tulu),ಅಂದ್,𑎀𑏌𑎣𑏎,aMd
+6,Greetings & Pleasantries,No / Not that (Tulu),ಅತ್ತ್,𑎀𑎡𑏐𑎡𑏎,att
+7,Greetings & Pleasantries,No / Absent (Tulu),ಇಜ್ಜಿ,𑎂𑎙𑏐𑎙𑎹,ijji
+8,Greetings & Pleasantries,Right / Correct,ಸರಿ,𑎱𑎬𑎹,sari
+9,Greetings & Pleasantries,Okay / Alright (Tulu),ಆವು,𑎁𑎮𑎻,aavu
+10,Greetings & Pleasantries,Happiness / Joy,ಖುಷಿ,𑎓𑎻𑎰𑎹,khuShi
+11,Greetings & Pleasantries,Good wishes,ಶುಭಾಶಯ,𑎯𑎻𑎩𑎸𑎯𑎫,shubhaashaya
+12,Greetings & Pleasantries,Peace,ಶಾಂತಿ,𑎯𑎸𑏌𑎡𑎹,shaaMti
+13,Greetings & Pleasantries,Joy / Delight,ಸಂತೋಷ,𑎱𑏌𑎡𑏇𑎰,saMtOSha
+14,Greetings & Pleasantries,Thank you (formal),ಧನ್ಯವಾದ,𑎤𑎥𑏐𑎫𑎮𑎸𑎣,dhanyavaada
+15,Greetings & Pleasantries,Kindness / Mercy,ದಯೆ,𑎣𑎫𑏁,daye
+16,Greetings & Pleasantries,Blessing,ಆಶೀರ್ವಾದ,𑎁𑎯𑎺𑎬𑏐𑎮𑎸𑎣,aasheervaada
+17,Greetings & Pleasantries,Love / Affection,ಪ್ರೀತಿ,𑎦𑏐𑎬𑎺𑎡𑎹,preeti
+18,Greetings & Pleasantries,Trust / Faith,ವಿಶ್ವಾಸ,𑎮𑎹𑎯𑏐𑎮𑎸𑎱,vishvaasa
+19,Greetings & Pleasantries,Truthful people,ಸತ್ಯವಂತರು,𑎱𑎡𑏐𑎫𑎮𑏌𑎡𑎬𑎻,satyavaMtaru
+20,Greetings & Pleasantries,Health,ಆರೋಗ್ಯ,𑎁𑎬𑏇𑎔𑏐𑎫,aarOgya
+21,Greetings & Pleasantries,God / Almighty,ಭಗವಂತ,𑎩𑎔𑎮𑏌𑎡,bhagavaMta
+22,Greetings & Pleasantries,Peace of mind,ನೆಮ್ಮದಿ,𑎥𑏁𑎪𑏐𑎪𑎣𑎹,nemmadi
+23,Greetings & Pleasantries,Favor / Good deed,ಉಪಕಾರ,𑎄𑎦𑎒𑎸𑎬,upakaara
+24,Greetings & Pleasantries,Friendship,ಸ್ನೇಹ,𑎱𑏐𑎥𑏂𑎲,snEha
+25,Greetings & Pleasantries,Charity / Giving,ದಾನ,𑎣𑎸𑎥,daana
+26,Family & Kinship,Mother (Tulu),ಅಪ್ಪೆ,𑎀𑎦𑏐𑎦𑏁,appe
+27,Family & Kinship,Father (Tulu respectful),ಅಮ್ಮೆರ್,𑎀𑎪𑏐𑎪𑏁𑎬𑏎,ammer
+28,Family & Kinship,Mother,ಅಮ್ಮ,𑎀𑎪𑏐𑎪,amma
+29,Family & Kinship,Father,ಅಪ್ಪ,𑎀𑎦𑏐𑎦,appa
+30,Family & Kinship,Elder brother (Tulu),ಅಣ್ಣೆ,𑎀𑎠𑏐𑎠𑏁,aNNe
+31,Family & Kinship,Younger brother (Tulu),ಮೆಗ್ಯೆ,𑎪𑏁𑎔𑏐𑎫𑏁,megye
+32,Family & Kinship,Elder sister,ಅಕ್ಕ,𑎀𑎒𑏐𑎒,akka
+33,Family & Kinship,Younger sister (Tulu),ಮೆಗ್ದಿ,𑎪𑏁𑎔𑏐𑎣𑎹,megdi
+34,Family & Kinship,Child / Baby (Tulu),ಬಾಲೆ,𑎨𑎸𑎭𑏁,baale
+35,Family & Kinship,Husband (Tulu),ಕಂಡನಿ,𑎒𑏌𑎞𑎥𑎹,kaMDani
+36,Family & Kinship,Wife (Tulu),ಬೊಡೆದಿ,𑎨𑏆𑎞𑏁𑎣𑎹,boDedi
+37,Family & Kinship,Son (Tulu),ಮಗೆ,𑎪𑎔𑏁,mage
+38,Family & Kinship,Daughter (Tulu),ಮಗಲ್,𑎪𑎔𑎭𑏎,magal
+39,Family & Kinship,Grandfather (Tulu),ಅಜ್ಜೆ,𑎀𑎙𑏐𑎙𑏁,ajje
+40,Family & Kinship,Grandmother,ಅಜ್ಜಿ,𑎀𑎙𑏐𑎙𑎹,ajji
+41,Family & Kinship,Aunt / Mother-in-law,ಮಾಮಿ,𑎪𑎸𑎪𑎹,maami
+42,Family & Kinship,Uncle / Father-in-law (Tulu),ಮಾಮೆ,𑎪𑎸𑎪𑏁,maame
+43,Family & Kinship,Brother-in-law,ಬಾವ,𑎨𑎸𑎮,baava
+44,Family & Kinship,Friend,ದೋಸ್ತಿ,𑎣𑏇𑎱𑏐𑎡𑎹,dOsti
+45,Family & Kinship,I / Myself (Tulu),ಯಾನ್,𑎫𑎸𑎥𑏎,yaan
+46,Family & Kinship,My / Mine (Tulu),ಎನ್ನ,𑎊𑎥𑏐𑎥,enna
+47,Family & Kinship,You informal (Tulu),ಈ,𑎃,ee
+48,Family & Kinship,You respectful (Tulu),ಈರ್,𑎃𑎬𑏎,eer
+49,Family & Kinship,He (Tulu),ಆಯೆ,𑎁𑎫𑏁,aaye
+50,Family & Kinship,She (Tulu),ಆಲ್,𑎁𑎭𑏎,aal
+51,Food & Dining,Meal / Food (Tulu),ವಣಸ್,𑎮𑎠𑎱𑏎,vaNas
+52,Food & Dining,Cooked rice (Tulu),ನುಪ್ಪು,𑎥𑎻𑎦𑏐𑎦𑎻,nuppu
+53,Food & Dining,Water,ನೀರ್,𑎥𑎺𑎬𑏎,neer
+54,Food & Dining,Milk (Tulu),ಪೇರ್,𑎦𑏂𑎬𑏎,pEr
+55,Food & Dining,Coconut (Tulu),ತಾರಾಯಿ,𑎡𑎸𑎬𑎸𑎫𑎹,taaraayi
+56,Food & Dining,Fish,ಮೀನ್,𑎪𑎺𑎥𑏎,meen
+57,Food & Dining,Chicken / Fowl (Tulu),ಕೋರಿ,𑎒𑏇𑎬𑎹,kOri
+58,Food & Dining,Tea,ಚಾ,𑎗𑎸,chaa
+59,Food & Dining,Jaggery,ಬೆಲ್ಲ,𑎨𑏁𑎭𑏐𑎭,bella
+60,Food & Dining,Salt,ಉಪ್ಪು,𑎄𑎦𑏐𑎦𑎻,uppu
+61,Food & Dining,Rasam / Soup,ಸಾರು,𑎱𑎸𑎬𑎻,saaru
+62,Food & Dining,Rice porridge / Gruel,ಗಂಜಿ,𑎔𑏌𑎙𑎹,gaMji
+63,Food & Dining,Chutney,ಚಟ್ನಿ,𑎗𑎜𑏐𑎥𑎹,chaTni
+64,Food & Dining,Fritter,ಬಜ್ಜಿ,𑎨𑎙𑏐𑎙𑎹,bajji
+65,Food & Dining,Arecanut (Tulu),ಬಜ್ಜೆಯಿ,𑎨𑎙𑏐𑎙𑏁𑎫𑎹,bajjeyi
+66,Food & Dining,Greens / Leaves,ತೊಪ್ಪು,𑎡𑏆𑎦𑏐𑎦𑎻,toppu
+67,Food & Dining,Tamarind gravy (Tulu),ಪುಲ್ಚಾರ್,𑎦𑎻𑎭𑏐𑎗𑎸𑎬𑏎,pulchaar
+68,Food & Dining,Coffee,ಕಾಪಿ,𑎒𑎸𑎦𑎹,kaapi
+69,Food & Dining,Ghee / Clarified butter,ತುಪ್ಪ,𑎡𑎻𑎦𑏐𑎦,tuppa
+70,Food & Dining,Buttermilk,ಮೋರು,𑎪𑏇𑎬𑎻,mOru
+71,Food & Dining,Curd / Yogurt,ಮೊಸರು,𑎪𑏆𑎱𑎬𑎻,mosaru
+72,Food & Dining,Roti / Flatbread,ರೊಟ್ಟಿ,𑎬𑏆𑎜𑏐𑎜𑎹,roTTi
+73,Food & Dining,Dosa / Rice pancake,ದೋಸೆ,𑎣𑏇𑎱𑏁,dOse
+74,Food & Dining,Steamed rice cake,ಇಡ್ಲಿ,𑎂𑎞𑏐𑎭𑎹,iDli
+75,Food & Dining,Pachadi / Side dish,ಪಚ್ಚಡಿ,𑎦𑎗𑏐𑎗𑎞𑎹,pachchaDi
+76,Nature & Geography,Rain (Tulu),ಬರ್ಸ,𑎨𑎬𑏐𑎱,barsa
+77,Nature & Geography,Sun / Time (Tulu),ಪೊರ್ತು,𑎦𑏆𑎬𑏐𑎡𑎻,portu
+78,Nature & Geography,Light / Radiance (Tulu),ಬೊಲ್ಪು,𑎨𑏆𑎭𑏐𑎦𑎻,bolpu
+79,Nature & Geography,Wind / Air,ಗಾಳಿ,𑎔𑎸𑎳𑎹,gaaLi
+80,Nature & Geography,Fire (Tulu),ತೂ,𑎡𑎼,too
+81,Nature & Geography,Soil / Earth,ಮಣ್ಣು,𑎪𑎠𑏐𑎠𑎻,maNNu
+82,Nature & Geography,River (Tulu),ಸುದೆ,𑎱𑎻𑎣𑏁,sude
+83,Nature & Geography,Sea / Ocean (Tulu),ಕಡಲ್,𑎒𑎞𑎭𑏎,kaDal
+84,Nature & Geography,Mountain / Hill,ಬೆಟ್ಟ,𑎨𑏁𑎜𑏐𑎜,beTTa
+85,Nature & Geography,Tree,ಮರ,𑎪𑎬,mara
+86,Nature & Geography,Flower,ಪೂ,𑎦𑎼,poo
+87,Nature & Geography,Unripe fruit / Nut,ಕಾಯಿ,𑎒𑎸𑎫𑎹,kaayi
+88,Nature & Geography,Ripe fruit (Tulu),ಪರ್ಂದು,𑎦𑎬𑏎𑏌𑎣𑎻,parMdu
+89,Nature & Geography,Forest / Jungle,ಕಾಡು,𑎒𑎸𑎞𑎻,kaaDu
+90,Nature & Geography,Earth / Soil,ಭೂಮಿ,𑎩𑎼𑎪𑎹,bhoomi
+91,Nature & Geography,Sky / Firmament,ಆಕಾಶ,𑎁𑎒𑎸𑎯,aakaasha
+92,Nature & Geography,Cloud,ಮೋಡ,𑎪𑏇𑎞,mODa
+93,Nature & Geography,Lightning,ಮಿಂಚು,𑎪𑎹𑏌𑎗𑎻,miMchu
+94,Nature & Geography,Thunder,ಗುಡುಗು,𑎔𑎻𑎞𑎻𑎔𑎻,guDugu
+95,Nature & Geography,Darkness / Night (Tulu),ಇರುಲ್,𑎂𑎬𑎻𑎭𑏎,irul
+96,Nature & Geography,Water well (Tulu),ಬಾಲ್ಕೆ,𑎨𑎸𑎭𑏐𑎒𑏁,baalke
+97,Nature & Geography,Paddy field / Valley,ಬೈಲು,𑎨𑏅𑎭𑎻,bailu
+98,Nature & Geography,Farm plot (Tulu),ಕಂಡೆ,𑎒𑏌𑎞𑏁,kaMDe
+99,Nature & Geography,Stone / Rock,ಕಲ್ಲು,𑎒𑎭𑏐𑎭𑎻,kallu
+100,Nature & Geography,Branch / Horn,ಕೊಂಬು,𑎒𑏆𑏌𑎨𑎻,koMbu
+101,Animals & Birds,Dog,ನಾಯಿ,𑎥𑎸𑎫𑎹,naayi
+102,Animals & Birds,Cat (Tulu),ಪುಚ್ಚೆ,𑎦𑎻𑎗𑏐𑎗𑏁,puchche
+103,Animals & Birds,Cow (Tulu),ಪೆತ್ತ,𑎦𑏁𑎡𑏐𑎡,petta
+104,Animals & Birds,Bull / Ox (Tulu),ಎರು,𑎊𑎬𑎻,eru
+105,Animals & Birds,Horse,ಕುದುರೆ,𑎒𑎻𑎣𑎻𑎬𑏁,kudure
+106,Animals & Birds,Elephant,ಆನೆ,𑎁𑎥𑏁,aane
+107,Animals & Birds,Tiger (Tulu),ಪಿಲಿ,𑎦𑎹𑎭𑎹,pili
+108,Animals & Birds,Lion,ಸಿಂಹ,𑎱𑎹𑏌𑎲,siMha
+109,Animals & Birds,Crow,ಕಾಗೆ,𑎒𑎸𑎔𑏁,kaage
+110,Animals & Birds,Parrot,ಗಿಳಿ,𑎔𑎹𑎳𑎹,giLi
+111,Animals & Birds,Koel / Cuckoo (Tulu),ಕೋವೆಳು,𑎒𑏇𑎮𑏁𑎳𑎻,kOveLu
+112,Animals & Birds,Snake (Tulu),ಉಚ್ಚು,𑎄𑎗𑏐𑎗𑎻,uchchu
+113,Animals & Birds,Tortoise / Turtle,ಆಮೆ,𑎁𑎪𑏁,aame
+114,Animals & Birds,Fish,ಮೀನು,𑎪𑎺𑎥𑎻,meenu
+115,Animals & Birds,Frog,ಕಪ್ಪೆ,𑎒𑎦𑏐𑎦𑏁,kappe
+116,Animals & Birds,Honeybee,ಜೇನುನೊಣ,𑎙𑏂𑎥𑎻𑎥𑏆𑎠,jEnunoNa
+117,Animals & Birds,Housefly,ನೊಣ,𑎥𑏆𑎠,noNa
+118,Animals & Birds,Butterfly,ಚಿಟ್ಟೆ,𑎗𑎹𑎜𑏐𑎜𑏁,chiTTe
+119,Animals & Birds,Ant (Tulu),ಇರುಂಪು,𑎂𑎬𑎻𑏌𑎦𑎻,iruMpu
+120,Animals & Birds,Deer / Fawn (Tulu),ಕುರ್ಲೆ,𑎒𑎻𑎬𑏐𑎭𑏁,kurle
+121,Animals & Birds,Monkey,ಕೋತಿ,𑎒𑏇𑎡𑎹,kOti
+122,Animals & Birds,Bear,ಕರಡಿ,𑎒𑎬𑎞𑎹,karaDi
+123,Animals & Birds,Tiger,ಹುಲಿ,𑎲𑎻𑎭𑎹,huli
+124,Animals & Birds,Rat / Rodent,ಎಲುಕ,𑎊𑎭𑎻𑎒,eluka
+125,Animals & Birds,Swan,ಹಂಸ,𑎲𑏌𑎱,haMsa
+126,Anatomy & Health,Head (Tulu),ತರೆ,𑎡𑎬𑏁,tare
+127,Anatomy & Health,Eye,ಕಣ್ಣು,𑎒𑎠𑏐𑎠𑎻,kaNNu
+128,Anatomy & Health,Nose,ಮೂಕು,𑎪𑎼𑎒𑎻,mooku
+129,Anatomy & Health,Mouth,ಬಾಯಿ,𑎨𑎸𑎫𑎹,baayi
+130,Anatomy & Health,Ear (Tulu),ಕರ್ಬು,𑎒𑎬𑏐𑎨𑎻,karbu
+131,Anatomy & Health,Hand / Arm,ಕೈ,𑎒𑏅,kai
+132,Anatomy & Health,Leg / Foot (Tulu),ಕಾರ್,𑎒𑎸𑎬𑏎,kaar
+133,Anatomy & Health,Back (Tulu),ಬೆರಿ,𑎨𑏁𑎬𑎹,beri
+134,Anatomy & Health,Blood (Tulu),ನೆತ್ತೆರ್,𑎥𑏁𑎡𑏐𑎡𑏁𑎬𑏎,netter
+135,Anatomy & Health,Tooth (Tulu),ಕೂಲಿ,𑎒𑎼𑎭𑎹,kooli
+136,Anatomy & Health,Tongue (Tulu),ನಾಲಾಯಿ,𑎥𑎸𑎭𑎸𑎫𑎹,naalaayi
+137,Anatomy & Health,Finger (Tulu),ಬಿರಲ್,𑎨𑎹𑎬𑎭𑏎,biral
+138,Anatomy & Health,Heart / Pit,ಗುಂಡಿ,𑎔𑎻𑏌𑎞𑎹,guMDi
+139,Anatomy & Health,Belly / Stomach,ಹೊಟ್ಟೆ,𑎲𑏆𑎜𑏐𑎜𑏁,hoTTe
+140,Anatomy & Health,Bone,ಎಲುಬು,𑎊𑎭𑎻𑎨𑎻,elubu
+141,Anatomy & Health,Stream / Vein,ತೋಡು,𑎡𑏇𑎞𑎻,tODu
+142,Anatomy & Health,Life / Vitality,ಜೀವ,𑎙𑎺𑎮,jeeva
+143,Anatomy & Health,Mind / Heart,ಮನಸ್ಸು,𑎪𑎥𑎱𑏐𑎱𑎻,manassu
+144,Anatomy & Health,Breath,ಉಸಿರು,𑎄𑎱𑎹𑎬𑎻,usiru
+145,Anatomy & Health,Voice / Sound,ಧ್ವನಿ,𑎤𑏐𑎮𑎥𑎹,dhvani
+146,Anatomy & Health,Divine energy,ಭವಾನಿ,𑎩𑎮𑎸𑎥𑎹,bhavaani
+147,Anatomy & Health,Power / Strength,ಶಕ್ತಿ,𑎯𑎒𑏐𑎡𑎹,shakti
+148,Anatomy & Health,Form / Beauty,ರೂಪ,𑎬𑎼𑎦,roopa
+149,Anatomy & Health,Intellect / Wit,ಬುದ್ಧಿ,𑎨𑎻𑎣𑏐𑎤𑎹,buddhi
+150,Anatomy & Health,Sleep / Slumber,ನಿದ್ರೆ,𑎥𑎹𑎣𑏐𑎬𑏁,nidre
+151,House & Objects,House / Residence (Tulu),ಇಲ್ಲ,𑎂𑎭𑏐𑎭,illa
+152,House & Objects,Door (Tulu),ಬಾಕಿಲ್,𑎨𑎸𑎒𑎹𑎭𑏎,baakil
+153,House & Objects,Window (Tulu),ಜನ್ನೆಲ್,𑎙𑎥𑏐𑎥𑏁𑎭𑏎,jannel
+154,House & Objects,Wooden seat / Stool,ಮಣೆ,𑎪𑎠𑏁,maNe
+155,House & Objects,Oil lamp,ದೀಪ,𑎣𑎺𑎦,deepa
+156,House & Objects,Bed / Cot,ಮಂಚ,𑎪𑏌𑎗,maMcha
+157,House & Objects,Knife / Sword,ಕತ್ತಿ,𑎒𑎡𑏐𑎡𑎹,katti
+158,House & Objects,Mirror,ಕನ್ನಡಿ,𑎒𑎥𑏐𑎥𑎞𑎹,kannaDi
+159,House & Objects,Bowl / Vessel,ಬಟ್ಟಲು,𑎨𑎜𑏐𑎜𑎭𑎻,baTTalu
+160,House & Objects,Village / Hometown,ಊರು,𑎅𑎬𑎻,ooru
+161,House & Objects,Shop / Store,ಅಂಗಡಿ,𑎀𑏌𑎔𑎞𑎹,aMgaDi
+162,House & Objects,School,ಶಾಲೆ,𑎯𑎸𑎭𑏁,shaale
+163,House & Objects,Shrine / Temple,ಗುಡಿ,𑎔𑎻𑎞𑎹,guDi
+164,House & Objects,Street / Avenue,ಬೀದಿ,𑎨𑎺𑎣𑎹,beedi
+165,House & Objects,Road / Path,ದಾರಿ,𑎣𑎸𑎬𑎹,daari
+166,House & Objects,Cart / Carriage,ಗಾಡಿ,𑎔𑎸𑎞𑎹,gaaDi
+167,House & Objects,Money / Wealth,ದುಡ್ಡು,𑎣𑎻𑎞𑏐𑎞𑎻,duDDu
+168,House & Objects,Coin / Cash (Tulu),ಕಾಸ್,𑎒𑎸𑎱𑏎,kaas
+169,House & Objects,Book,ಪುಸ್ತಕ,𑎦𑎻𑎱𑏐𑎡𑎒,pustaka
+170,House & Objects,Paper / Letter,ಕಾಗದ,𑎒𑎸𑎔𑎣,kaagada
+171,House & Objects,Wagon / Cart,ಬಂಡಿ,𑎨𑏌𑎞𑎹,baMDi
+172,House & Objects,Betel leaf / Plant leaf,ಎಲೆ,𑎊𑎭𑏁,ele
+173,House & Objects,Cooking vessel,ಪಾತ್ರೆ,𑎦𑎸𑎡𑏐𑎬𑏁,paatre
+174,House & Objects,Glass bottle,ಕುಪ್ಪಿ,𑎒𑎻𑎦𑏐𑎦𑎹,kuppi
+175,House & Objects,Shell / Coconut shell,ಚಿಪ್ಪು,𑎗𑎹𑎦𑏐𑎦𑎻,chippu
+176,Time & Numbers,Today (Tulu),ಇನಿ,𑎂𑎥𑎹,ini
+177,Time & Numbers,Tomorrow (Tulu),ಎಲ್ಲೆ,𑎊𑎭𑏐𑎭𑏁,elle
+178,Time & Numbers,Morning (Tulu),ಕಾಂಡೆ,𑎒𑎸𑏌𑎞𑏁,kaaMDe
+179,Time & Numbers,Evening (Tulu),ಬಯ್ಯ,𑎨𑎫𑏐𑎫,bayya
+180,Time & Numbers,Night,ರಾತ್ರೆ,𑎬𑎸𑎡𑏐𑎬𑏁,raatre
+181,Time & Numbers,Daylight hours,ಪಗಲ್,𑎦𑎔𑎭𑏎,pagal
+182,Time & Numbers,Year,ವರ್ಷ,𑎮𑎬𑏐𑎰,varSha
+183,Time & Numbers,Month / Moon,ತಿಂಗೊಳು,𑎡𑎹𑏌𑎔𑏆𑎳𑎻,tiMgoLu
+184,Time & Numbers,Week / Day of week,ವಾರ,𑎮𑎸𑎬,vaara
+185,Time & Numbers,One 1 (Tulu),ಒಂಜಿ,𑎏𑏌𑎙𑎹,oMji
+186,Time & Numbers,Two 2 (Tulu),ರಡ್ಡ್,𑎬𑎞𑏐𑎞𑏎,raDD
+187,Time & Numbers,Three 3 (Tulu),ಮೂಜಿ,𑎪𑎼𑎙𑎹,mooji
+188,Time & Numbers,Four 4 (Tulu),ನಾಲ್,𑎥𑎸𑎭𑏎,naal
+189,Time & Numbers,Five 5 (Tulu),ಐನ್,𑎎𑎥𑏎,ain
+190,Time & Numbers,Six 6 (Tulu),ಆಜಿ,𑎁𑎙𑎹,aaji
+191,Time & Numbers,Seven 7 (Tulu),ಏಳ್,𑎋𑎳𑏎,EL
+192,Time & Numbers,Eight 8 (Tulu),ಎನ್ಮ,𑎊𑎥𑏐𑎪,enma
+193,Time & Numbers,Nine 9 (Tulu),ಒರುಂಬ,𑎏𑎬𑎻𑏌𑎨,oruMba
+194,Time & Numbers,Ten 10 (Tulu),ಪತ್ತ್,𑎦𑎡𑏐𑎡𑏎,patt
+195,Time & Numbers,Twenty 20 (Tulu),ಇರ್ವ,𑎂𑎬𑏐𑎮,irva
+196,Time & Numbers,Thirty 30 (Tulu),ಮುಪ್ಪ,𑎪𑎻𑎦𑏐𑎦,muppa
+197,Time & Numbers,Forty 40 (Tulu),ನಲ್ಪ,𑎥𑎭𑏐𑎦,nalpa
+198,Time & Numbers,Fifty 50 (Tulu),ಐವ,𑎎𑎮,aiva
+199,Time & Numbers,One hundred 100 (Tulu),ನೂದು,𑎥𑎼𑎣𑎻,noodu
+200,Time & Numbers,One thousand 1000,ಸಾವಿರ,𑎱𑎸𑎮𑎹𑎬,saavira
+201,Verbs & Actions,Come (polite Tulu),ಬಲೆ,𑎨𑎭𑏁,bale
+202,Verbs & Actions,Come (informal Tulu),ಬಲ,𑎨𑎭,bala
+203,Verbs & Actions,Go (polite Tulu),ಪೋಲೆ,𑎦𑏇𑎭𑏁,pOle
+204,Verbs & Actions,Go (informal Tulu),ಪೋ,𑎦𑏇,pO
+205,Verbs & Actions,Eat (Tulu),ತಿನ್ಲೆ,𑎡𑎹𑎥𑏐𑎭𑏁,tinle
+206,Verbs & Actions,Drink (Tulu),ಪರ್ಲೆ,𑎦𑎬𑏐𑎭𑏁,parle
+207,Verbs & Actions,See / Look (Tulu),ತೂಲೆ,𑎡𑎼𑎭𑏁,toole
+208,Verbs & Actions,Ask / Hear (Tulu),ಕೇನ್ಲೆ,𑎒𑏂𑎥𑏐𑎭𑏁,kEnle
+209,Verbs & Actions,Speak / Converse (Tulu),ಪಾತೆರ್ಲೆ,𑎦𑎸𑎡𑏁𑎬𑏐𑎭𑏁,paaterle
+210,Verbs & Actions,Sit down (Tulu),ಕುಲ್ಲೆ,𑎒𑎻𑎭𑏐𑎭𑏁,kulle
+211,Verbs & Actions,Stand up / Halt (Tulu),ಉಂತುಲೆ,𑎄𑏌𑎡𑎻𑎭𑏁,uMtule
+212,Verbs & Actions,Sleep / Lie down (Tulu),ಜೆಪುಲೆ,𑎙𑏁𑎦𑎻𑎭𑏁,jepule
+213,Verbs & Actions,Give (Tulu),ಕೊರ್ಲೆ,𑎒𑏆𑎬𑏐𑎭𑏁,korle
+214,Verbs & Actions,Receive / Take (Tulu),ದೆತೊನ್ಲೆ,𑎣𑏁𑎡𑏆𑎥𑏐𑎭𑏁,detonle
+215,Verbs & Actions,Do / Perform (Tulu),ಮಲ್ಪುಲೆ,𑎪𑎭𑏐𑎦𑎻𑎭𑏁,malpule
+216,Verbs & Actions,Study / Learn (Tulu),ಕಲ್ಪುಲೆ,𑎒𑎭𑏐𑎦𑎻𑎭𑏁,kalpule
+217,Verbs & Actions,Tell / Narrate (Tulu),ಪನ್ಲೆ,𑎦𑎥𑏐𑎭𑏁,panle
+218,Verbs & Actions,Run (Tulu),ಓಡುಲೆ,𑎐𑎞𑎻𑎭𑏁,ODule
+219,Verbs & Actions,Dance (Tulu),ನಲಿಪುಲೆ,𑎥𑎭𑎹𑎦𑎻𑎭𑏁,nalipule
+220,Verbs & Actions,Put / Place (Tulu),ಪಾಡುಲೆ,𑎦𑎸𑎞𑎻𑎭𑏁,paaDule
+221,Verbs & Actions,Write (Tulu),ಬರೆಪುಲೆ,𑎨𑎬𑏁𑎦𑎻𑎭𑏁,barepule
+222,Verbs & Actions,Read (Tulu),ಓದುಲೆ,𑎐𑎣𑎻𑎭𑏁,Odule
+223,Verbs & Actions,Wait / Guard (Tulu),ಕಾಪುಲೆ,𑎒𑎸𑎦𑎻𑎭𑏁,kaapule
+224,Verbs & Actions,Understand / Know (Tulu),ತೆರಿಯುಲೆ,𑎡𑏁𑎬𑎹𑎫𑎻𑎭𑏁,teriyule
+225,Verbs & Actions,Win / Prevail (Tulu),ಗೆಲಿಪುಲೆ,𑎔𑏁𑎭𑎹𑎦𑎻𑎭𑏁,gelipule
+226,Adjectives & Special Ligatures,Good / Fine (Tulu),ಎಡ್ಡೆ,𑎊𑎞𑏐𑎞𑏁,eDDe
+227,Adjectives & Special Ligatures,Bad / Ruined,ಹಾಳ್,𑎲𑎸𑎳𑏎,haaL
+228,Adjectives & Special Ligatures,Big / Grand (Tulu),ಮಲ್ಲ,𑎪𑎭𑏐𑎭,malla
+229,Adjectives & Special Ligatures,Small / Little (Tulu),ಎಲ್ಯ,𑎊𑎭𑏐𑎫,elya
+230,Adjectives & Special Ligatures,Beautiful / Splendid (Tulu),ಪೊರ್ಲು,𑎦𑏆𑎬𑏐𑎭𑎻,porlu
+231,Adjectives & Special Ligatures,Black / Dark,ಕಪ್ಪು,𑎒𑎦𑏐𑎦𑎻,kappu
+232,Adjectives & Special Ligatures,White / Fair (Tulu),ಬೊಳ್ದು,𑎨𑏆𑎳𑏐𑎣𑎻,boLdu
+233,Adjectives & Special Ligatures,Red color,ಕೆಂಪು,𑎒𑏁𑏌𑎦𑎻,keMpu
+234,Adjectives & Special Ligatures,Yellow / Turmeric (Tulu),ಮಂಜೊಲು,𑎪𑏌𑎙𑏆𑎭𑎻,maMjolu
+235,Adjectives & Special Ligatures,Green / Emerald,ಪಚ್ಚೆ,𑎦𑎗𑏐𑎗𑏁,pachche
+236,Adjectives & Special Ligatures,Sweet taste,ಚೀಪೆ,𑎗𑎺𑎦𑏁,cheepe
+237,Adjectives & Special Ligatures,Hot / Pungent / Spicy,ಖಾರ,𑎓𑎸𑎬,khaara
+238,Adjectives & Special Ligatures,Yesterday (distinct Tulu open ae sound),ಕೋಡೆ್,𑎒𑏇𑎞𑏁𑏎,kODae
+239,Adjectives & Special Ligatures,Work (Tulu open ae ending),ಬೇಲೆ್,𑎨𑏂𑎭𑏁𑏎,bElae
+240,Adjectives & Special Ligatures,Fear (Tulu open ae ending),ಪೊಡೆ್,𑎦𑏆𑎞𑏁𑏎,poDae
+241,Adjectives & Special Ligatures,Eye (with dead final halant virama),ಕಣ್ಣ್,𑎒𑎠𑏐𑎠𑏎,kaNN
+242,Adjectives & Special Ligatures,Letter / Alphabet (cluster ksh),ಅಕ್ಷರ,𑎀𑎒𑏐𑎰𑎬,akShara
+243,Adjectives & Special Ligatures,Science / Knowledge (cluster jn),ವಿಜ್ಞಾನ,𑎮𑎹𑎙𑏐𑎛𑎸𑎥,vijnaana
+244,Adjectives & Special Ligatures,School / Academy (cluster dy),ವಿದ್ಯಾಲಯ,𑎮𑎹𑎣𑏐𑎫𑎸𑎭𑎫,vidyaalaya
+245,Adjectives & Special Ligatures,Nation / Country (cluster Sh-T-r),ರಾಷ್ಟ್ರ,𑎬𑎸𑎰𑏐𑎜𑏐𑎬,raaShTra
+246,Adjectives & Special Ligatures,"Creator / Brahman (clusters br, hm)",ಬ್ರಹ್ಮ,𑎨𑏐𑎬𑎲𑏐𑎪,brahma
+247,Adjectives & Special Ligatures,"Prayer (clusters pr, rth)",ಪ್ರಾರ್ಥನೆ,𑎦𑏐𑎬𑎸𑎬𑏐𑎢𑎥𑏁,praarthane
+248,Adjectives & Special Ligatures,Temple / Holy place (cluster sth),ದೇವಸ್ಥಾನ,𑎣𑏂𑎮𑎱𑏐𑎢𑎸𑎥,dEvasthaana
+249,Adjectives & Special Ligatures,Righteous duty / Dharma (cluster rm),ಧರ್ಮ,𑎤𑎬𑏐𑎪,dharma
+250,Adjectives & Special Ligatures,Karnataka (cluster rn),ಕರ್ನಾಟಕ,𑎒𑎬𑏐𑎥𑎸𑎜𑎒,karnaaTaka
