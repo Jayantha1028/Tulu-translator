@@ -65,6 +65,7 @@ CONSONANT_MAPPINGS: List[Tuple[str, str, bool]] = [
     ('NG', 'ಙ', True),
     ('~g', 'ಙ', True),
     ('ch', 'ಚ', True),
+    ('Ch', 'ಛ', True),
     ('jh', 'ಝ', True),
     ('Jh', 'ಝ', True),
     ('nj', 'ಞ', True),
