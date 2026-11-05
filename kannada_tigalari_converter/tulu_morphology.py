@@ -298,6 +298,22 @@ NOUN_PLURAL_SUFFIXES: List[Tuple[str, str, str]] = [
     ("ರ್",     "r",      "plural (human)"),
 ]
 
+# Oblique plural stems (before case markers: -ಕುಲೆಡ್, -ಕುಲೆಗ್, -ರೆಡ್, etc.)
+NOUN_PLURAL_OBLIQUE_SUFFIXES: List[Tuple[str, str, str]] = [
+    ("ಕುಲೆ",   "kule",   "plural oblique"),
+    ("ಗುಲೆ",   "gule",   "plural oblique"),
+    ("ಕ್ಲೆ",   "kle",    "plural oblique"),
+    ("ಕ್ಳೆ",   "kLe",    "plural oblique"),
+    ("ರೆ",     "re",     "plural oblique (human)"),
+    ("ಲೆ",     "le",     "plural oblique"),
+]
+
+# Tulu enclitics that attach to inflected nouns, pronouns, or verbs
+CLITIC_SUFFIXES: List[Tuple[str, str, str, str]] = [
+    ("ಲಾ",    "laa",    "CLITIC.ALSO", "also / too"),
+    ("ನೇ",    "nE",     "CLITIC.EMPH", "indeed / emphatic"),
+]
+
 
 # ═══════════════════════════════════════════════════════════════
 #  4.  TULU VERB SUFFIX TABLES
@@ -433,37 +449,63 @@ IRREGULAR_VERB_MAP: Dict[str, Tuple[str, str, str]] = {
     "ದೆತೊಂಡ":   ("ದೆತೊನ್ಲೆ", "detonle", "Take"),
     # malp- / malt- (do)
     "ಮಲ್ಪ":     ("ಮಲ್ಪುಲೆ", "malpule", "Do"),
+    "ಮಲ್ಪು":    ("ಮಲ್ಪುಲೆ", "malpule", "Do"),
     "ಮಲ್ತ":     ("ಮಲ್ಪುಲೆ", "malpule", "Do"),
     # kalp- / kalt- (learn)
     "ಕಲ್ಪ":     ("ಕಲ್ಪುಲೆ", "kalpule", "Learn"),
+    "ಕಲ್ಪು":    ("ಕಲ್ಪುಲೆ", "kalpule", "Learn"),
     "ಕಲ್ತ":     ("ಕಲ್ಪುಲೆ", "kalpule", "Learn"),
     # pan- / paMD- (tell)
     "ಪನ್":      ("ಪನ್ಲೆ", "panle", "Tell"),
+    "ಪನ್ಪು":    ("ಪನ್ಲೆ", "panle", "Tell"),
     "ಪಂಡ":      ("ಪನ್ಲೆ", "panle", "Tell"),
     "ಪನ್ಪ":     ("ಪನ್ಲೆ", "panle", "Tell"),
     # OD- / ODi- (run)
     "ಓಡ":       ("ಓಡುಲೆ", "ODule", "Run"),
+    "ಓಡು":      ("ಓಡುಲೆ", "ODule", "Run"),
     "ಓಡಿ":      ("ಓಡುಲೆ", "ODule", "Run"),
     # nalip- / nalit- (dance)
     "ನಲಿಪ":     ("ನಲಿಪುಲೆ", "nalipule", "Dance"),
+    "ನಲಿಪು":    ("ನಲಿಪುಲೆ", "nalipule", "Dance"),
     "ನಲಿತ":     ("ನಲಿಪುಲೆ", "nalipule", "Dance"),
     # paaD- / paaDi- (put)
     "ಪಾಡ":      ("ಪಾಡುಲೆ", "paaDule", "Put"),
+    "ಪಾಡು":     ("ಪಾಡುಲೆ", "paaDule", "Put"),
     "ಪಾಡಿ":     ("ಪಾಡುಲೆ", "paaDule", "Put"),
     # barep- / baret- (write)
     "ಬರೆಪ":     ("ಬರೆಪುಲೆ", "barepule", "Write"),
+    "ಬರೆಪು":    ("ಬರೆಪುಲೆ", "barepule", "Write"),
     "ಬರೆತ":     ("ಬರೆಪುಲೆ", "barepule", "Write"),
     # Od- / Odi- (read)
     "ಓದ":       ("ಓದುಲೆ", "Odule", "Read"),
+    "ಓದು":      ("ಓದುಲೆ", "Odule", "Read"),
     "ಓದಿ":      ("ಓದುಲೆ", "Odule", "Read"),
     # kaap- / kaay- (wait)
     "ಕಾಪ":      ("ಕಾಪುಲೆ", "kaapule", "Wait"),
+    "ಕಾಪು":     ("ಕಾಪುಲೆ", "kaapule", "Wait"),
     "ಕಾಯ":      ("ಕಾಪುಲೆ", "kaapule", "Wait"),
     # teriy- (know)
     "ತೆರಿಯ":    ("ತೆರಿಯುಲೆ", "teriyule", "Know"),
     "ತೆರಿದ":    ("ತೆರಿಯುಲೆ", "teriyule", "Know"),
     # gelip- (win)
     "ಗೆಲಿಪ":    ("ಗೆಲಿಪುಲೆ", "gelipule", "Win"),
+    "ಗೆಲಿಪು":   ("ಗೆಲಿಪುಲೆ", "gelipule", "Win"),
+    # bar- / batt- (come negative / variant stems)
+    "ಬರ್ಪು":    ("ಬಲೆ", "bale", "Come"),
+    "ಬತ್ತಿ":    ("ಬಲೆ", "bale", "Come"),
+    # pO- (go)
+    "ಪೋಪು":    ("ಪೋಲೆ", "pOle", "Go"),
+    # tin- (eat)
+    "ತಿನ್ಪು":    ("ತಿನ್ಲೆ", "tinle", "Eat"),
+    # par- (drink)
+    "ಪರ್ಪು":    ("ಪರ್ಲೆ", "parle", "Drink"),
+    # kor- (give)
+    "ಕೊರ್ಪು":   ("ಕೊರ್ಲೆ", "korle", "Give"),
+    # kull- / jep- / deton- / uMt-
+    "ಕುಲ್ಲು":   ("ಕುಲ್ಲೆ", "kulle", "Sit"),
+    "ಜೆಪ್ಪು":   ("ಜೆಪುಲೆ", "jepule", "Sleep"),
+    "ದೆತೊನು":   ("ದೆತೊನ್ಲೆ", "detonle", "Take"),
+    "ಉಂತು":    ("ಉಂತುಲೆ", "uMtule", "Stand"),
     # existential verbs (suppletive)
     "ಉಲ್ಲ":     ("ಉಂಡು", "uMDu", "Exist"),
     "ಇಜ್ಜ":     ("ಇಜ್ಜಿ", "ijji", "Not exist"),
@@ -483,18 +525,36 @@ IRREGULAR_VERB_MAP: Dict[str, Tuple[str, str, str]] = {
 # ═══════════════════════════════════════════════════════════════
 
 TULU_PRONOUNS: Dict[str, Dict[str, str]] = {
-    "ಯಾನ್":  {"latin": "yaan",  "english": "I",           "person": "1sg"},
-    "ಎಂಕ್":  {"latin": "eMk",   "english": "me (obj)",    "person": "1sg.acc"},
-    "ಎನ್ನ":  {"latin": "enna",  "english": "my",          "person": "1sg.gen"},
-    "ನಂಕ್":  {"latin": "naMk",  "english": "our (obj)",   "person": "1pl.acc"},
-    "ನಮ":    {"latin": "nama",  "english": "we",          "person": "1pl"},
-    "ಈರ್":   {"latin": "eer",   "english": "you (polite)", "person": "2sg.pol"},
-    "ನಿಕ್ಕ್": {"latin": "nikk",  "english": "you (obj)",   "person": "2sg.acc"},
-    "ಈರೆನ":  {"latin": "eerena","english": "your",        "person": "2sg.gen"},
-    "ಆಯೆ":   {"latin": "aaye",  "english": "he",          "person": "3sg.m"},
-    "ಆಲ್":   {"latin": "aal",   "english": "she",         "person": "3sg.f"},
-    "ಅವು":   {"latin": "avu",   "english": "it",          "person": "3sg.n"},
-    "ಅಕುಲು":  {"latin": "akulu", "english": "they",        "person": "3pl"},
+    "ಯಾನ್":      {"latin": "yaan",       "english": "I",                     "person": "1sg",         "lemma": "ಯಾನ್"},
+    "ಎಂಕ್":      {"latin": "eMk",        "english": "me / to me",            "person": "1sg.dat",     "lemma": "ಯಾನ್"},
+    "ಎನ್ನ":      {"latin": "enna",       "english": "my",                    "person": "1sg.gen",     "lemma": "ಯಾನ್"},
+    "ಎನ್ನೊಟ್ಟುಗು": {"latin": "ennoTTugu",  "english": "with me",               "person": "1sg.soc",     "lemma": "ಯಾನ್"},
+    "ಎನ್ನರ್ದ್":   {"latin": "ennard",     "english": "from me",               "person": "1sg.abl",     "lemma": "ಯಾನ್"},
+    "ನಮ":        {"latin": "nama",       "english": "we",                    "person": "1pl",         "lemma": "ನಮ"},
+    "ನಂಕ್":      {"latin": "naMk",       "english": "us / to us",            "person": "1pl.dat",     "lemma": "ನಮ"},
+    "ನಮ್ಮ":      {"latin": "namma",      "english": "our",                   "person": "1pl.gen",     "lemma": "ನಮ"},
+    "ನಮ್ಮೊಟ್ಟುಗು": {"latin": "nammoTTugu", "english": "with us",               "person": "1pl.soc",     "lemma": "ನಮ"},
+    "ನಮ್ಮರ್ದ್":   {"latin": "nammard",    "english": "from us",               "person": "1pl.abl",     "lemma": "ನಮ"},
+    "ಈರ್":       {"latin": "eer",        "english": "you (polite)",          "person": "2sg.pol",     "lemma": "ಈರ್"},
+    "ಈರೆಗ್":     {"latin": "eereg",      "english": "to you (polite)",       "person": "2sg.pol.dat", "lemma": "ಈರ್"},
+    "ಈರೆನ":      {"latin": "eerena",     "english": "your (polite)",         "person": "2sg.pol.gen", "lemma": "ಈರ್"},
+    "ಈರೆರ್ದ್":    {"latin": "eererd",     "english": "from you (polite)",     "person": "2sg.pol.abl", "lemma": "ಈರ್"},
+    "ಈರೆನೊಟ್ಟುಗು": {"latin": "eerenoTTugu","english": "with you (polite)",     "person": "2sg.pol.soc", "lemma": "ಈರ್"},
+    "ಈ":         {"latin": "ee",         "english": "you (familiar)",        "person": "2sg",         "lemma": "ಈ"},
+    "ನಿಕ್ಕ್":     {"latin": "nikk",       "english": "to you (familiar)",     "person": "2sg.dat",     "lemma": "ಈ"},
+    "ನಿನ್ನ":     {"latin": "ninna",      "english": "your (familiar)",       "person": "2sg.gen",     "lemma": "ಈ"},
+    "ಆಯೆ":       {"latin": "aaye",       "english": "he",                    "person": "3sg.m",       "lemma": "ಆಯೆ"},
+    "ಆಯಗ್":      {"latin": "aayag",      "english": "to him",                "person": "3sg.m.dat",   "lemma": "ಆಯೆ"},
+    "ಆಯನ":       {"latin": "aayana",     "english": "his",                   "person": "3sg.m.gen",   "lemma": "ಆಯೆ"},
+    "ಆಲ್":       {"latin": "aal",        "english": "she",                   "person": "3sg.f",       "lemma": "ಆಲ್"},
+    "ಆಲೆಗ್":      {"latin": "aaleg",      "english": "to her",                "person": "3sg.f.dat",   "lemma": "ಆಲ್"},
+    "ಆಲೆನ":      {"latin": "aalena",     "english": "her",                   "person": "3sg.f.gen",   "lemma": "ಆಲ್"},
+    "ಅವು":       {"latin": "avu",        "english": "it",                    "person": "3sg.n",       "lemma": "ಅವು"},
+    "ಅಯಿಕ್ಕ್":     {"latin": "ayikk",      "english": "to it",                 "person": "3sg.n.dat",   "lemma": "ಅವು"},
+    "ಅಯಿತ":      {"latin": "ayita",      "english": "its",                   "person": "3sg.n.gen",   "lemma": "ಅವು"},
+    "ಅಕುಲು":      {"latin": "akulu",      "english": "they",                  "person": "3pl",         "lemma": "ಅಕುಲು"},
+    "ಅಕುಲೆಗ್":    {"latin": "akuleg",     "english": "to them",               "person": "3pl.dat",     "lemma": "ಅಕುಲು"},
+    "ಅಕುಲೆನ":    {"latin": "akulena",    "english": "their",                 "person": "3pl.gen",     "lemma": "ಅಕುಲು"},
 }
 
 
@@ -685,17 +745,19 @@ def _try_verb_analysis(word_kn: str) -> Optional[MorphAnalysis]:
 
 def _try_noun_analysis(word_kn: str) -> Optional[MorphAnalysis]:
     """
-    Attempt to parse a Tulu noun form by stripping case suffixes and
-    looking up the residual stem in the lexicon.
+    Attempt to parse a Tulu noun form by stripping case suffixes,
+    oblique plural markers, or nominative plural suffixes, and looking up
+    the residual stem in the lexicon.
     """
     surface_latin = kannada_to_latin(word_kn)
 
+    # 1. Try Case Suffixes (with optional oblique plural marker inside)
     for suffix_kn, suffix_lat, case, gloss in NOUN_CASE_SUFFIXES:
         stem = _strip_suffix(word_kn, suffix_kn)
         if not stem:
             continue
 
-        # Try direct lemma lookup
+        # Check A: Direct lemma lookup of stem
         entry = lookup_lemma(stem)
         if entry:
             return MorphAnalysis(
@@ -715,7 +777,7 @@ def _try_noun_analysis(word_kn: str) -> Optional[MorphAnalysis]:
                 english_meaning=entry["english"],
             )
 
-        # Try adding back inherent 'a' vowel that gets elided
+        # Check B: Adding back inherent vowel to stem
         for vowel_restore in ["", "ು", "ೆ", "ಿ"]:
             candidate = stem + vowel_restore
             entry = lookup_lemma(candidate)
@@ -737,6 +799,60 @@ def _try_noun_analysis(word_kn: str) -> Optional[MorphAnalysis]:
                     english_meaning=entry["english"],
                 )
 
+        # Check C: Oblique plural marker before case suffix (e.g. ಇಲ್ಲ + ಕುಲೆ + ಡ್)
+        for pl_obl_kn, pl_obl_lat, pl_obl_gloss in NOUN_PLURAL_OBLIQUE_SUFFIXES:
+            pl_stem = _strip_suffix(stem, pl_obl_kn)
+            if not pl_stem:
+                continue
+            for vowel_restore in ["", "ು", "ೆ", "ಿ"]:
+                candidate = pl_stem + vowel_restore
+                entry = lookup_lemma(candidate)
+                if entry:
+                    return MorphAnalysis(
+                        surface_word=word_kn, surface_latin=surface_latin,
+                        lemma_kannada=entry["kannada"],
+                        lemma_latin=entry["latin"],
+                        lemma_tigalari=(entry.get("tigalari")
+                                        or kannada_to_tigalari(entry["kannada"])),
+                        pos=POS.NOUN,
+                        morphemes=[
+                            Morpheme(pl_stem, kannada_to_latin(pl_stem), "STEM",
+                                     entry["english"]),
+                            Morpheme(pl_obl_kn, pl_obl_lat, "PL.OBL", pl_obl_gloss),
+                            Morpheme(suffix_kn, suffix_lat,
+                                     case.value[:3].upper(), gloss),
+                        ],
+                        case=case,
+                        number=Number.PLURAL,
+                        english_meaning=entry["english"],
+                    )
+
+    # 2. Try Nominative Plural Suffixes (e.g. ಇಲ್ಲಕುಲು, ಮರಕುಲು)
+    for pl_kn, pl_lat, pl_gloss in NOUN_PLURAL_SUFFIXES:
+        stem = _strip_suffix(word_kn, pl_kn)
+        if not stem:
+            continue
+        for vowel_restore in ["", "ು", "ೆ", "ಿ"]:
+            candidate = stem + vowel_restore
+            entry = lookup_lemma(candidate)
+            if entry:
+                return MorphAnalysis(
+                    surface_word=word_kn, surface_latin=surface_latin,
+                    lemma_kannada=entry["kannada"],
+                    lemma_latin=entry["latin"],
+                    lemma_tigalari=(entry.get("tigalari")
+                                    or kannada_to_tigalari(entry["kannada"])),
+                    pos=POS.NOUN,
+                    morphemes=[
+                        Morpheme(stem, kannada_to_latin(stem), "STEM",
+                                 entry["english"]),
+                        Morpheme(pl_kn, pl_lat, "PL", pl_gloss),
+                    ],
+                    case=Case.NOMINATIVE,
+                    number=Number.PLURAL,
+                    english_meaning=entry["english"],
+                )
+
     return None
 
 
@@ -744,12 +860,14 @@ def _try_pronoun(word_kn: str) -> Optional[MorphAnalysis]:
     """Check if the word is a known Tulu pronoun."""
     info = TULU_PRONOUNS.get(word_kn)
     if info:
+        lemma_kn = info.get("lemma", word_kn)
+        lemma_lat = info.get("latin", kannada_to_latin(lemma_kn))
         return MorphAnalysis(
             surface_word=word_kn,
             surface_latin=info["latin"],
-            lemma_kannada=word_kn,
-            lemma_latin=info["latin"],
-            lemma_tigalari=kannada_to_tigalari(word_kn),
+            lemma_kannada=lemma_kn,
+            lemma_latin=lemma_lat,
+            lemma_tigalari=kannada_to_tigalari(lemma_kn),
             pos=POS.PRONOUN,
             morphemes=[
                 Morpheme(word_kn, info["latin"], info["person"],
@@ -858,7 +976,34 @@ def analyze(word: str, script: str = "auto") -> MorphAnalysis:
             confidence=1.0,
         )
 
-    # 5. Fallback: return as unknown with the word itself as lemma
+    # 5. Try peeling enclitics (-ಲಾ 'also', -ನೇ 'indeed') from the word
+    for clitic_kn, clitic_lat, clitic_tag, clitic_gloss in CLITIC_SUFFIXES:
+        if word_kn.endswith(clitic_kn) and len(word_kn) > len(clitic_kn) + 1:
+            base_kn = word_kn[:-len(clitic_kn)]
+            base_analysis = analyze(base_kn, script="kannada")
+            if base_analysis.pos != POS.UNKNOWN and base_analysis.confidence >= 0.5:
+                gloss_suffix = f" ({clitic_gloss})" if base_analysis.english_meaning else ""
+                return MorphAnalysis(
+                    surface_word=word_kn,
+                    surface_latin=surface_latin,
+                    lemma_kannada=base_analysis.lemma_kannada,
+                    lemma_latin=base_analysis.lemma_latin,
+                    lemma_tigalari=base_analysis.lemma_tigalari,
+                    pos=base_analysis.pos,
+                    morphemes=base_analysis.morphemes + [
+                        Morpheme(clitic_kn, clitic_lat, clitic_tag, clitic_gloss)
+                    ],
+                    case=base_analysis.case,
+                    tense=base_analysis.tense,
+                    person=base_analysis.person,
+                    number=base_analysis.number,
+                    mood=base_analysis.mood,
+                    is_negative=base_analysis.is_negative,
+                    english_meaning=f"{base_analysis.english_meaning}{gloss_suffix}",
+                    confidence=base_analysis.confidence * 0.95,
+                )
+
+    # 6. Fallback: return as unknown with the word itself as lemma
     return MorphAnalysis(
         surface_word=word_kn, surface_latin=surface_latin,
         lemma_kannada=word_kn, lemma_latin=surface_latin,
