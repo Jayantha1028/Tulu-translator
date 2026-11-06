@@ -108,7 +108,7 @@ def run_interactive(from_script="auto", to_script="tigalari", debug=False):
             print(f"Error: {e}\n")
 
 
-def launch_web(port=8080):
+def launch_web(port=9000):
     """Launches the local web transliterator & ASR speech studio in browser."""
     import http.server
     import socketserver
@@ -368,14 +368,14 @@ def launch_web(port=8080):
 
     handler = TuluWebRequestHandler
 
-    # Find free port if 8080 is taken
+    # Find free port if requested port is taken
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         s.bind(("", port))
         s.close()
     except OSError:
-        port = 8081
+        port = port + 1
 
     httpd = socketserver.TCPServer(("", port), handler)
     url = f"http://localhost:{port}/index.html"
@@ -502,8 +502,8 @@ def main():
         help="Number of training epochs (default: 3)"
     )
     parser.add_argument(
-        "-p", "--port", type=int, default=8080,
-        help="Port for web server (default: 8080)"
+        "-p", "--port", type=int, default=9000,
+        help="Port for web server (default: 9000)"
     )
 
     # ── Morphological Analyzer Commands ──

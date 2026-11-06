@@ -14,7 +14,7 @@ if BASE_DIR not in sys.path:
 from kannada_tigalari_converter.cli import launch_web
 
 def main():
-    port = 8080
+    port = int(os.environ.get("PORT", 9000))
     if len(sys.argv) > 1 and sys.argv[1].isdigit():
         port = int(sys.argv[1])
     launch_web(port=port)

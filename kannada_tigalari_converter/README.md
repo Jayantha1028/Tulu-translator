@@ -86,7 +86,7 @@ Or:
 ```bash
 python3 kannada_tigalari_converter/cli.py --web
 ```
-This opens `http://localhost:8080/index.html` in your default browser.
+This opens `http://localhost:9000/index.html` in your default browser.
 
 ---
 
