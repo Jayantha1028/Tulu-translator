@@ -182,9 +182,45 @@ def launch_web(port=8080):
                     self._send_json({"success": False, "error": str(e)}, status=500)
                 return
 
+            elif self.path == "/api/translate/sentence":
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+                    payload = json.loads(body.decode("utf-8")) if body else {}
+                    text = payload.get("text", "")
+                    src = payload.get("source_lang", None)
+
+                    from kannada_tigalari_converter.nlp.sentence_translator import FullSentenceTranslator
+                    res = FullSentenceTranslator.translate(text, source_lang=src)
+                    self._send_json({
+                        "success": True,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
             self._send_json({"error": "Not found"}, status=404)
 
         def do_GET(self):
+            if self.path.startswith("/api/translate/sentence"):
+                try:
+                    import urllib.parse
+                    parsed = urllib.parse.urlparse(self.path)
+                    params = urllib.parse.parse_qs(parsed.query)
+                    text = params.get("text", [""])[0]
+                    src = params.get("source_lang", [None])[0]
+
+                    from kannada_tigalari_converter.nlp.sentence_translator import FullSentenceTranslator
+                    res = FullSentenceTranslator.translate(text, source_lang=src)
+                    self._send_json({
+                        "success": True,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
             if self.path.startswith("/api/asr/test-sample"):
                 try:
                     import urllib.parse

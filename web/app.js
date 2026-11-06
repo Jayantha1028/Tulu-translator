@@ -98,6 +98,55 @@ document.addEventListener('DOMContentLoaded', () => {
   const transTags = document.getElementById('transTags');
   const copyTranslationBtn = document.getElementById('copyTranslationBtn');
 
+  let sentenceDebounceTimer = null;
+
+  async function fetchSentenceTranslation(rawSentence) {
+    try {
+      const resp = await fetch(`/api/translate/sentence?text=${encodeURIComponent(rawSentence)}`);
+      if (!resp.ok) return;
+      const data = await resp.json();
+      if (!data.success || !data.translated_text) return;
+
+      translationCard.style.display = 'block';
+      transTags.innerHTML = '';
+
+      if (data.source_lang === 'english') {
+        transDirection.textContent = 'English ➔ Tulu (SOV Sentence Grammar)';
+        transPrimaryText.textContent = data.translated_text;
+        transPrimaryText.className = 'trans-primary kannada';
+        transPhoneticText.textContent = `/${data.tulu_latin}/`;
+        transSecondaryText.innerHTML = `<strong>Tulu-Tigalari (Unicode 16.0):</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari}</span>`;
+
+        const modeTag = document.createElement('span');
+        modeTag.className = 'trans-tag';
+        modeTag.textContent = 'SVO ➔ SOV Grammar';
+        transTags.appendChild(modeTag);
+      } else {
+        transDirection.textContent = 'Tulu ➔ English (Full-Sentence Grammar)';
+        transPrimaryText.textContent = data.translated_text;
+        transPrimaryText.className = 'trans-primary';
+        transPhoneticText.textContent = `${data.tulu_kannada} (${data.tulu_latin})`;
+        transSecondaryText.innerHTML = `<strong>Tulu-Tigalari:</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari}</span>`;
+
+        const modeTag = document.createElement('span');
+        modeTag.className = 'trans-tag';
+        modeTag.textContent = 'SOV ➔ SVO Grammar';
+        transTags.appendChild(modeTag);
+      }
+
+      if (Array.isArray(data.grammar_notes)) {
+        data.grammar_notes.slice(0, 2).forEach(note => {
+          const nTag = document.createElement('span');
+          nTag.className = 'trans-tag morph';
+          nTag.textContent = note;
+          transTags.appendChild(nTag);
+        });
+      }
+    } catch (e) {
+      // Gracefully silent on network failure
+    }
+  }
+
   function updateLiveTranslation(rawInput) {
     if (!translationCard) return;
     const input = (rawInput || '').trim();
@@ -219,8 +268,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // For multi-word phrases or sentences, trigger full-sentence grammar translation
+    if (input.includes(' ') && input.length >= 4) {
+      if (sentenceDebounceTimer) clearTimeout(sentenceDebounceTimer);
+      sentenceDebounceTimer = setTimeout(() => {
+        fetchSentenceTranslation(input);
+      }, 150);
+      return;
+    }
+
     if (!match) {
-      translationCard.style.display = 'none';
+      if (input.length >= 3) {
+        if (sentenceDebounceTimer) clearTimeout(sentenceDebounceTimer);
+        sentenceDebounceTimer = setTimeout(() => {
+          fetchSentenceTranslation(input);
+        }, 150);
+      } else {
+        translationCard.style.display = 'none';
+      }
       return;
     }
 

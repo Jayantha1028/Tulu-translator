@@ -358,6 +358,15 @@ class TuluSpeechRecognizer:
                     if dict_matches:
                         english_trans = dict_matches[0]["english"]
                 if not english_trans:
+                    # Leverage Full-Sentence Grammar Translator
+                    try:
+                        from kannada_tigalari_converter.nlp.sentence_translator import FullSentenceTranslator
+                        s_res = FullSentenceTranslator.translate(kannada_text, source_lang="tulu")
+                        if s_res and s_res.translated_text:
+                            english_trans = s_res.translated_text
+                    except Exception:
+                        pass
+                if not english_trans:
                     # Fallback to morphology analysis
                     morph = morph_analyze(kannada_text)
                     if morph.english_meaning:

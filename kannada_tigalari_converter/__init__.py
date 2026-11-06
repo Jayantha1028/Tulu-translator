@@ -37,6 +37,8 @@ from .lexicon import (
 
 # 3. NLP & Morphology
 from .nlp import (
+    FullSentenceTranslator,
+    TranslationResult,
     morphological_analyze,
     analyze_sentence,
     lemmatize,

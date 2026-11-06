@@ -23,8 +23,14 @@ from .tulu_nmt_pipeline import (
     NMTMetrics,
     load_nmt_benchmark_corpus,
 )
+from .sentence_translator import (
+    FullSentenceTranslator,
+    TranslationResult,
+)
 
 __all__ = [
+    "FullSentenceTranslator",
+    "TranslationResult",
     "morphological_analyze",
     "analyze_sentence",
     "lemmatize",
