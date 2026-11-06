@@ -1318,6 +1318,42 @@ def export_analysis_to_dicts(analyses: List[MorphAnalysis]) -> List[Dict]:
     return [a.to_dict() for a in analyses]
 
 
+class TuluMorphAnalyzer:
+    """Class wrapper providing lemmatization, POS tagging, and morpheme parsing
+
+    Compatible with standard microservice interfaces.
+    """
+
+    def __init__(self, default_script: str = "auto"):
+        self.default_script = default_script
+
+    def lemmatize(self, word: str, script: Optional[str] = None) -> str:
+        res = analyze(word, script=script or self.default_script)
+        return res.lemma_kannada if res and res.lemma_kannada else word
+
+    def predict_pos(self, word: str, script: Optional[str] = None) -> str:
+        tag = pos_tag(word, script=script or self.default_script)
+        return tag.value if hasattr(tag, "value") else str(tag)
+
+    def parse(self, word: str, script: Optional[str] = None) -> List[Dict[str, str]]:
+        res = analyze(word, script=script or self.default_script)
+        if not res:
+            return []
+        return [
+            {
+                "surface": m.surface,
+                "latin": getattr(m, "latin", ""),
+                "tag": m.tag,
+                "gloss": getattr(m, "gloss", ""),
+                "meaning": getattr(m, "gloss", ""),
+            }
+            for m in res.morphemes
+        ]
+
+    def analyze(self, word: str, script: Optional[str] = None) -> MorphAnalysis:
+        return analyze(word, script=script or self.default_script)
+
+
 # ═══════════════════════════════════════════════════════════════
 # 12.  MODULE-LEVEL CONVENIENCE — QUICK DEMO
 # ═══════════════════════════════════════════════════════════════

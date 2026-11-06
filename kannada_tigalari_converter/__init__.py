@@ -81,12 +81,22 @@ from .scrapers import (
     process_book_to_corpus,
 )
 
+# 6. Vision, OCR & Handwriting Strokes
+from .vision import (
+    extract_text_from_image,
+    extract_entities_from_text,
+    ocr_and_translate_document,
+    preprocess_document_image,
+    CharacterStrokeRecognizer,
+)
+
 # Also expose submodules
 from . import core
 from . import lexicon
 from . import nlp
 from . import asr
 from . import scrapers
+from . import vision
 
 __all__ = [
     # Submodules
@@ -95,6 +105,7 @@ __all__ = [
     "nlp",
     "asr",
     "scrapers",
+    "vision",
     # Core
     "kannada_to_tigalari",
     "tigalari_to_kannada",
@@ -157,4 +168,10 @@ __all__ = [
     "download_book_pdf",
     "ocr_pdf_pages",
     "process_book_to_corpus",
+    # Vision & OCR
+    "extract_text_from_image",
+    "extract_entities_from_text",
+    "ocr_and_translate_document",
+    "preprocess_document_image",
+    "CharacterStrokeRecognizer",
 ]

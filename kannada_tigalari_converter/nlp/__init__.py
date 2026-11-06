@@ -6,6 +6,7 @@ declension & conjugation paradigms, and NMT parallel corpus processing.
 """
 
 from .tulu_morphology import (
+    TuluMorphAnalyzer,
     analyze as morphological_analyze,
     analyze_sentence,
     lemmatize,
@@ -31,6 +32,7 @@ from .sentence_translator import (
 __all__ = [
     "FullSentenceTranslator",
     "TranslationResult",
+    "TuluMorphAnalyzer",
     "morphological_analyze",
     "analyze_sentence",
     "lemmatize",

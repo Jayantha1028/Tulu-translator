@@ -115,6 +115,7 @@ def launch_web(port=8080):
     import threading
     import json
     import io
+    import time
 
     web_dir = os.path.join(PARENT_DIR, "web")
     if not os.path.isdir(web_dir):
@@ -139,7 +140,12 @@ def launch_web(port=8080):
             super().__init__(*args, directory=web_dir, **kwargs)
 
         def do_POST(self):
+            t0 = time.time()
+            status_code = 200
+            event_name = "api_request"
+
             if self.path == "/api/asr/transcribe":
+                event_name = "asr_transcribe"
                 try:
                     content_length = int(self.headers.get("Content-Length", 0))
                     body = self.rfile.read(content_length)
@@ -169,7 +175,8 @@ def launch_web(port=8080):
                         audio_bytes = body
 
                     if not audio_bytes:
-                        self._send_json({"error": "No audio data received"}, status=400)
+                        status_code = 400
+                        self._send_json({"error": "No audio data received"}, status=status_code)
                         return
 
                     recognizer = get_recognizer()
@@ -179,10 +186,17 @@ def launch_web(port=8080):
                         **res.to_dict()
                     })
                 except Exception as e:
-                    self._send_json({"success": False, "error": str(e)}, status=500)
+                    status_code = 500
+                    self._send_json({"success": False, "error": str(e)}, status=status_code)
+                finally:
+                    dur_ms = (time.time() - t0) * 1000
+                    from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
+                    GLOBAL_TELEMETRY.record(dur_ms, status_code=status_code)
+                    GLOBAL_LOGGER.log("tulu-asr", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
                 return
 
             elif self.path == "/api/translate/sentence":
+                event_name = "translate_sentence"
                 try:
                     content_length = int(self.headers.get("Content-Length", 0))
                     body = self.rfile.read(content_length)
@@ -197,12 +211,110 @@ def launch_web(port=8080):
                         **res.to_dict()
                     })
                 except Exception as e:
-                    self._send_json({"success": False, "error": str(e)}, status=500)
+                    status_code = 500
+                    self._send_json({"success": False, "error": str(e)}, status=status_code)
+                finally:
+                    dur_ms = (time.time() - t0) * 1000
+                    from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
+                    GLOBAL_TELEMETRY.record(dur_ms, status_code=status_code)
+                    GLOBAL_LOGGER.log("tulu-nmt", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
+                return
+
+            elif self.path == "/api/ocr/extract-and-translate":
+                event_name = "ocr_extract_and_translate"
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+                    content_type = self.headers.get("Content-Type", "")
+
+                    image_data = None
+                    lang = "kan+eng"
+
+                    if "application/json" in content_type:
+                        import base64
+                        payload = json.loads(body.decode("utf-8"))
+                        image_data = payload.get("image", payload.get("image_base64", ""))
+                        lang = payload.get("lang", "kan+eng")
+                    elif "multipart/form-data" in content_type:
+                        boundary = content_type.split("boundary=")[-1].strip().encode()
+                        parts = body.split(b"--" + boundary)
+                        for part in parts:
+                            if b'filename="' in part or b'name="image"' in part or b'name="file"' in part:
+                                header_end = part.find(b"\r\n\r\n")
+                                if header_end != -1:
+                                    image_data = part[header_end + 4:].rstrip(b"\r\n")
+                                    break
+                    else:
+                        image_data = body
+
+                    if not image_data:
+                        status_code = 400
+                        self._send_json({"error": "No image data received"}, status=status_code)
+                        return
+
+                    from kannada_tigalari_converter.vision.tulu_ocr_service import ocr_and_translate_document
+                    result = ocr_and_translate_document(image_data, lang=lang)
+                    self._send_json({
+                        "success": True,
+                        **result
+                    })
+                except Exception as e:
+                    status_code = 500
+                    self._send_json({"success": False, "error": str(e)}, status=status_code)
+                finally:
+                    dur_ms = (time.time() - t0) * 1000
+                    from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
+                    GLOBAL_TELEMETRY.record(dur_ms, status_code=status_code)
+                    GLOBAL_LOGGER.log("tulu-ocr", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
+                return
+
+            elif self.path in ("/recognize/strokes", "/api/recognize/strokes"):
+                event_name = "stroke_recognition"
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+                    payload = json.loads(body.decode("utf-8")) if body else {}
+                    strokes = payload.get("strokes", [])
+
+                    from kannada_tigalari_converter.vision.stroke_recognizer import CharacterStrokeRecognizer
+                    recognizer = CharacterStrokeRecognizer()
+                    result = recognizer.recognize(strokes)
+                    self._send_json({
+                        "success": True,
+                        **result
+                    })
+                except Exception as e:
+                    status_code = 500
+                    self._send_json({"success": False, "error": str(e)}, status=status_code)
+                finally:
+                    dur_ms = (time.time() - t0) * 1000
+                    from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
+                    GLOBAL_TELEMETRY.record(dur_ms, status_code=status_code)
+                    GLOBAL_LOGGER.log("tulu-strokes", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
                 return
 
             self._send_json({"error": "Not found"}, status=404)
 
         def do_GET(self):
+            t0 = time.time()
+            status_code = 200
+
+            if self.path in ("/health", "/api/health"):
+                from kannada_tigalari_converter.core.observability import GLOBAL_TELEMETRY
+                self._send_json({
+                    "status": "healthy",
+                    "service": "tulu-unified-suite",
+                    "telemetry": GLOBAL_TELEMETRY.summary()
+                })
+                return
+
+            if self.path in ("/metrics", "/api/metrics"):
+                from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
+                self._send_json({
+                    "telemetry": GLOBAL_TELEMETRY.summary(),
+                    "recent_logs": GLOBAL_LOGGER.tail(25)
+                })
+                return
             if self.path.startswith("/api/translate/sentence"):
                 try:
                     import urllib.parse

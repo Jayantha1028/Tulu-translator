@@ -22,6 +22,12 @@ from .transliterator import (
     latin_to_tigalari,
     tigalari_to_latin,
 )
+from .observability import (
+    StructuredLogger,
+    TelemetryTracker,
+    GLOBAL_LOGGER,
+    GLOBAL_TELEMETRY,
+)
 
 __all__ = [
     "kannada_to_tigalari",
@@ -35,4 +41,8 @@ __all__ = [
     "tigalari_to_latin",
     "KANNADA_TO_TIGALARI",
     "TIGALARI_TO_KANNADA",
+    "StructuredLogger",
+    "TelemetryTracker",
+    "GLOBAL_LOGGER",
+    "GLOBAL_TELEMETRY",
 ]
