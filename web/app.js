@@ -561,6 +561,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Export Scalable Vector Graphic (SVG)
+  const exportSvgBtn = document.getElementById('exportSvgBtn');
+  if (exportSvgBtn) {
+    exportSvgBtn.addEventListener('click', () => {
+      const text = targetOutput.value.trim();
+      if (!text) {
+        showToast('Please type some text first to export!');
+        return;
+      }
+
+      const isTigalari = (toScriptSelect.value === 'tigalari');
+      const fontFace = isTigalari ? 'Mallige Unicode, Mallige, Inter, sans-serif' : 'Inter, -apple-system, sans-serif';
+      const fontSize = isTigalari ? 48 : 36;
+      const lines = text.split('\n');
+      const padX = 50;
+      const padY = 60;
+      const lineH = fontSize * 1.5;
+      const totalW = 800;
+      const totalH = Math.max(340, lines.length * lineH + padY * 2 + 50);
+
+      const escapedLines = lines.map((l, i) => {
+        const safe = l.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return `<text x="${padX}" y="${padY + i * lineH}" font-family="${fontFace}" font-size="${fontSize}" font-weight="600" fill="#f8fafc">${safe}</text>`;
+      }).join('\n    ');
+
+      const svgContent = `<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalW} ${totalH}" width="${totalW}" height="${totalH}">
+  <defs>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap');
+      @font-face {
+        font-family: 'Mallige Unicode';
+        src: local('Mallige Unicode'), local('Mallige'), local('Tulu Tigalari');
+      }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" rx="16" fill="url(#cardGrad)" stroke="#334155" stroke-width="2"/>
+  <rect x="0" y="0" width="100%" height="6" fill="#0284c7" rx="3"/>
+  <g transform="translate(0, 0)">
+    ${escapedLines}
+  </g>
+  <line x1="${padX}" y1="${totalH - 45}" x2="${totalW - padX}" y2="${totalH - 45}" stroke="#334155" stroke-width="1"/>
+  <text x="${padX}" y="${totalH - 22}" font-family="Inter, sans-serif" font-size="12" fill="#94a3b8">Tulu-Tigalari Transliterator • Unicode 16.0 (U+11380–U+113FF)</text>
+</svg>`;
+
+      const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'tulu_tigalari_vector.svg';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast('Downloaded scalable vector SVG! ✨');
+    });
+  }
+
   // Real-time Candidate Suggestion Bar (IME)
   const suggestionBar = document.getElementById('suggestionBar');
 

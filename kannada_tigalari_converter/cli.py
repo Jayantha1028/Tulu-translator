@@ -374,6 +374,32 @@ def launch_web(port=9000):
                 })
                 return
 
+            if self.path in ("/info", "/api/info"):
+                self._send_json({
+                    "name": "Tulu-Tigalari Multi-Engine Platform",
+                    "version": "1.0.0",
+                    "unicode_standard": "Unicode 16.0 (U+11380 - U+113FF)",
+                    "port": self.server.server_address[1],
+                    "corpus": {
+                        "validation_words": 1000,
+                        "canonical_words": 250,
+                        "master_corpus_present": os.path.exists(os.path.join(DATASETS_DIR, "tulu_master_consolidated_corpus.csv")),
+                    },
+                    "capabilities": [
+                        "lossless_transliteration",
+                        "sentence_translation_sov_svo",
+                        "agglutinative_morphology",
+                        "speech_to_text_whisper",
+                        "text_to_speech_synthesis",
+                        "vision_ocr_document",
+                        "magic_slate_stroke_recognition",
+                        "neural_slm_qwen_lora",
+                        "offline_pwa_serviceworker",
+                        "svg_card_export"
+                    ]
+                })
+                return
+
             if self.path in ("/metrics", "/api/metrics"):
                 from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
                 self._send_json({
@@ -633,6 +659,14 @@ def main():
         "-p", "--port", type=int, default=9000,
         help="Port for web server (default: 9000)"
     )
+    parser.add_argument(
+        "--benchmark", action="store_true",
+        help="Run comprehensive zero-burden performance & accuracy benchmark"
+    )
+    parser.add_argument(
+        "--benchmark-export", type=str, default=None,
+        help="Save benchmark results to Markdown report file"
+    )
 
     # ── Morphological Analyzer Commands ──
     parser.add_argument(
@@ -886,6 +920,11 @@ def main():
             for slot, f in sorted(table.irregular_forms.items()):
                 print(f"  {slot:12s} : {f['kannada']:15s} ({f['latin']:15s}) {f['tigalari']}")
         print("=" * 70)
+        return
+
+    if args.benchmark:
+        from kannada_tigalari_converter.benchmark import TuluBenchmarkSuite
+        TuluBenchmarkSuite.run_all(export_markdown=args.benchmark_export)
         return
 
     if args.web:
