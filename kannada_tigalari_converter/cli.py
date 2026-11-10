@@ -293,6 +293,72 @@ def launch_web(port=9000):
                     GLOBAL_LOGGER.log("tulu-strokes", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
                 return
 
+            elif self.path == "/api/tts/synthesize":
+                event_name = "tts_synthesize"
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+                    payload = json.loads(body.decode("utf-8")) if body else {}
+                    text = payload.get("text", "")
+                    script = payload.get("script", "auto")
+                    speed = float(payload.get("speed_rate", 1.0))
+
+                    from kannada_tigalari_converter.asr.tulu_tts_engine import TuluTTSEngine
+                    result = TuluTTSEngine.synthesize_speech(text, script=script, speed_rate=speed)
+                    self._send_json(result)
+                except Exception as e:
+                    status_code = 500
+                    self._send_json({"success": False, "error": str(e)}, status=status_code)
+                finally:
+                    dur_ms = (time.time() - t0) * 1000
+                    from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
+                    GLOBAL_TELEMETRY.record(dur_ms, status_code=status_code)
+                    GLOBAL_LOGGER.log("tulu-tts", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
+                return
+
+            elif self.path == "/api/translate/neural":
+                event_name = "translate_neural_slm"
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+                    payload = json.loads(body.decode("utf-8")) if body else {}
+                    text = payload.get("text", "")
+                    src = payload.get("source_lang", None)
+                    engine = payload.get("engine", "hybrid")
+
+                    from kannada_tigalari_converter.nlp.neural_translator import NeuralTuluTranslator
+                    translator = NeuralTuluTranslator(preferred_engine=engine)
+                    res = translator.translate(text, source_lang=src)
+                    self._send_json({
+                        "success": True,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    status_code = 500
+                    self._send_json({"success": False, "error": str(e)}, status=status_code)
+                finally:
+                    dur_ms = (time.time() - t0) * 1000
+                    from kannada_tigalari_converter.core.observability import GLOBAL_LOGGER, GLOBAL_TELEMETRY
+                    GLOBAL_TELEMETRY.record(dur_ms, status_code=status_code)
+                    GLOBAL_LOGGER.log("tulu-slm", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
+                return
+
+            elif self.path == "/api/dataset/export-lora":
+                event_name = "export_lora_dataset"
+                try:
+                    from kannada_tigalari_converter.nlp.neural_translator import NeuralTuluTranslator
+                    out_path = os.path.join(DATASETS_DIR, "tulu_lora_sft_dataset.jsonl")
+                    count = NeuralTuluTranslator.export_lora_sft_dataset(out_path)
+                    self._send_json({
+                        "success": True,
+                        "record_count": count,
+                        "file_path": out_path,
+                    })
+                except Exception as e:
+                    status_code = 500
+                    self._send_json({"success": False, "error": str(e)}, status=status_code)
+                return
+
             self._send_json({"error": "Not found"}, status=404)
 
         def do_GET(self):
@@ -315,6 +381,64 @@ def launch_web(port=9000):
                     "recent_logs": GLOBAL_LOGGER.tail(25)
                 })
                 return
+            if self.path.startswith("/api/tts/synthesize"):
+                try:
+                    import urllib.parse
+                    parsed = urllib.parse.urlparse(self.path)
+                    params = urllib.parse.parse_qs(parsed.query)
+                    text = params.get("text", [""])[0]
+                    script = params.get("script", ["auto"])[0]
+                    speed = float(params.get("speed_rate", ["1.0"])[0])
+
+                    from kannada_tigalari_converter.asr.tulu_tts_engine import TuluTTSEngine
+                    result = TuluTTSEngine.synthesize_speech(text, script=script, speed_rate=speed)
+                    self._send_json(result)
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
+            if self.path == "/api/translate/neural/status":
+                try:
+                    from kannada_tigalari_converter.nlp.neural_translator import NeuralTuluTranslator
+                    status = NeuralTuluTranslator().check_slm_availability()
+                    self._send_json({"success": True, **status})
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
+            if self.path.startswith("/api/translate/neural"):
+                try:
+                    import urllib.parse
+                    parsed = urllib.parse.urlparse(self.path)
+                    params = urllib.parse.parse_qs(parsed.query)
+                    text = params.get("text", [""])[0]
+                    src = params.get("source_lang", [None])[0]
+                    engine = params.get("engine", ["hybrid"])[0]
+
+                    from kannada_tigalari_converter.nlp.neural_translator import NeuralTuluTranslator
+                    res = NeuralTuluTranslator(preferred_engine=engine).translate(text, source_lang=src)
+                    self._send_json({
+                        "success": True,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
+            if self.path == "/api/dataset/export-lora":
+                try:
+                    from kannada_tigalari_converter.nlp.neural_translator import NeuralTuluTranslator
+                    out_path = os.path.join(DATASETS_DIR, "tulu_lora_sft_dataset.jsonl")
+                    count = NeuralTuluTranslator.export_lora_sft_dataset(out_path)
+                    self._send_json({
+                        "success": True,
+                        "record_count": count,
+                        "file_path": out_path,
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
             if self.path.startswith("/api/translate/sentence"):
                 try:
                     import urllib.parse
@@ -377,7 +501,11 @@ def launch_web(port=9000):
     except OSError:
         port = port + 1
 
-    httpd = socketserver.TCPServer(("", port), handler)
+    class ThreadingServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+        daemon_threads = True
+        allow_reuse_address = True
+
+    httpd = ThreadingServer(("", port), handler)
     url = f"http://localhost:{port}/index.html"
     print(f"Serving Tulu Transliterator & Speech Studio at {url}")
     print("Press Ctrl+C to stop the web server.\n")

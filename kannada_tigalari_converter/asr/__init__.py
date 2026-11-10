@@ -19,6 +19,9 @@ from .tulu_asr_trainer import (
     TuluSpeechDataset,
     train_tulu_asr,
 )
+from .tulu_tts_engine import (
+    TuluTTSEngine,
+)
 
 __all__ = [
     "AudioPreprocessor",
@@ -28,4 +31,5 @@ __all__ = [
     "TuluASRTrainer",
     "TuluSpeechDataset",
     "train_tulu_asr",
+    "TuluTTSEngine",
 ]

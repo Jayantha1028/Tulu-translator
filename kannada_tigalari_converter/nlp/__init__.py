@@ -28,10 +28,16 @@ from .sentence_translator import (
     FullSentenceTranslator,
     TranslationResult,
 )
+from .neural_translator import (
+    NeuralTuluTranslator,
+    NeuralTranslationResult,
+)
 
 __all__ = [
     "FullSentenceTranslator",
     "TranslationResult",
+    "NeuralTuluTranslator",
+    "NeuralTranslationResult",
     "TuluMorphAnalyzer",
     "morphological_analyze",
     "analyze_sentence",

@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tulu Transliterator | ತುಳು ಅನುವಾದಕ (Unicode 16.0)</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0ea5e9">
+  <meta name="description" content="Official Unicode 16.0 Tulu-Tigalari Transliterator, Speech-to-Text Studio, Vision OCR and Grammar Translator.">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -113,7 +117,14 @@
           <span class="trans-badge" id="transBadge">Live Translation</span>
           <span class="trans-sub" id="transDirection">English ⇄ Kannada</span>
         </div>
-        <button id="copyTranslationBtn" class="action-btn" title="Copy Translation">Copy</button>
+        <div class="engine-toggle-group">
+          <button id="engineRuleBtn" class="engine-toggle-btn active" data-engine="rule_based" title="Instant Deterministic FSM Grammar Rules (<1ms)">⚡ Instant Rules</button>
+          <button id="engineNeuralBtn" class="engine-toggle-btn" data-engine="hybrid" title="Neural SLM (Contextual Generative Translation)">🤖 Neural SLM</button>
+        </div>
+        <div class="translation-actions">
+          <button id="speakTranslationBtn" class="action-btn" title="Listen to spoken audio">🔊 Listen</button>
+          <button id="copyTranslationBtn" class="action-btn" title="Copy Translation">Copy</button>
+        </div>
       </div>
       <div class="translation-body">
         <div class="trans-main-row">
@@ -123,6 +134,7 @@
         <div class="trans-secondary" id="transSecondaryText"></div>
         <div id="transTags" class="trans-tags-row"></div>
       </div>
+      <audio id="ttsAudioPlayer" style="display: none;"></audio>
     </div>
 
     <!-- 🎙️ Tulu Speech-to-Text Studio (Speech-LLM ASR) -->
@@ -185,6 +197,90 @@
             <div class="asr-script-label">English Translation</div>
             <div id="asrEnglishText" class="asr-script-content trans-en"></div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📷 Vision OCR & Inscription Studio -->
+    <div class="ocr-studio-card">
+      <div class="ocr-header">
+        <div class="ocr-title-group">
+          <span class="ocr-badge">📷 Document &amp; Inscription Vision OCR</span>
+          <span class="ocr-sub">Tesseract Multilingual OCR + Unicode 16.0 Tigalari Transliteration &amp; English Translation</span>
+        </div>
+      </div>
+      <div class="ocr-dropzone" id="ocrDropzone">
+        <input type="file" id="ocrFileInput" accept="image/*" style="display: none;">
+        <div class="dropzone-prompt" id="ocrDropPrompt">
+          <span class="dropzone-icon">📜</span>
+          <span class="dropzone-title">Drag &amp; drop photo of Tulu / Kannada manuscript, inscription or signboard</span>
+          <span class="dropzone-sub">or <button type="button" class="action-btn" id="ocrBrowseBtn">Browse Image</button></span>
+        </div>
+        <div id="ocrImagePreviewContainer" class="ocr-preview-container" style="display: none;">
+          <img id="ocrImagePreview" class="ocr-preview-img" alt="Uploaded Document Preview">
+          <button type="button" class="action-btn" id="ocrChangeBtn">Change Image</button>
+        </div>
+      </div>
+      <div class="ocr-controls-row">
+        <div class="select-group">
+          <label for="ocrLangSelect">OCR Model:</label>
+          <select id="ocrLangSelect">
+            <option value="kan+eng" selected>Kannada + English (kan+eng)</option>
+            <option value="kan">Kannada (ಕನ್ನಡ)</option>
+            <option value="eng">English (Latin)</option>
+          </select>
+        </div>
+        <button id="ocrProcessBtn" class="action-btn primary" disabled>⚡ Extract &amp; Translate Document</button>
+        <span id="ocrStatusText" class="ocr-status-text">Select an image to extract text.</span>
+      </div>
+
+      <!-- OCR Result Box -->
+      <div id="ocrResultBox" class="ocr-result-box" style="display: none;">
+        <div class="ocr-result-header">
+          <div class="ocr-meta-tags">
+            <span id="ocrScriptBadge" class="asr-badge latency">Script: Kannada</span>
+            <span id="ocrEntitiesBadge" class="asr-badge conf">Entities Found: 0</span>
+          </div>
+          <button id="ocrCopyAllBtn" class="action-btn" title="Copy extracted text">Copy Text</button>
+        </div>
+        <div id="ocrEntitiesContainer" class="ocr-entities-row"></div>
+        <div class="ocr-grid">
+          <div class="ocr-grid-col">
+            <div class="ocr-col-header">Extracted Text (OCR)</div>
+            <div id="ocrRawText" class="ocr-col-content kannada-font"></div>
+          </div>
+          <div class="ocr-grid-col">
+            <div class="ocr-col-header">Tulu-Tigalari (Unicode 16.0)</div>
+            <div id="ocrTigalariText" class="ocr-col-content tigalari-font"></div>
+          </div>
+          <div class="ocr-grid-col">
+            <div class="ocr-col-header">English Translation</div>
+            <div id="ocrEnglishText" class="ocr-col-content trans-en"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✍️ Interactive Magic Slate & Stroke Recognizer -->
+    <div class="slate-studio-card">
+      <div class="slate-header">
+        <div class="slate-title-group">
+          <span class="slate-badge">✍️ Tulu Magic Slate &amp; Akshara Drawing Pad</span>
+          <span class="slate-sub">Geometric handwriting recognition for Tigalari &amp; Indic characters (Touch &amp; Mouse)</span>
+        </div>
+        <div class="slate-tools">
+          <button id="slatePencilBtn" class="action-btn active" title="Pencil Tool">✏️ Pencil</button>
+          <button id="slateEraserBtn" class="action-btn" title="Eraser Tool">🧹 Eraser</button>
+          <button id="slateClearBtn" class="action-btn" title="Clear Canvas">🗑️ Clear Slate</button>
+        </div>
+      </div>
+      <div class="slate-canvas-wrap">
+        <canvas id="slateCanvas" width="600" height="220" class="slate-canvas"></canvas>
+        <div class="slate-result-overlay" id="slateResultOverlay">
+          <div class="slate-match-symbol" id="slateMatchSymbol">?</div>
+          <div class="slate-match-label" id="slateMatchLabel">Draw an akshara (e.g. ಅ, ರ, ಕ, 1)</div>
+          <div class="slate-match-meta" id="slateMatchMeta">Waiting for drawing input...</div>
+          <button id="slateUseCharBtn" class="action-btn primary" style="display: none; margin-top: 8px;">⬇ Insert Into Editor</button>
         </div>
       </div>
     </div>

@@ -99,10 +99,78 @@ document.addEventListener('DOMContentLoaded', () => {
   const copyTranslationBtn = document.getElementById('copyTranslationBtn');
 
   let sentenceDebounceTimer = null;
+  let currentEngine = 'rule_based';
+  let lastSpokenText = '';
+  let lastSpokenScript = 'kannada';
+
+  const engineRuleBtn = document.getElementById('engineRuleBtn');
+  const engineNeuralBtn = document.getElementById('engineNeuralBtn');
+  const speakTranslationBtn = document.getElementById('speakTranslationBtn');
+  const ttsAudioPlayer = document.getElementById('ttsAudioPlayer');
+
+  if (engineRuleBtn && engineNeuralBtn) {
+    engineRuleBtn.addEventListener('click', () => {
+      engineRuleBtn.classList.add('active');
+      engineNeuralBtn.classList.remove('active');
+      currentEngine = 'rule_based';
+      fetchSentenceTranslation(sourceInput.value);
+    });
+    engineNeuralBtn.addEventListener('click', () => {
+      engineNeuralBtn.classList.add('active');
+      engineRuleBtn.classList.remove('active');
+      currentEngine = 'hybrid';
+      fetchSentenceTranslation(sourceInput.value);
+    });
+  }
+
+  async function speakText(text, script = 'kannada') {
+    if (!text) return;
+    try {
+      const resp = await fetch('/api/tts/synthesize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text, script: script, speed_rate: 1.0 })
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.success && data.audio_uri) {
+          if (ttsAudioPlayer) {
+            ttsAudioPlayer.src = data.audio_uri;
+            await ttsAudioPlayer.play();
+            showToast('Playing spoken Tulu pronunciation 🔊');
+            return;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Backend TTS error, falling back to Web Speech API:', e);
+    }
+
+    // Web Speech API fallback
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.88;
+      const voices = window.speechSynthesis.getVoices();
+      const indVoice = voices.find(v => v.lang.includes('kn') || v.lang.includes('te') || v.lang.includes('hi') || v.name.includes('India'));
+      if (indVoice) u.voice = indVoice;
+      window.speechSynthesis.speak(u);
+      showToast('Playing speech via browser audio 🔊');
+    }
+  }
+
+  if (speakTranslationBtn) {
+    speakTranslationBtn.addEventListener('click', () => {
+      speakText(lastSpokenText, lastSpokenScript);
+    });
+  }
 
   async function fetchSentenceTranslation(rawSentence) {
+    const text = (rawSentence || '').trim();
+    if (!text) return;
     try {
-      const resp = await fetch(`/api/translate/sentence?text=${encodeURIComponent(rawSentence)}`);
+      const endpoint = `/api/translate/neural?text=${encodeURIComponent(text)}&engine=${currentEngine}`;
+      const resp = await fetch(endpoint);
       if (!resp.ok) return;
       const data = await resp.json();
       if (!data.success || !data.translated_text) return;
@@ -111,26 +179,30 @@ document.addEventListener('DOMContentLoaded', () => {
       transTags.innerHTML = '';
 
       if (data.source_lang === 'english') {
-        transDirection.textContent = 'English ➔ Tulu (SOV Sentence Grammar)';
+        transDirection.textContent = `English ➔ Tulu (${data.engine_used === 'neural_slm' ? 'Neural SLM' : 'SOV Grammar'})`;
         transPrimaryText.textContent = data.translated_text;
         transPrimaryText.className = 'trans-primary kannada';
-        transPhoneticText.textContent = `/${data.tulu_latin}/`;
-        transSecondaryText.innerHTML = `<strong>Tulu-Tigalari (Unicode 16.0):</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari}</span>`;
+        transPhoneticText.textContent = data.tulu_latin ? `/${data.tulu_latin}/` : '';
+        transSecondaryText.innerHTML = `<strong>Tulu-Tigalari (Unicode 16.0):</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari || ''}</span>`;
+        lastSpokenText = data.translated_text;
+        lastSpokenScript = 'kannada';
 
         const modeTag = document.createElement('span');
         modeTag.className = 'trans-tag';
-        modeTag.textContent = 'SVO ➔ SOV Grammar';
+        modeTag.textContent = data.engine_used === 'neural_slm' ? '🤖 Neural SLM' : '⚡ SVO ➔ SOV Grammar';
         transTags.appendChild(modeTag);
       } else {
-        transDirection.textContent = 'Tulu ➔ English (Full-Sentence Grammar)';
+        transDirection.textContent = `Tulu ➔ English (${data.engine_used === 'neural_slm' ? 'Neural SLM' : 'Grammar Syntax'})`;
         transPrimaryText.textContent = data.translated_text;
         transPrimaryText.className = 'trans-primary';
-        transPhoneticText.textContent = `${data.tulu_kannada} (${data.tulu_latin})`;
-        transSecondaryText.innerHTML = `<strong>Tulu-Tigalari:</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari}</span>`;
+        transPhoneticText.textContent = `${data.tulu_kannada || ''} (${data.tulu_latin || ''})`;
+        transSecondaryText.innerHTML = `<strong>Tulu-Tigalari:</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari || ''}</span>`;
+        lastSpokenText = data.tulu_kannada || text;
+        lastSpokenScript = 'kannada';
 
         const modeTag = document.createElement('span');
         modeTag.className = 'trans-tag';
-        modeTag.textContent = 'SOV ➔ SVO Grammar';
+        modeTag.textContent = data.engine_used === 'neural_slm' ? '🤖 Neural SLM' : '⚡ SOV ➔ SVO Grammar';
         transTags.appendChild(modeTag);
       }
 
@@ -1153,6 +1225,348 @@ document.addEventListener('DOMContentLoaded', () => {
       doTransliteration();
       showToast(`Loaded "${text}" into editor`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // =============================================================
+  // 📷 5. Document & Inscription Vision OCR Studio Handlers
+  // =============================================================
+  const ocrDropzone = document.getElementById('ocrDropzone');
+  const ocrFileInput = document.getElementById('ocrFileInput');
+  const ocrBrowseBtn = document.getElementById('ocrBrowseBtn');
+  const ocrChangeBtn = document.getElementById('ocrChangeBtn');
+  const ocrProcessBtn = document.getElementById('ocrProcessBtn');
+  const ocrLangSelect = document.getElementById('ocrLangSelect');
+  const ocrImagePreview = document.getElementById('ocrImagePreview');
+  const ocrImagePreviewContainer = document.getElementById('ocrImagePreviewContainer');
+  const ocrDropPrompt = document.getElementById('ocrDropPrompt');
+  const ocrStatusText = document.getElementById('ocrStatusText');
+  const ocrResultBox = document.getElementById('ocrResultBox');
+  const ocrRawText = document.getElementById('ocrRawText');
+  const ocrTigalariText = document.getElementById('ocrTigalariText');
+  const ocrEnglishText = document.getElementById('ocrEnglishText');
+  const ocrEntitiesContainer = document.getElementById('ocrEntitiesContainer');
+  const ocrScriptBadge = document.getElementById('ocrScriptBadge');
+  const ocrEntitiesBadge = document.getElementById('ocrEntitiesBadge');
+  const ocrCopyAllBtn = document.getElementById('ocrCopyAllBtn');
+
+  let currentOcrBase64 = null;
+
+  function handleOcrFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Please upload a valid image file');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      currentOcrBase64 = e.target.result;
+      if (ocrImagePreview) ocrImagePreview.src = currentOcrBase64;
+      if (ocrDropPrompt) ocrDropPrompt.style.display = 'none';
+      if (ocrImagePreviewContainer) ocrImagePreviewContainer.style.display = 'flex';
+      if (ocrProcessBtn) ocrProcessBtn.disabled = false;
+      if (ocrStatusText) ocrStatusText.textContent = `Ready: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (ocrBrowseBtn && ocrFileInput) {
+    ocrBrowseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      ocrFileInput.click();
+    });
+  }
+
+  if (ocrChangeBtn && ocrFileInput) {
+    ocrChangeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      ocrFileInput.click();
+    });
+  }
+
+  if (ocrDropzone && ocrFileInput) {
+    ocrDropzone.addEventListener('click', () => {
+      if (!currentOcrBase64) ocrFileInput.click();
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      ocrDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        ocrDropzone.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      ocrDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        ocrDropzone.classList.remove('dragover');
+      });
+    });
+
+    ocrDropzone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt && dt.files;
+      if (files && files.length > 0) {
+        handleOcrFile(files[0]);
+      }
+    });
+
+    ocrFileInput.addEventListener('change', (e) => {
+      const files = e.target.files;
+      if (files && files.length > 0) {
+        handleOcrFile(files[0]);
+      }
+    });
+  }
+
+  if (ocrProcessBtn) {
+    ocrProcessBtn.addEventListener('click', async () => {
+      if (!currentOcrBase64) return;
+      ocrProcessBtn.disabled = true;
+      if (ocrStatusText) ocrStatusText.textContent = 'Processing OCR and translating document...';
+
+      try {
+        const lang = ocrLangSelect ? ocrLangSelect.value : 'kan+eng';
+        const resp = await fetch('/api/ocr/extract-and-translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: currentOcrBase64, lang: lang })
+        });
+
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        if (!data.success) throw new Error(data.error || 'OCR processing failed');
+
+        if (ocrResultBox) ocrResultBox.style.display = 'block';
+        if (ocrRawText) ocrRawText.textContent = data.raw_text || '(No text detected)';
+        if (ocrTigalariText) ocrTigalariText.textContent = (data.transliterations && data.transliterations.tigalari) || '';
+
+        // Line-by-line translation
+        if (ocrEnglishText) {
+          if (Array.isArray(data.translations) && data.translations.length > 0) {
+            ocrEnglishText.innerHTML = data.translations
+              .map(t => `<div>• ${t.translated_text || t.target_text || ''}</div>`)
+              .join('');
+          } else {
+            ocrEnglishText.textContent = '(No translation available)';
+          }
+        }
+
+        if (ocrScriptBadge) ocrScriptBadge.textContent = `Script: ${data.script || 'Auto'}`;
+
+        // Entities
+        if (ocrEntitiesContainer) {
+          ocrEntitiesContainer.innerHTML = '';
+          const entities = data.entities || {};
+          let entityCount = 0;
+
+          if (Array.isArray(entities.tulu_cultural_entities)) {
+            entities.tulu_cultural_entities.forEach(ent => {
+              entityCount++;
+              const chip = document.createElement('span');
+              chip.className = 'ocr-entity-chip';
+              chip.textContent = `🏛️ ${ent}`;
+              ocrEntitiesContainer.appendChild(chip);
+            });
+          }
+          if (Array.isArray(entities.historical_eras)) {
+            entities.historical_eras.forEach(ent => {
+              entityCount++;
+              const chip = document.createElement('span');
+              chip.className = 'ocr-entity-chip';
+              chip.textContent = `📜 ${ent}`;
+              ocrEntitiesContainer.appendChild(chip);
+            });
+          }
+          if (Array.isArray(entities.dates)) {
+            entities.dates.forEach(ent => {
+              entityCount++;
+              const chip = document.createElement('span');
+              chip.className = 'ocr-entity-chip';
+              chip.textContent = `📅 ${ent}`;
+              ocrEntitiesContainer.appendChild(chip);
+            });
+          }
+          if (ocrEntitiesBadge) ocrEntitiesBadge.textContent = `Entities: ${entityCount}`;
+        }
+
+        if (ocrStatusText) ocrStatusText.textContent = `Complete! Extracted ${data.line_count || 1} lines.`;
+      } catch (err) {
+        console.error('OCR Error:', err);
+        if (ocrStatusText) ocrStatusText.textContent = `Error: ${err.message}`;
+      } finally {
+        ocrProcessBtn.disabled = false;
+      }
+    });
+  }
+
+  if (ocrCopyAllBtn) {
+    ocrCopyAllBtn.addEventListener('click', async () => {
+      const text = ocrRawText ? ocrRawText.textContent.trim() : '';
+      if (!text) return;
+      await navigator.clipboard.writeText(text);
+      showToast('Copied OCR text to clipboard!');
+    });
+  }
+
+  // =============================================================
+  // ✍️ 6. Interactive Magic Slate & Stroke Recognizer
+  // =============================================================
+  const slateCanvas = document.getElementById('slateCanvas');
+  const slatePencilBtn = document.getElementById('slatePencilBtn');
+  const slateEraserBtn = document.getElementById('slateEraserBtn');
+  const slateClearBtn = document.getElementById('slateClearBtn');
+  const slateMatchSymbol = document.getElementById('slateMatchSymbol');
+  const slateMatchLabel = document.getElementById('slateMatchLabel');
+  const slateMatchMeta = document.getElementById('slateMatchMeta');
+  const slateUseCharBtn = document.getElementById('slateUseCharBtn');
+
+  if (slateCanvas) {
+    const ctx = slateCanvas.getContext('2d');
+    let isDrawing = false;
+    let isEraser = false;
+    let strokes = [];
+    let currentStroke = [];
+    let recognizeDebounce = null;
+
+    function resetSlate() {
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, slateCanvas.width, slateCanvas.height);
+      strokes = [];
+      currentStroke = [];
+      if (slateMatchSymbol) slateMatchSymbol.textContent = '?';
+      if (slateMatchLabel) slateMatchLabel.textContent = 'Draw an akshara (e.g. ಅ, ರ, ಕ, 1)';
+      if (slateMatchMeta) slateMatchMeta.textContent = 'Waiting for drawing input...';
+      if (slateUseCharBtn) slateUseCharBtn.style.display = 'none';
+    }
+
+    resetSlate();
+
+    if (slatePencilBtn) {
+      slatePencilBtn.addEventListener('click', () => {
+        isEraser = false;
+        slatePencilBtn.classList.add('active');
+        if (slateEraserBtn) slateEraserBtn.classList.remove('active');
+      });
+    }
+
+    if (slateEraserBtn) {
+      slateEraserBtn.addEventListener('click', () => {
+        isEraser = true;
+        slateEraserBtn.classList.add('active');
+        if (slatePencilBtn) slatePencilBtn.classList.remove('active');
+      });
+    }
+
+    if (slateClearBtn) {
+      slateClearBtn.addEventListener('click', () => {
+        resetSlate();
+      });
+    }
+
+    function getCanvasCoordinates(e) {
+      const rect = slateCanvas.getBoundingClientRect();
+      const scaleX = slateCanvas.width / rect.width;
+      const scaleY = slateCanvas.height / rect.height;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
+    function startStroke(e) {
+      isDrawing = true;
+      currentStroke = [];
+      const pt = getCanvasCoordinates(e);
+      currentStroke.push(pt);
+
+      ctx.beginPath();
+      ctx.moveTo(pt.x, pt.y);
+      ctx.strokeStyle = isEraser ? '#0f172a' : '#38bdf8';
+      ctx.lineWidth = isEraser ? 24 : 6;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+
+    function moveStroke(e) {
+      if (!isDrawing) return;
+      const pt = getCanvasCoordinates(e);
+      currentStroke.push(pt);
+      ctx.lineTo(pt.x, pt.y);
+      ctx.stroke();
+    }
+
+    function endStroke() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      if (currentStroke.length > 1 && !isEraser) {
+        strokes.push(currentStroke);
+        clearTimeout(recognizeDebounce);
+        recognizeDebounce = setTimeout(sendStrokesForRecognition, 350);
+      }
+    }
+
+    // Pointer & Touch Listeners
+    slateCanvas.addEventListener('mousedown', startStroke);
+    slateCanvas.addEventListener('mousemove', moveStroke);
+    window.addEventListener('mouseup', endStroke);
+
+    slateCanvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      startStroke(e);
+    }, { passive: false });
+
+    slateCanvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      moveStroke(e);
+    }, { passive: false });
+
+    window.addEventListener('touchend', endStroke);
+
+    async function sendStrokesForRecognition() {
+      if (strokes.length === 0) return;
+      try {
+        const resp = await fetch('/recognize/strokes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ strokes: strokes })
+        });
+        if (!resp.ok) return;
+        const res = await resp.json();
+        if (res.success && res.matched) {
+          if (slateMatchSymbol) slateMatchSymbol.textContent = res.symbol || '✨';
+          if (slateMatchLabel) slateMatchLabel.textContent = `${res.label || res.symbol} ${res.emoji || ''}`;
+          if (slateMatchMeta) slateMatchMeta.textContent = `Confidence: ${(res.confidence * 100).toFixed(0)}% • Strokes: ${res.stroke_count}`;
+          if (slateUseCharBtn) {
+            slateUseCharBtn.style.display = 'inline-block';
+            slateUseCharBtn.onclick = () => {
+              const char = res.symbol;
+              sourceInput.value += char;
+              updateFontClasses();
+              doTransliteration();
+              showToast(`Inserted "${char}" into editor`);
+            };
+          }
+        }
+      } catch (err) {
+        console.warn('Slate recognition error:', err);
+      }
+    }
+  }
+
+  // =============================================================
+  // 📲 7. Progressive Web App (PWA) Offline Registration
+  // =============================================================
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        console.log('Tulu Studio ServiceWorker registered:', reg.scope);
+      }).catch(err => {
+        console.warn('ServiceWorker registration skipped:', err);
+      });
     });
   }
 
