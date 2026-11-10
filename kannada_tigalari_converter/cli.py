@@ -667,6 +667,10 @@ def main():
         "--benchmark-export", type=str, default=None,
         help="Save benchmark results to Markdown report file"
     )
+    parser.add_argument(
+        "--segregate-quality", dest="segregate_quality_file", nargs="?", const="datasets/tulu_wikipedia_corpus.csv", type=str,
+        help="Segregate web-scraped dataset into high-quality and low-quality partitions"
+    )
 
     # ── Morphological Analyzer Commands ──
     parser.add_argument(
@@ -925,6 +929,25 @@ def main():
     if args.benchmark:
         from kannada_tigalari_converter.benchmark import TuluBenchmarkSuite
         TuluBenchmarkSuite.run_all(export_markdown=args.benchmark_export)
+        return
+
+    if args.segregate_quality_file:
+        from kannada_tigalari_converter.nlp.dataset_quality_segregator import DatasetQualitySegregator
+        high_out = os.path.join(DATASETS_DIR, "tulu_web_corpus_high_quality.csv")
+        low_out = os.path.join(DATASETS_DIR, "tulu_web_corpus_low_quality.csv")
+        seg = DatasetQualitySegregator()
+        stats = seg.segregate_file(args.segregate_quality_file, high_out, low_out)
+        print("=" * 65)
+        print("  TULU WEB CORPUS QUALITY SEGREGATION RESULTS")
+        print("=" * 65)
+        print(f"  Input File               : {args.segregate_quality_file}")
+        print(f"  Total Records Examined   : {stats['total_records']:,}")
+        print(f"  ⭐ High-Quality Dataset : {stats['high_quality_count']:,} ({stats['high_quality_percent']}%)")
+        print(f"  ⚠️  Low-Quality Quarantined: {stats['low_quality_count']:,} ({100 - stats['high_quality_percent']:.2f}%)")
+        print(f"  Average Quality Score    : {stats['avg_quality_score']:.2f} / 1.00")
+        print(f"  High-Quality Output      : {high_out}")
+        print(f"  Low-Quality Output       : {low_out}")
+        print("=" * 65)
         return
 
     if args.web:

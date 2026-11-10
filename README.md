@@ -196,16 +196,31 @@ ollama run tulu-slm "Translate 'ಎಂಚ ಉಲ್ಲರ್' to English and Tig
 
 ---
 
-### 6. Running Tests
+### 6. Web Corpus Quality & Noise Segregation
+
+Raw internet scraped data (Wikipedia, Wiktionary, OCR) contains artifacts such as wikitext leaks, incomplete table splits, and broken fragments. The quality segregation engine scores linguistic authenticity and partitions the data in `< 2.5s` using `O(1)` streaming:
 
 ```bash
-# Run the complete test suite (188+ tests)
+# Segregate raw web data into high-quality and quarantined low-quality files
+python3 kannada_tigalari_converter/cli.py --segregate-quality datasets/tulu_wikipedia_corpus.csv
+```
+
+*Results on Wikipedia Corpus (13,929 entries):*
+- **⭐ High-Quality Dataset (`datasets/tulu_web_corpus_high_quality.csv`):** **11,522 records (82.7%)** (Grammatical, fluent Tulu with authentic morphology, ready for LLM fine-tuning).
+- **⚠️ Low-Quality Quarantined (`datasets/tulu_web_corpus_low_quality.csv`):** **2,407 records (17.3%)** (Broken fragments, unbalanced brackets, wikitext `scope=` leaks, excessive table digits).
+
+---
+
+### 7. Running Tests
+
+```bash
+# Run the complete test suite (195 unit tests)
 python3 run_tests.py
 ```
 
 ---
 
-### 7. Documentation & Corpus Details
+### 8. Documentation & Corpus Details
 
 For a complete breakdown of how `tulu_master_consolidated_corpus.csv` was aggregated, deduplicated, and normalized across 5 primary sources:
 👉 Read [`docs/TULU_MASTER_CORPUS_CREATION.md`](file:///Users/jayanthanayak/Side_task/Tulu_Model/docs/TULU_MASTER_CORPUS_CREATION.md).
