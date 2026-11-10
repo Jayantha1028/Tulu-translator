@@ -72,7 +72,7 @@ A complete Python library, CLI, and Web Transliterator Application for the **Tul
 │   ├── aatana_books.js                     # Digital library catalog data
 │   └── fonts/Mallige_Unicode_v2.ttf        # Embedded Unicode 16.0 Tigalari font
 ├── datasets/                               # Curated CSV Datasets (75,000+ clean entries)
-├── tests/                                  # 149 Unit Test Suites across all submodules
+├── tests/                                  # unittest modules for project subsystems
 ├── downloads/                              # Cached OCR and PDF downloads (git-ignored)
 ├── run_app.py                              # Quick Web Studio launcher
 └── run_tests.py                            # Unified test runner
@@ -92,7 +92,7 @@ Or:
 ```bash
 python3 kannada_tigalari_converter/cli.py --web
 ```
-This opens `http://localhost:8080/index.html` in your default browser.
+This opens `http://localhost:9000/index.html` in your default browser.
 
 ---
 
@@ -181,14 +181,14 @@ python3 kannada_tigalari_converter/cli.py --scrape-all 50
 ### 4. Running Tests
 
 ```bash
-# Run all test suites together (35 tests total)
+# Run all tests
 python3 run_tests.py
 
-# Or run individual modules:
-python3 -m unittest kannada_tigalari_converter/test_converter.py
-python3 -m unittest kannada_tigalari_converter/test_250_words.py
-python3 -m unittest kannada_tigalari_converter/test_1000_words.py
-python3 -m unittest kannada_tigalari_converter/test_aatana_and_nmt.py
+# Or run an individual test module:
+python3 -m unittest discover -s tests -p 'test_converter.py'
+python3 -m unittest discover -s tests -p 'test_250_words.py'
+python3 -m unittest discover -s tests -p 'test_1000_words.py'
+python3 -m unittest discover -s tests -p 'test_aatana_and_nmt.py'
 ```
 
 ---

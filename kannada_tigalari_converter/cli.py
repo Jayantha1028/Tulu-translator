@@ -496,7 +496,7 @@ def launch_web(port=9000):
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        s.bind(("", port))
+        s.bind(("127.0.0.1", port))
         s.close()
     except OSError:
         port = port + 1
@@ -505,7 +505,7 @@ def launch_web(port=9000):
         daemon_threads = True
         allow_reuse_address = True
 
-    httpd = ThreadingServer(("", port), handler)
+    httpd = ThreadingServer(("127.0.0.1", port), handler)
     url = f"http://localhost:{port}/index.html"
     print(f"Serving Tulu Transliterator & Speech Studio at {url}")
     print("Press Ctrl+C to stop the web server.\n")

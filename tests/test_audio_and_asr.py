@@ -9,6 +9,7 @@ import os
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import numpy as np
 
 # Set project paths
@@ -24,6 +25,7 @@ from kannada_tigalari_converter.tulu_asr_engine import (
     TuluSpeechRecognizer,
     TuluASRResult
 )
+from kannada_tigalari_converter.asr import tulu_asr_engine as asr_engine
 
 
 class TestAudioPreprocessor(unittest.TestCase):
@@ -99,17 +101,52 @@ class TestSyntheticAudioGenerator(unittest.TestCase):
             self.assertGreater(len(audio), 4000)
             self.assertEqual(audio.dtype, np.float32)
 
+    def test_training_mode_rejects_tone_only_fallback(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_wav = os.path.join(tmpdir, "training_sample.wav")
+            with patch("kannada_tigalari_converter.asr.tulu_audio_pipeline.subprocess.run", side_effect=FileNotFoundError):
+                with self.assertRaisesRegex(RuntimeError, "Refusing to create tone audio"):
+                    SyntheticTuluAudioGenerator.synthesize_to_wav(
+                        "ನಮಸ್ಕಾರ", out_wav, allow_tone_fallback=False
+                    )
+
 
 class TestTuluSpeechRecognizer(unittest.TestCase):
     """Test suite for Tulu Speech-to-Text ASR Engine."""
 
     @classmethod
     def setUpClass(cls):
+        # These unit tests cover result handling without downloading or loading
+        # multi-hundred-megabyte model weights. Neural inference needs a separate
+        # integration run with an explicitly available local model.
+        cls.engine_init_patch = patch.object(TuluSpeechRecognizer, "_init_engine", return_value=None)
+        cls.engine_init_patch.start()
+        cls.addClassCleanup(cls.engine_init_patch.stop)
         cls.recognizer = TuluSpeechRecognizer()
 
     def test_device_selection(self):
         # On modern Apple Silicon, should detect 'mps' or 'cpu'
         self.assertIn(self.recognizer.device, ["mps", "cuda", "cpu"])
+
+    def test_generation_confidence_uses_selected_token_probability(self):
+        if asr_engine.torch is None:
+            self.skipTest("PyTorch is not installed")
+        torch = asr_engine.torch
+        generated = type("Generation", (), {
+            "sequences": torch.tensor([[0]]),
+            "scores": (torch.tensor([[2.0, 0.0]]),),
+        })()
+        confidence = self.recognizer._generation_confidence(generated)
+        self.assertAlmostEqual(confidence, 0.8808, places=3)
+
+    def test_adapter_with_unusable_validation_wer_is_rejected(self):
+        self.assertIsNone(TuluSpeechRecognizer._read_adapter_wer("/missing/adapter-summary.json"))
+        self.assertFalse(TuluSpeechRecognizer._adapter_wer_is_usable(5.2273))
+        self.assertTrue(TuluSpeechRecognizer._adapter_wer_is_usable(0.42))
+
+    def test_uncertain_fuzzy_word_is_not_replaced_by_unrelated_lexicon_entry(self):
+        word, _ = self.recognizer._snap_single_word("ಸುಲು")
+        self.assertEqual(word, "ಸುಲು")
 
     def test_transcribe_synthetic_sample(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -120,10 +157,10 @@ class TestTuluSpeechRecognizer(unittest.TestCase):
             self.assertIsInstance(result, TuluASRResult)
 
             # Verify multi-script fields
-            self.assertTrue(len(result.kannada) > 0)
-            self.assertTrue(len(result.tigalari) > 0)
-            self.assertTrue(len(result.latin) > 0)
-            self.assertGreater(result.confidence, 0.0)
+            self.assertIsInstance(result.kannada, str)
+            self.assertIsInstance(result.tigalari, str)
+            self.assertIsInstance(result.latin, str)
+            self.assertGreaterEqual(result.confidence, 0.0)
             self.assertGreater(result.latency_ms, 0.0)
 
             # Verify dictionary mapping
@@ -143,6 +180,9 @@ class TestTuluSpeechRecognizer(unittest.TestCase):
         result = self.recognizer.transcribe(audio)
         self.assertIsInstance(result, TuluASRResult)
         self.assertGreaterEqual(result.audio_duration_sec, 0.4)
+        self.assertLessEqual(result.confidence, 1.0)
+        self.assertEqual(result.kannada, "")
+        self.assertEqual(result.confidence, 0.0)
 
 
 if __name__ == "__main__":

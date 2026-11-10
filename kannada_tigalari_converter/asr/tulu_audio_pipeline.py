@@ -236,16 +236,22 @@ class AudioPreprocessor:
 
 class SyntheticTuluAudioGenerator:
     """
-    Generates paired acoustic speech samples (audio <-> text) for Tulu sentences
-    using native macOS Indian voice synthesis or formants for ground-truth calibration.
+    Generates paired speech samples using native macOS Indian voice synthesis.
+    A tone-only fallback is available for tests and previews, but is not valid ASR data.
     """
 
     @classmethod
-    def synthesize_to_wav(cls, text_kannada: str, output_wav_path: str, rate: Optional[int] = None) -> bool:
+    def synthesize_to_wav(
+        cls,
+        text_kannada: str,
+        output_wav_path: str,
+        rate: Optional[int] = None,
+        allow_tone_fallback: bool = True,
+    ) -> bool:
         """
         Synthesizes a sentence in Kannada script into a 16kHz WAV file.
-        Uses native macOS 'say -v Soumya' (Kannada voice) if available,
-        or falls back to an acoustic waveform generator.
+        Uses native macOS 'say -v Soumya' (Kannada voice) if available. The
+        tone-only fallback is for tests/previews and can be disabled by trainers.
         :param rate: Speaking rate in WPM (e.g. 150=slow, 175=normal, 205=fast).
         """
         os.makedirs(os.path.dirname(os.path.abspath(output_wav_path)), exist_ok=True)
@@ -275,6 +281,11 @@ class SyntheticTuluAudioGenerator:
                 return True
         except Exception:
             pass
+
+        if not allow_tone_fallback:
+            raise RuntimeError(
+                "No speech synthesis backend is available. Refusing to create tone audio for ASR training."
+            )
 
         # 2. Fallback acoustic tone synthesis (for automated testing in CI/CD without macOS voices)
         audio = cls._synthesize_acoustic_tones(text_kannada)
@@ -333,7 +344,7 @@ def generate_baseline_paired_dataset(output_dir: str, num_samples: int = 25) -> 
         wav_filename = f"tulu_sample_{item_id:03d}.wav"
         wav_path = os.path.join(output_dir, wav_filename)
 
-        SyntheticTuluAudioGenerator.synthesize_to_wav(kn_text, wav_path)
+        SyntheticTuluAudioGenerator.synthesize_to_wav(kn_text, wav_path, allow_tone_fallback=False)
 
         records.append({
             "id": item_id,

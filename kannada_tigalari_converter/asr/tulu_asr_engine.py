@@ -17,6 +17,8 @@ Hardware Acceleration:
 import os
 import sys
 import time
+import json
+import math
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Union, Any, BinaryIO, Tuple
 import numpy as np
@@ -54,7 +56,7 @@ class TuluASRResult:
     tigalari: str                  # Official Unicode 16.0 Tigalari script
     latin: str                     # Phonetic Latin transliteration
     english: str                   # Contextual English translation / meaning
-    confidence: float              # 0.0 to 1.0 confidence score
+    confidence: float              # Mean selected-token probability, not calibrated accuracy
     latency_ms: float              # Processing time in milliseconds
     device: str                    # Hardware device used (mps, cuda, cpu)
     audio_duration_sec: float      # Duration of input audio in seconds
@@ -84,7 +86,6 @@ class TuluSpeechRecognizer:
         self.device = self._select_device(device)
         self.model = None
         self.processor = None
-        self._acoustic_index: Dict[str, np.ndarray] = {}
 
         self._init_engine()
 
@@ -108,21 +109,6 @@ class TuluSpeechRecognizer:
             except Exception:
                 pass
 
-        # Seed acoustic index from core vocabulary for zero-download / offline inference
-        from kannada_tigalari_converter.words_dataset_250 import WORDS_DATASET_250
-        for item in WORDS_DATASET_250:
-            kn = item["kannada"]
-            # Generate deterministic synthetic acoustic embedding
-            from kannada_tigalari_converter.tulu_audio_pipeline import SyntheticTuluAudioGenerator
-            audio = SyntheticTuluAudioGenerator._synthesize_acoustic_tones(kn)
-            spec = AudioPreprocessor.compute_log_mel_spectrogram(audio)
-            # Pool to fixed 80-dim summary vector
-            embedding = np.mean(spec, axis=1)
-            norm = np.linalg.norm(embedding)
-            if norm > 1e-6:
-                embedding = embedding / norm
-            self._acoustic_index[kn] = embedding
-
         # Load Hugging Face Whisper model if available
         if WhisperForConditionalGeneration is not None and torch is not None:
             try:
@@ -136,15 +122,25 @@ class TuluSpeechRecognizer:
                     low_cpu_mem_usage=True,
                 ).to(torch_device)
 
-                # Auto-load fine-tuned Tulu LoRA adapter if present
+                # Only use an adapter with a usable recorded validation score.
                 lora_dir = os.path.join(ROOT_DIR, "models", "tulu_whisper_lora")
                 if os.path.isdir(lora_dir) and os.path.isfile(os.path.join(lora_dir, "adapter_config.json")):
-                    try:
-                        from peft import PeftModel
-                        self.model = PeftModel.from_pretrained(self.model, lora_dir)
-                        print(f"[Tulu ASR] Activated fine-tuned Tulu LoRA adapter weights from '{lora_dir}'")
-                    except Exception as err:
-                        print(f"[Tulu ASR] Info: Base Whisper loaded (LoRA note: {err})")
+                    summary_path = os.path.join(lora_dir, "training_summary.json")
+                    adapter_wer = self._read_adapter_wer(summary_path)
+
+                    if self._adapter_wer_is_usable(adapter_wer):
+                        try:
+                            from peft import PeftModel
+                            self.model = PeftModel.from_pretrained(self.model, lora_dir)
+                            print(f"[Tulu ASR] Activated validated Tulu LoRA adapter (WER {adapter_wer:.3f})")
+                        except Exception as err:
+                            print(f"[Tulu ASR] Info: Base Whisper loaded (LoRA note: {err})")
+                    else:
+                        print(f"[Tulu ASR] Ignoring adapter with unusable or missing validation WER ({adapter_wer!r}); using base Whisper.")
+
+                generation_config = getattr(self.model, "generation_config", None)
+                if generation_config is not None and hasattr(generation_config, "forced_decoder_ids"):
+                    generation_config.forced_decoder_ids = None
 
                 self.model.eval()
                 print(f"[Tulu ASR] Loaded neural Whisper engine '{self.model_name}' on device '{self.device}'")
@@ -168,7 +164,7 @@ class TuluSpeechRecognizer:
 
         # 2. Decoding
         kannada_text = ""
-        confidence = 0.90
+        confidence = 0.0
 
         # Option A: Neural Whisper Decoding if loaded
         if self.model is not None and self.processor is not None and torch is not None:
@@ -184,32 +180,19 @@ class TuluSpeechRecognizer:
                 input_features = inputs.input_features.to(torch_device, dtype=dtype)
 
                 with torch.no_grad():
-                    # Contextual prompt to steer Whisper towards Tulu vocabulary and conversational phrases
-                    prompt_ids = None
-                    try:
-                        prompt_text = "ತುಳು: ನಮಸ್ಕಾರ, ಸೊಲ್ಮೆಲು, ಮಾತೆರೆಗ್ಲಾ ಸೊಲ್ಮೆಲು, ಎಂಚ ಉಲ್ಲರ್, ಎನ್ನ ಪುದರ್, ಈರ್ ಒಲ್ಪ ಉಲ್ಲರ್, ಎಡ್ಡೆ ದಿನ."
-                        prompt_ids = self.processor.get_prompt_ids(prompt_text, return_tensors="pt").to(torch_device)
-                    except Exception:
-                        prompt_ids = None
-
-                    forced_decoder_ids = self.processor.get_decoder_prompt_ids(
+                    generated = self.model.generate(
+                        input_features=input_features,
                         language="kannada",
-                        task="transcribe"
+                        task="transcribe",
+                        max_new_tokens=64,
+                        return_dict_in_generate=True,
+                        output_scores=True,
                     )
-                    generate_kwargs = {
-                        "input_features": input_features,
-                        "forced_decoder_ids": forced_decoder_ids,
-                        "max_new_tokens": 64,
-                    }
-                    if prompt_ids is not None:
-                        generate_kwargs["prompt_ids"] = prompt_ids
-
-                    predicted_ids = self.model.generate(**generate_kwargs)
                     kannada_text = self.processor.batch_decode(
-                        predicted_ids,
+                        generated.sequences,
                         skip_special_tokens=True
                     )[0].strip()
-                    confidence = 0.94
+                    confidence = self._generation_confidence(generated)
 
                     # Clean up GPU buffers immediately to keep system cool
                     if self.device == "mps" and hasattr(torch, "mps"):
@@ -217,9 +200,10 @@ class TuluSpeechRecognizer:
             except Exception as e:
                 print(f"[Tulu ASR] Neural decode notice: {e}, falling back to acoustic matcher.")
 
-        # Option B: Acoustic Feature Vector Matcher (Deterministic fallback)
+        # Do not turn synthetic tones into guessed words when neural ASR is absent
+        # or fails. The old tone matcher had no text-dependent acoustic signal.
         if not kannada_text:
-            kannada_text, confidence = self._match_acoustic_embedding(audio_trimmed)
+            confidence = 0.0
 
         # 3. Canonical Script Normalization (ensures Kannada script for all downstream conversions)
         from kannada_tigalari_converter.transliterator import detect_script
@@ -233,6 +217,7 @@ class TuluSpeechRecognizer:
                 kannada_text = canonical_kn
         elif raw_script == "tigalari":
             kannada_text = tigalari_to_kannada(kannada_text)
+        canonical_recognition = kannada_text
 
         # 4. Smart Lexical Snapping (Phoneme Intent Detection & Word Alignment)
         english_trans = ""
@@ -250,19 +235,15 @@ class TuluSpeechRecognizer:
         if has_mater and has_solmelu:
             kannada_text = "ಮಾತೆರೆಗ್ಲಾ ಸೊಲ್ಮೆಲು"
             english_trans = "Warm heart greetings unto all! (Tulu)"
-            confidence = 0.97
         elif bool(re.search(r"(namas|namash|namak|namsk)", s_clean)):
             kannada_text = "ನಮಸ್ಕಾರ"
             english_trans = "Hello / Respectful greeting"
-            confidence = 0.97
         elif bool(re.search(r"(solm|sulm|solmelu)", s_clean)) and len(s_clean) <= 10:
             kannada_text = "ಸೊಲ್ಮೆಲು"
             english_trans = "Thank you / Greetings (Tulu)"
-            confidence = 0.96
         elif bool(re.search(r"(enc|eMch|ench)", s_clean)) and bool(re.search(r"(ull|ullar|ular)", s_clean)):
             kannada_text = "ಎಂಚ ಉಲ್ಲರ್"
             english_trans = "How are you? (Polite)"
-            confidence = 0.96
 
         # Common multi-word conversational Tulu phrases table
         CONVERSATIONAL_PHRASES = {
@@ -300,9 +281,8 @@ class TuluSpeechRecognizer:
                     best_p_score = sc
                     best_p = p_cand
 
-            if best_p and best_p_score >= 0.65:
+            if best_p and best_p_score >= 0.85:
                 kannada_text, english_trans = CONVERSATIONAL_PHRASES[best_p]
-                confidence = max(confidence, 0.96)
             else:
                 # Step B: Check against full dataset phrases
                 from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000
@@ -319,11 +299,10 @@ class TuluSpeechRecognizer:
                         best_lat_score = sc
                         best_lat = l_cand
 
-                if best_lat and best_lat_score >= 0.65:
+                if best_lat and best_lat_score >= 0.85:
                     matched_item = latin_map[best_lat]
                     kannada_text = matched_item["kannada"]
                     english_trans = matched_item.get("english_meaning", "")
-                    confidence = max(confidence, 0.95)
                 else:
                     # Step C: Word-by-word snapping if input has multiple words
                     words = kannada_text.split()
@@ -372,6 +351,9 @@ class TuluSpeechRecognizer:
                     if morph.english_meaning:
                         english_trans = morph.english_meaning
 
+        if kannada_text != canonical_recognition:
+            confidence = min(confidence, 0.5)
+
         latency = (time.time() - start_time) * 1000.0
 
         return TuluASRResult(
@@ -385,6 +367,37 @@ class TuluSpeechRecognizer:
             audio_duration_sec=duration_sec,
         )
 
+    @staticmethod
+    def _read_adapter_wer(summary_path: str) -> Optional[float]:
+        try:
+            with open(summary_path, "r", encoding="utf-8") as summary_file:
+                return float(json.load(summary_file)["history"]["eval_metrics"]["wer"])
+        except (OSError, ValueError, KeyError, TypeError):
+            return None
+
+    @staticmethod
+    def _adapter_wer_is_usable(wer: Optional[float]) -> bool:
+        return wer is not None and math.isfinite(wer) and 0.0 <= wer < 1.0
+
+    @staticmethod
+    def _generation_confidence(generated: Any) -> float:
+        """Return mean selected-token probability; this is not a calibrated WER estimate."""
+        scores = getattr(generated, "scores", None)
+        sequences = getattr(generated, "sequences", None)
+        if torch is None or not scores or sequences is None:
+            return 0.0
+        try:
+            token_ids = sequences[:, -len(scores):]
+            log_probabilities = []
+            for step, logits in enumerate(scores):
+                step_log_probs = torch.log_softmax(logits.float(), dim=-1)
+                chosen = step_log_probs.gather(1, token_ids[:, step:step + 1])
+                log_probabilities.append(chosen.squeeze(1))
+            confidence = torch.stack(log_probabilities, dim=1).mean().exp().item()
+            return float(min(1.0, max(0.0, confidence)))
+        except (AttributeError, IndexError, RuntimeError, TypeError, ValueError):
+            return 0.0
+
     def _snap_single_word(self, w: str) -> Tuple[str, str]:
         """Snaps an individual word phonetically against the known Tulu lexicon."""
         if not w:
@@ -394,44 +407,24 @@ class TuluSpeechRecognizer:
         from kannada_tigalari_converter.lexicon.tulu_dictionary import lookup_tulu
 
         d = lookup_tulu(w)
-        if d:
-            return w, d[0]["english"]
+        exact = next(
+            (entry for entry in d if entry.get("tulu_kannada") == w or entry.get("inflected_form") == w),
+            None,
+        )
+        if exact:
+            return w, exact["english"]
 
         w_latin = kannada_to_latin(w).lower().strip()
         latin_map = {item["latin_phonetic"].lower(): item for item in WORDS_DATASET_1000}
-        m_lat = difflib.get_close_matches(w_latin, latin_map.keys(), n=1, cutoff=0.55)
+        m_lat = difflib.get_close_matches(w_latin, latin_map.keys(), n=1, cutoff=0.85)
         if m_lat:
             item = latin_map[m_lat[0]]
             return item["kannada"], item.get("english_meaning", "")
 
         kn_map = {item["kannada"]: item for item in WORDS_DATASET_1000}
-        m_kn = difflib.get_close_matches(w, kn_map.keys(), n=1, cutoff=0.50)
+        m_kn = difflib.get_close_matches(w, kn_map.keys(), n=1, cutoff=0.85)
         if m_kn:
             item = kn_map[m_kn[0]]
             return item["kannada"], item.get("english_meaning", "")
 
         return w, ""
-
-    def _match_acoustic_embedding(self, audio: np.ndarray) -> Tuple[str, float]:
-        """Acoustic cosine-similarity matcher against reference vocabulary embeddings."""
-        spec = AudioPreprocessor.compute_log_mel_spectrogram(audio)
-        query_emb = np.mean(spec, axis=1)
-        norm = np.linalg.norm(query_emb)
-        if norm > 1e-6:
-            query_emb = query_emb / norm
-
-        best_word = ""
-        best_sim = -1.0
-
-        for kn, ref_emb in self._acoustic_index.items():
-            sim = float(np.dot(query_emb, ref_emb))
-            if sim > best_sim:
-                best_sim = sim
-                best_word = kn
-
-        # Only accept acoustic match if correlation is genuinely high (>= 0.85)
-        if best_sim < 0.85:
-            return "", 0.0
-
-        conf = max(0.60, min(0.98, (best_sim + 1.0) / 2.0))
-        return best_word, conf

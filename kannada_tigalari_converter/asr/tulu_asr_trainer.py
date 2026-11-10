@@ -95,7 +95,7 @@ class TuluSpeechDataset(Dataset):
 
         # If audio does not exist, synthesize it on-the-fly
         if not os.path.isfile(audio_path):
-            SyntheticTuluAudioGenerator.synthesize_to_wav(text, audio_path)
+            SyntheticTuluAudioGenerator.synthesize_to_wav(text, audio_path, allow_tone_fallback=False)
 
         # Load 16kHz audio array
         audio = AudioPreprocessor.load_audio(audio_path)
@@ -141,9 +141,9 @@ def speech_collate_fn(batch: List[Dict[str, torch.Tensor]]) -> Dict[str, torch.T
 
 
 class TuluASRTrainer:
-    """
-    LoRA Fine-Tuning Trainer for Tulu Speech-to-Text.
-    """
+    """LoRA fine-tuning trainer for Tulu speech-to-text."""
+
+    MAX_ACCEPTABLE_VALIDATION_WER = 1.0
 
     def __init__(
         self,
@@ -267,7 +267,9 @@ class TuluASRTrainer:
             from concurrent.futures import ThreadPoolExecutor
             def _synth(item):
                 rate = random.choice([150, 175, 205])
-                SyntheticTuluAudioGenerator.synthesize_to_wav(item["text_kannada"], item["audio_path"], rate=rate)
+                SyntheticTuluAudioGenerator.synthesize_to_wav(
+                    item["text_kannada"], item["audio_path"], rate=rate, allow_tone_fallback=False
+                )
 
             with ThreadPoolExecutor(max_workers=workers) as pool:
                 list(pool.map(_synth, missing))
@@ -392,18 +394,39 @@ class TuluASRTrainer:
         print("[Tulu Trainer] Running validation evaluation (WER & CER)...")
         eval_metrics = self.evaluate_metrics(val_loader)
         history["eval_metrics"] = eval_metrics
-        print(f"  Character Error Rate (CER): {eval_metrics['cer'] * 100:.1f}%")
-        print(f"  Word Error Rate (WER)     : {eval_metrics['wer'] * 100:.1f}%")
+        if eval_metrics["cer"] is not None:
+            print(f"  Character Error Rate (CER): {eval_metrics['cer'] * 100:.1f}%")
+        else:
+            print("  Character Error Rate (CER): unavailable (jiwer is not installed or validation is empty)")
+        if eval_metrics["wer"] is not None:
+            print(f"  Word Error Rate (WER)     : {eval_metrics['wer'] * 100:.1f}%")
+        else:
+            print("  Word Error Rate (WER)     : unavailable (jiwer is not installed or validation is empty)")
         if eval_metrics.get("sample_pred"):
             print("\n  Sample Decoded Predictions:")
             for p, r in zip(eval_metrics["sample_pred"][:2], eval_metrics["sample_ref"][:2]):
                 print(f"    Target    : {r}")
                 print(f"    Recognized: {p}")
 
-        # Save LoRA adapter weights
+        if not self._validation_wer_is_acceptable(eval_metrics.get("wer")):
+            print("[Tulu Trainer] Validation WER is missing or >= 1.0; refusing to save an unusable adapter.")
+            return {
+                "success": False,
+                "adapter_saved": False,
+                "epochs": epochs,
+                "train_loss": history["train_loss"],
+                "val_loss": history["val_loss"],
+                "wer": eval_metrics.get("wer"),
+                "cer": eval_metrics.get("cer"),
+                "output_dir": self.output_dir,
+                "duration_sec": total_duration,
+            }
+
+        # Save LoRA adapter weights only after validation clears the quality gate.
         self.save_adapter(history)
         return {
             "success": True,
+            "adapter_saved": True,
             "epochs": epochs,
             "train_loss": history["train_loss"],
             "val_loss": history["val_loss"],
@@ -438,14 +461,18 @@ class TuluASRTrainer:
                 predictions.extend([p.strip() for p in pred_texts])
                 references.extend([r.strip() for r in ref_texts])
 
-        wer = jiwer.wer(references, predictions) if jiwer and len(references) > 0 else 0.0
-        cer = jiwer.cer(references, predictions) if jiwer and len(references) > 0 else 0.0
+        wer = jiwer.wer(references, predictions) if jiwer and len(references) > 0 else None
+        cer = jiwer.cer(references, predictions) if jiwer and len(references) > 0 else None
         return {
-            "wer": round(float(wer), 4),
-            "cer": round(float(cer), 4),
+            "wer": round(float(wer), 4) if wer is not None else None,
+            "cer": round(float(cer), 4) if cer is not None else None,
             "sample_pred": predictions[:3],
             "sample_ref": references[:3],
         }
+
+    @classmethod
+    def _validation_wer_is_acceptable(cls, wer: Optional[float]) -> bool:
+        return wer is not None and math.isfinite(wer) and 0.0 <= wer < cls.MAX_ACCEPTABLE_VALIDATION_WER
 
     def save_adapter(self, history: Dict[str, Any]):
         """Serializes the PEFT adapter weights and metadata."""
