@@ -53,6 +53,23 @@ class TestLLMPreparation(unittest.TestCase):
         self.assertIn("ಯಾನ್ ಇಲ್ಲಗ್ ಬರ್ಪೆ", content)
         self.assertIn("CRITICAL TULU GRAMMAR RULES", content)
 
+        # 5-Layer Structured Prompt assertions (Lossfunk EACL 2026 architecture)
+        self.assertIn("LAYER 1: IDENTITY & NATIVE SPEAKER PERSONA", content)
+        self.assertIn("LAYER 2: ANTI-CONTAMINATION PROTOCOL", content)
+        self.assertIn("LAYER 3: CRITICAL TULU GRAMMAR RULES", content)
+        self.assertIn("LAYER 4: FEW-SHOT CONVERSATIONAL EXAMPLES", content)
+        self.assertIn("LAYER 5: PRE-RESPONSE SELF-VERIFICATION CHECKLIST", content)
+
+        # Verify negative constraints table coverage
+        self.assertGreaterEqual(len(OllamaModelExporter.NEGATIVE_CONSTRAINTS), 30)
+        self.assertTrue(any(c["kannada"] == "ಏನು" for c in OllamaModelExporter.NEGATIVE_CONSTRAINTS))
+        self.assertTrue(any(c["kannada"] == "ನಾನು" for c in OllamaModelExporter.NEGATIVE_CONSTRAINTS))
+
+        # Test single-query prompt generation
+        single_prompt = OllamaModelExporter.build_prompt_for_query("Tell me about yourself")
+        self.assertIn("CURRENT USER INPUT", single_prompt)
+        self.assertIn("Tell me about yourself", single_prompt)
+
 
 if __name__ == "__main__":
     unittest.main()
