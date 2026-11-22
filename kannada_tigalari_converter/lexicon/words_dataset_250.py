@@ -16,7 +16,13 @@ Derived as the canonical base vocabulary subset from WORDS_DATASET_1000.
 """
 
 from typing import Dict, List
-from .words_dataset_1000 import WORDS_DATASET_1000, RAW_WORDS_1000
+try:
+    from .words_dataset_1000 import WORDS_DATASET_1000, RAW_WORDS_1000
+except (ImportError, ValueError):
+    try:
+        from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000, RAW_WORDS_1000
+    except (ImportError, ValueError):
+        from words_dataset_1000 import WORDS_DATASET_1000, RAW_WORDS_1000
 
 # Canonical 250 words extracted from the master 1,000 words dataset without redundant execution
 RAW_WORDS = RAW_WORDS_1000[:250]

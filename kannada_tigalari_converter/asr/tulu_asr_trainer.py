@@ -34,8 +34,11 @@ try:
     import torch
     import torch.nn as nn
     from torch.utils.data import Dataset, DataLoader
-except ImportError:
+except (ImportError, ModuleNotFoundError, TypeError):
     torch = None
+    nn = None
+    Dataset = object
+    DataLoader = None
 
 try:
     from transformers import (
@@ -88,7 +91,7 @@ class TuluSpeechDataset(Dataset):
     def __len__(self) -> int:
         return len(self.samples)
 
-    def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
+    def __getitem__(self, idx: int) -> Dict[str, Any]:
         item = self.samples[idx]
         audio_path = item["audio_path"]
         synth_text = item.get("text_kannada", "")
@@ -118,7 +121,7 @@ class TuluSpeechDataset(Dataset):
         }
 
 
-def speech_collate_fn(batch: List[Dict[str, torch.Tensor]]) -> Dict[str, torch.Tensor]:
+def speech_collate_fn(batch: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Pads variable-length label sequences with -100 for PyTorch CrossEntropyLoss masking.
     """

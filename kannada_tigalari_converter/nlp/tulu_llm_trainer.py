@@ -18,7 +18,10 @@ import sys
 import time
 from typing import Any, Dict, List, Optional
 
-import torch
+try:
+    import torch
+except (ImportError, ModuleNotFoundError, TypeError):
+    torch = None
 
 # Ensure project paths
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -46,7 +49,9 @@ class TuluLLMTrainer:
         # Auto-detect optimal lightweight device
         if device:
             self.device = device
-        elif torch.backends.mps.is_available():
+        elif torch is not None and torch.cuda.is_available():
+            self.device = "cuda"
+        elif torch is not None and hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
             self.device = "mps"
         else:
             self.device = "cpu"
@@ -121,6 +126,9 @@ class TuluLLMTrainer:
         """Runs a controlled micro-training session (5-10 steps) strictly capped for laptop safety."""
         from transformers import AutoTokenizer, AutoModelForCausalLM
         from peft import LoraConfig, get_peft_model
+
+        if torch is None:
+            raise RuntimeError("PyTorch is required for LoRA training. Please install torch.")
 
         print(f"[Tulu Trainer] Initializing lightweight model '{self.base_model_name}' on {self.device}...")
 

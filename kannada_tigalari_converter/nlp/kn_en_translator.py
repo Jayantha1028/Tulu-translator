@@ -53,7 +53,7 @@ class MicroSeq2SeqModel(nn.Module if nn is not None else object):
         self.decoder = nn.GRU(hidden_dim, hidden_dim * 2, batch_first=True)
         self.fc_out = nn.Linear(hidden_dim * 2, tgt_vocab_size)
 
-    def forward(self, src: torch.Tensor, tgt: torch.Tensor) -> torch.Tensor:
+    def forward(self, src: Any, tgt: Any) -> Any:
         embedded_src = self.embedding_src(src)
         enc_out, enc_hidden = self.encoder(embedded_src)
         # Combine bidirectional states
