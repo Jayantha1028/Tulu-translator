@@ -90,6 +90,18 @@ class TestRomanizedDatasets(unittest.TestCase):
             self.assertIn("kannada_romanized", first_row)
             self.assertIn("english", first_row)
 
+    def test_historical_gold_25k_dataset_integrity(self):
+        path = os.path.join(BASE_DIR, "datasets", "tulu_historical_gold_25k.csv")
+        self.assertTrue(os.path.isfile(path), "tulu_historical_gold_25k.csv missing")
+        with open(path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertIn("tulu_kannada", reader.fieldnames)
+            self.assertIn("tulu_romanized", reader.fieldnames)
+            self.assertIn("english", reader.fieldnames)
+            self.assertIn("source", reader.fieldnames)
+            count = sum(1 for _ in reader)
+            self.assertEqual(count, 25000)
+
 
 class TestRomanizedTokenizer(unittest.TestCase):
     """Verifies that the tokenizer vocabulary contains strictly zero Indic/Tigalari codepoints."""

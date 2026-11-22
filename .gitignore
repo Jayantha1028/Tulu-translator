@@ -39,4 +39,5 @@ Icon
 kannada_tigalari_converter/downloads/
 datasets/.scraper_checkpoint.json
 datasets/paired_speech_data/
+datasets/manner_1886_raw.txt
 *.pdf
