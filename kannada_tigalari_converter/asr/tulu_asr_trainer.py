@@ -91,11 +91,13 @@ class TuluSpeechDataset(Dataset):
     def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
         item = self.samples[idx]
         audio_path = item["audio_path"]
-        text = item["text_kannada"]
+        synth_text = item.get("text_kannada", "")
+        # Target labels are purely Canonical ASCII Romanized transcripts
+        text = item.get("text_romanized") or synth_text
 
         # If audio does not exist, synthesize it on-the-fly
         if not os.path.isfile(audio_path):
-            SyntheticTuluAudioGenerator.synthesize_to_wav(text, audio_path, allow_tone_fallback=False)
+            SyntheticTuluAudioGenerator.synthesize_to_wav(synth_text or text, audio_path, allow_tone_fallback=False)
 
         # Load 16kHz audio array
         audio = AudioPreprocessor.load_audio(audio_path)
@@ -231,15 +233,19 @@ class TuluASRTrainer:
                 continue
             wav_name = f"sample_{idx:05d}.wav"
             wav_path = os.path.join(audio_cache_dir, wav_name)
+            rom = item.get("tulu_romanized", item.get("latin_phonetic", ""))
             samples.append({
                 "id": str(idx),
                 "text_kannada": kn,
+                "text_romanized": rom,
                 "audio_path": wav_path,
             })
 
         # 2. Add from master corpus if more samples requested
         if len(samples) < num_samples:
-            master_csv = os.path.join(ROOT_DIR, "datasets", "tulu_master_consolidated_corpus.csv")
+            master_csv = os.path.join(ROOT_DIR, "datasets", "tulu_master_corpus_romanized.csv")
+            if not os.path.isfile(master_csv):
+                master_csv = os.path.join(ROOT_DIR, "datasets", "tulu_master_consolidated_corpus.csv")
             if os.path.isfile(master_csv):
                 import csv
                 with open(master_csv, "r", encoding="utf-8") as f:
@@ -247,13 +253,18 @@ class TuluASRTrainer:
                     for idx, row in enumerate(reader, start=len(samples)):
                         if len(samples) >= num_samples:
                             break
-                        kn = (row.get("tulu_kannada") or row.get("kannada") or "").strip()
+                        kn = (row.get("tulu_kannada_raw") or row.get("tulu_kannada") or row.get("kannada") or "").strip()
+                        rom = (row.get("tulu_romanized") or "").strip()
+                        if not rom and kn:
+                            from kannada_tigalari_converter.lexicon.romanization_scheme import to_canonical_roman
+                            rom = to_canonical_roman(kn)
                         if 3 <= len(kn) <= 60:
                             wav_name = f"master_{idx:05d}.wav"
                             wav_path = os.path.join(audio_cache_dir, wav_name)
                             samples.append({
                                 "id": str(idx),
                                 "text_kannada": kn,
+                                "text_romanized": rom,
                                 "audio_path": wav_path,
                             })
 

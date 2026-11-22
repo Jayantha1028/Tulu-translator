@@ -31,8 +31,8 @@ class TestLLMPreparation(unittest.TestCase):
     def test_tokenizer_tool_tokens(self):
         tokens = TuluTokenizerTool.get_full_tulu_token_list()
         self.assertGreater(len(tokens), 50)
-        # Check Tigalari codepoints present
-        self.assertTrue(any(len(c) == 1 and 0x11380 <= ord(c) <= 0x113FF for c in tokens))
+        # Verify pure ASCII canonical romanized tokens with zero Tigalari/Kannada codepoints
+        self.assertTrue(all(all(ord(c) < 128 for c in tok) for tok in tokens))
 
         test_out = "/tmp/test_tokens.json"
         path = TuluTokenizerTool.export_token_catalog(test_out)

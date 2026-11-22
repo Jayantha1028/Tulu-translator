@@ -52,17 +52,23 @@ except ImportError:
 @dataclass
 class TuluASRResult:
     """Complete multi-script speech recognition result."""
-    kannada: str                   # Recognized Kannada script
-    tigalari: str                  # Official Unicode 16.0 Tigalari script
-    latin: str                     # Phonetic Latin transliteration
+    kannada: str                   # Recognized Kannada script (cosmetic render)
+    tigalari: str                  # Official Unicode 16.0 Tigalari script (cosmetic render)
+    latin: str                     # Canonical ASCII Romanized transcription
     english: str                   # Contextual English translation / meaning
     confidence: float              # Mean selected-token probability, not calibrated accuracy
     latency_ms: float              # Processing time in milliseconds
     device: str                    # Hardware device used (mps, cuda, cpu)
     audio_duration_sec: float      # Duration of input audio in seconds
+    romanized: str = ""            # Explicit canonical ASCII romanization
+
+    def __post_init__(self):
+        if not self.romanized:
+            self.romanized = self.latin
 
     def to_dict(self) -> Dict[str, Any]:
         return {
+            "romanized": self.romanized,
             "kannada": self.kannada,
             "tigalari": self.tigalari,
             "latin": self.latin,

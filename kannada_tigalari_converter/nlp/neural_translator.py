@@ -36,12 +36,22 @@ class NeuralTranslationResult:
     confidence: float
     grammar_notes: List[str]
     tokens: List[Dict[str, Any]] = field(default_factory=list)
+    tulu_romanized: str = ""
+    kannada_romanized: str = ""
+
+    def __post_init__(self):
+        if not self.tulu_romanized:
+            self.tulu_romanized = self.tulu_latin
+        if not self.kannada_romanized:
+            self.kannada_romanized = self.tulu_latin
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "source_text": self.source_text,
             "source_lang": self.source_lang,
             "translated_text": self.translated_text,
+            "tulu_romanized": self.tulu_romanized,
+            "kannada_romanized": self.kannada_romanized,
             "tulu_kannada": self.tulu_kannada,
             "tulu_tigalari": self.tulu_tigalari,
             "tulu_latin": self.tulu_latin,

@@ -220,6 +220,42 @@ def launch_web(port=9000):
                     GLOBAL_LOGGER.log("tulu-nmt", "INFO", event_name, f"Processed in {dur_ms:.1f}ms", duration_ms=dur_ms)
                 return
 
+            elif self.path == "/api/translate/tulu-kn":
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+                    payload = json.loads(body.decode("utf-8")) if body else {}
+                    text = payload.get("text", "")
+
+                    from kannada_tigalari_converter.nlp.sentence_translator import FullSentenceTranslator
+                    res = FullSentenceTranslator.translate_tulu_to_kannada(text)
+                    self._send_json({
+                        "success": True,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
+            elif self.path == "/api/translate/kn-en":
+                try:
+                    content_length = int(self.headers.get("Content-Length", 0))
+                    body = self.rfile.read(content_length)
+                    payload = json.loads(body.decode("utf-8")) if body else {}
+                    text = payload.get("text", "")
+
+                    from kannada_tigalari_converter.nlp.kn_en_translator import KannadaEnglishTranslator
+                    trans = KannadaEnglishTranslator()
+                    out = trans.translate(text)
+                    self._send_json({
+                        "success": True,
+                        "source_text": text,
+                        "translated_text": out,
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
             elif self.path == "/api/ocr/extract-and-translate":
                 event_name = "ocr_extract_and_translate"
                 try:
@@ -505,6 +541,42 @@ def launch_web(port=9000):
                     self._send_json({"success": False, "error": str(e)}, status=500)
                 return
 
+            if self.path.startswith("/api/translate/tulu-kn"):
+                try:
+                    import urllib.parse
+                    parsed = urllib.parse.urlparse(self.path)
+                    params = urllib.parse.parse_qs(parsed.query)
+                    text = params.get("text", [""])[0]
+
+                    from kannada_tigalari_converter.nlp.sentence_translator import FullSentenceTranslator
+                    res = FullSentenceTranslator.translate_tulu_to_kannada(text)
+                    self._send_json({
+                        "success": True,
+                        **res.to_dict()
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
+            if self.path.startswith("/api/translate/kn-en"):
+                try:
+                    import urllib.parse
+                    parsed = urllib.parse.urlparse(self.path)
+                    params = urllib.parse.parse_qs(parsed.query)
+                    text = params.get("text", [""])[0]
+
+                    from kannada_tigalari_converter.nlp.kn_en_translator import KannadaEnglishTranslator
+                    trans = KannadaEnglishTranslator()
+                    out = trans.translate(text)
+                    self._send_json({
+                        "success": True,
+                        "source_text": text,
+                        "translated_text": out,
+                    })
+                except Exception as e:
+                    self._send_json({"success": False, "error": str(e)}, status=500)
+                return
+
             super().do_GET()
 
         def _send_json(self, data: dict, status: int = 200):
@@ -670,6 +742,22 @@ def main():
     parser.add_argument(
         "--segregate-quality", dest="segregate_quality_file", nargs="?", const="datasets/tulu_wikipedia_corpus.csv", type=str,
         help="Segregate web-scraped dataset into high-quality and low-quality partitions"
+    )
+    parser.add_argument(
+        "--to-roman", action="store_true",
+        help="Convert input text to canonical ASCII Romanization"
+    )
+    parser.add_argument(
+        "--from-roman", dest="from_roman_target", type=str, choices=["kannada", "tigalari"], default=None,
+        help="Cosmetically render canonical Romanized input into target script"
+    )
+    parser.add_argument(
+        "--tulu-kn", action="store_true",
+        help="Translate Tulu sentence into Romanized Kannada"
+    )
+    parser.add_argument(
+        "--kn-en", action="store_true",
+        help="Translate Romanized Kannada sentence into English"
     )
 
     # ── Morphological Analyzer Commands ──
@@ -947,6 +1035,52 @@ def main():
         print(f"  Average Quality Score    : {stats['avg_quality_score']:.2f} / 1.00")
         print(f"  High-Quality Output      : {high_out}")
         print(f"  Low-Quality Output       : {low_out}")
+        print("=" * 65)
+        return
+
+    if args.to_roman:
+        if not args.text:
+            print("Error: Please provide text to romanize.")
+            sys.exit(1)
+        from kannada_tigalari_converter.lexicon.romanization_scheme import to_canonical_roman
+        print(to_canonical_roman(args.text))
+        return
+
+    if args.from_roman_target:
+        if not args.text:
+            print("Error: Please provide Romanized text to render.")
+            sys.exit(1)
+        from kannada_tigalari_converter.lexicon.romanization_scheme import from_canonical_roman
+        print(from_canonical_roman(args.text, to_script=args.from_roman_target))
+        return
+
+    if args.tulu_kn:
+        if not args.text:
+            print("Error: Please provide Tulu text to translate.")
+            sys.exit(1)
+        from kannada_tigalari_converter.nlp.sentence_translator import FullSentenceTranslator
+        res = FullSentenceTranslator.translate_tulu_to_kannada(args.text)
+        print("=" * 65)
+        print("  Tulu -> Kannada (Romanized MT Pipeline)")
+        print("=" * 65)
+        print(f"  Tulu (Romanized)   : {res.tulu_romanized}")
+        print(f"  Kannada (Romanized): {res.kannada_romanized}")
+        print(f"  Cosmetic Script    : {res.tulu_kannada}")
+        print("=" * 65)
+        return
+
+    if args.kn_en:
+        if not args.text:
+            print("Error: Please provide Kannada text to translate.")
+            sys.exit(1)
+        from kannada_tigalari_converter.nlp.kn_en_translator import KannadaEnglishTranslator
+        trans = KannadaEnglishTranslator()
+        out = trans.translate(args.text)
+        print("=" * 65)
+        print("  Kannada (Romanized) -> English MT")
+        print("=" * 65)
+        print(f"  Input  : {args.text}")
+        print(f"  English: {out}")
         print("=" * 65)
         return
 

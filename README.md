@@ -30,6 +30,13 @@ A complete Python library, CLI, and Web Transliterator Application for the **Tul
 ### 3. Grammar Translation & Dual-Engine Router
 - **Deterministic FSM Grammar Rules:** Sub-millisecond (`< 0.1ms`) SOV $\longleftrightarrow$ SVO bidirectional sentence translation.
 - **Neural SLM Hybrid Engine:** Dynamic router toggle between deterministic rules and contextual local Small Language Models (e.g., Qwen2.5 / Llama 3 via Ollama).
+- **Tulu ➔ Kannada Romanized MT:** End-to-end Romanized pipeline translating Tulu to Kannada (e.g. `yaan illag barpe` $\rightarrow$ `naanu manege baruttEne.`).
+- **Kannada (Romanized) ➔ English MT:** Pure-ASCII Seq2Seq translation pipeline trained directly on Romanized Kannada-English parallel pairs (replaces heavy IndicTrans2/NLLB).
+
+### 4. Canonical ASCII Romanization & Tokenization
+- **Canonical Romanization Scheme (`romanization_scheme.py`):** Single source of truth covering all Tulu and Kannada phonemes (retroflexes `T, D, N, L`, aspirates `kh, gh, th, dh, ph, bh`, Tulu open-e `ae`, long vowels `aa, ee, oo, ii, uu`, and geminates).
+- **Pure-ASCII Tokenizer (`tulu_tokenizer_tool.py`):** Patches tokenizers with canonical ASCII romanized phonemes—guaranteeing zero Indic or Tigalari codepoints in the vocabulary, completely avoiding token explosion.
+- **Multi-Language TTS Engine (`tulu_tts_engine.py`):** Rule-based formant acoustic synthesis extending across 3 phoneme language profiles (Tulu, Kannada, English) with zero heavy model downloads.
 
 ### 4. Agglutinative Morphology & Lexicons
 - **Lemmatization:** Deconstruct inflected words to recover canonical dictionary base lemmas (e.g. `ಇಲ್ಲಡ್` $\rightarrow$ `ಇಲ್ಲ`, `ಕುಡ್ಲಗ್` $\rightarrow$ `ಕುಡ್ಲ`, `ಬರ್ಪೆ` $\rightarrow$ `ಬಲೆ`).
@@ -214,7 +221,7 @@ python3 kannada_tigalari_converter/cli.py --segregate-quality datasets/tulu_wiki
 ### 7. Running Tests
 
 ```bash
-# Run the complete test suite (195 unit tests)
+# Run the complete test suite (210 unit tests)
 python3 run_tests.py
 ```
 

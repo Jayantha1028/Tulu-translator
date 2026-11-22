@@ -1030,8 +1030,12 @@ for idx, (lat, kan, meaning, cat) in enumerate(RAW_WORDS_1000, start=1):
     WORDS_DATASET_1000.append({
         "id": idx,
         "latin_phonetic": lat,
+        "tulu_romanized": lat,
+        "kannada_romanized": lat,
         "kannada": kan,
+        "tulu_kannada": kan,
         "english_meaning": meaning,
+        "english": meaning,
         "category": cat,
         "expected_tigalari": tig
     })

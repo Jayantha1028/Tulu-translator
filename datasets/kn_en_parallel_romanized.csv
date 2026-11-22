@@ -1,0 +1,1024 @@
+id,kannada_romanized,english,kannada_raw,domain
+1,nimma hesarEnu?,What is your name?,ನಿಮ್ಮ ಹೆಸರೇನು?,conversational
+2,neevu ellige hOguttiddeeri?,Where are you going?,ನೀವು ಎಲ್ಲಿಗೆ ಹೋಗುತ್ತಿದ್ದೀರಿ?,conversational
+3,tuMbaa dhanyavaadagaLu.,Thank you very much.,ತುಂಬಾ ಧನ್ಯವಾದಗಳು.,conversational
+4,ninne jOraagi maLe baMditu.,It rained heavily yesterday.,ನಿನ್ನೆ ಜೋರಾಗಿ ಮಳೆ ಬಂದಿತು.,weather
+5,naanu manege hOguttiddEne.,I am going home.,ನಾನು ಮನೆಗೆ ಹೋಗುತ್ತಿದ್ದೇನೆ.,daily
+6,ivattu habbada dina.,Today is a festival day.,ಇವತ್ತು ಹಬ್ಬದ ದಿನ.,culture
+7,namage neeru bEku.,We need water.,ನಮಗೆ ನೀರು ಬೇಕು.,needs
+8,avanu oLLeya huDuga.,He is a good boy.,ಅವನು ಒಳ್ಳೆಯ ಹುಡುಗ.,description
+9,avaLu shaalege hOdaLu.,She went to school.,ಅವಳು ಶಾಲೆಗೆ ಹೋದಳು.,daily
+10,illi banni.,Come here.,ಇಲ್ಲಿ ಬನ್ನಿ.,imperative
+11,alli kuLitukoLLi.,Sit there.,ಅಲ್ಲಿ ಕುಳಿತುಕೊಳ್ಳಿ.,imperative
+12,idara bele eShTu?,How much does this cost?,ಇದರ ಬೆಲೆ ಎಷ್ಟು?,commerce
+13,ooTa aayitaa?,Did you have food?,ಊಟ ಆಯಿತಾ?,dining
+14,"haudu, naanu ooTa maaDide.","Yes, I had food.","ಹೌದು, ನಾನು ಊಟ ಮಾಡಿದೆ.",dining
+15,"illa, nanage hasivilla.","No, I am not hungry.","ಇಲ್ಲ, ನನಗೆ ಹಸಿವಿಲ್ಲ.",dining
+16,dayaviTTu nanage sahaaya maaDi.,Please help me.,ದಯವಿಟ್ಟು ನನಗೆ ಸಹಾಯ ಮಾಡಿ.,courtesy
+17,shubhOdaya.,Good morning.,ಶುಭೋದಯ.,greetings
+18,shubha raatri.,Good night.,ಶುಭ ರಾತ್ರಿ.,greetings
+19,matte sigONa.,See you again.,ಮತ್ತೆ ಸಿಗೋಣ.,farewell
+20,kannaDa bhaaShe suMdaravaagide.,Kannada language is beautiful.,ಕನ್ನಡ ಭಾಷೆ ಸುಂದರವಾಗಿದೆ.,linguistics
+21,tuLu karnaaTaka mattu kEraLadalli maatanaaDuva oMdu draaviDa bhaaShe.,Tulu is a Dravidian language spoken in Karnataka and Kerala.,ತುಳು ಕರ್ನಾಟಕ ಮತ್ತು ಕೇರಳದಲ್ಲಿ ಮಾತನಾಡುವ ಒಂದು ದ್ರಾವಿಡ ಭಾಷೆ.,flores200
+22,dayaviTTu ooTa maaDi.,Please have some food.,ದಯವಿಟ್ಟು ಊಟ ಮಾಡಿ.,flores200
+23,neeru jeevakke atyagatya.,Water is essential for life.,ನೀರು ಜೀವಕ್ಕೆ ಅತ್ಯಗತ್ಯ.,flores200
+24,soorya poorvadalli mooDuttaane.,The sun rises in the east.,ಸೂರ್ಯ ಪೂರ್ವದಲ್ಲಿ ಮೂಡುತ್ತಾನೆ.,flores200
+25,naavu maMgaLoorina samudra teerakke hOgiddevu.,We went to the beach in Mangalore.,ನಾವು ಮಂಗಳೂರಿನ ಸಮುದ್ರ ತೀರಕ್ಕೆ ಹೋಗಿದ್ದೆವು.,flores200
+26,nimage tuLuvinalli maatanaaDalu saadhyavE?,Can you speak in Tulu?,ನಿಮಗೆ ತುಳುವಿನಲ್ಲಿ ಮಾತನಾಡಲು ಸಾಧ್ಯವೇ?,flores200
+27,solmelu,Thank you / Greetings (Tulu),ಸೊಲ್ಮೆಲು,Greetings & Pleasantries
+28,namaskaara,Hello / Respectful greeting,ನಮಸ್ಕಾರ,Greetings & Pleasantries
+29,svaagata,Welcome,ಸ್ವಾಗತ,Greetings & Pleasantries
+30,dayamalt,Please (Tulu),ದಯಮಲ್ತ್,Greetings & Pleasantries
+31,aMd,Yes (Tulu),ಅಂದ್,Greetings & Pleasantries
+32,att,No / Not that (Tulu),ಅತ್ತ್,Greetings & Pleasantries
+33,ijji,No / Absent (Tulu),ಇಜ್ಜಿ,Greetings & Pleasantries
+34,sari,Right / Correct,ಸರಿ,Greetings & Pleasantries
+35,aavu,Okay / Alright (Tulu),ಆವು,Greetings & Pleasantries
+36,khuShi,Happiness / Joy,ಖುಷಿ,Greetings & Pleasantries
+37,shubhaashaya,Good wishes,ಶುಭಾಶಯ,Greetings & Pleasantries
+38,shaaMti,Peace,ಶಾಂತಿ,Greetings & Pleasantries
+39,saMtOSha,Joy / Delight,ಸಂತೋಷ,Greetings & Pleasantries
+40,dhanyavaada,Thank you (formal),ಧನ್ಯವಾದ,Greetings & Pleasantries
+41,daye,Kindness / Mercy,ದಯೆ,Greetings & Pleasantries
+42,aasheervaada,Blessing,ಆಶೀರ್ವಾದ,Greetings & Pleasantries
+43,preeti,Love / Affection,ಪ್ರೀತಿ,Greetings & Pleasantries
+44,vishvaasa,Trust / Faith,ವಿಶ್ವಾಸ,Greetings & Pleasantries
+45,satyavaMtaru,Truthful people,ಸತ್ಯವಂತರು,Greetings & Pleasantries
+46,aarOgya,Health,ಆರೋಗ್ಯ,Greetings & Pleasantries
+47,bhagavaMta,God / Almighty,ಭಗವಂತ,Greetings & Pleasantries
+48,nemmadi,Peace of mind,ನೆಮ್ಮದಿ,Greetings & Pleasantries
+49,upakaara,Favor / Good deed,ಉಪಕಾರ,Greetings & Pleasantries
+50,snEha,Friendship,ಸ್ನೇಹ,Greetings & Pleasantries
+51,daana,Charity / Giving,ದಾನ,Greetings & Pleasantries
+52,appe,Mother (Tulu),ಅಪ್ಪೆ,Family & Kinship
+53,ammer,Father (Tulu respectful),ಅಮ್ಮೆರ್,Family & Kinship
+54,amma,Mother,ಅಮ್ಮ,Family & Kinship
+55,appa,Father,ಅಪ್ಪ,Family & Kinship
+56,aNNe,Elder brother (Tulu),ಅಣ್ಣೆ,Family & Kinship
+57,megye,Younger brother (Tulu),ಮೆಗ್ಯೆ,Family & Kinship
+58,akka,Elder sister,ಅಕ್ಕ,Family & Kinship
+59,megdi,Younger sister (Tulu),ಮೆಗ್ದಿ,Family & Kinship
+60,baale,Child / Baby (Tulu),ಬಾಲೆ,Family & Kinship
+61,kaMDani,Husband (Tulu),ಕಂಡನಿ,Family & Kinship
+62,boDedi,Wife (Tulu),ಬೊಡೆದಿ,Family & Kinship
+63,mage,Son (Tulu),ಮಗೆ,Family & Kinship
+64,magal,Daughter (Tulu),ಮಗಲ್,Family & Kinship
+65,ajje,Grandfather (Tulu),ಅಜ್ಜೆ,Family & Kinship
+66,ajji,Grandmother,ಅಜ್ಜಿ,Family & Kinship
+67,maami,Aunt / Mother-in-law,ಮಾಮಿ,Family & Kinship
+68,maame,Uncle / Father-in-law (Tulu),ಮಾಮೆ,Family & Kinship
+69,baava,Brother-in-law,ಬಾವ,Family & Kinship
+70,dOsti,Friend,ದೋಸ್ತಿ,Family & Kinship
+71,yaan,I / Myself (Tulu),ಯಾನ್,Family & Kinship
+72,enna,My / Mine (Tulu),ಎನ್ನ,Family & Kinship
+73,ee,You informal (Tulu),ಈ,Family & Kinship
+74,eer,You respectful (Tulu),ಈರ್,Family & Kinship
+75,aaye,He (Tulu),ಆಯೆ,Family & Kinship
+76,aal,She (Tulu),ಆಲ್,Family & Kinship
+77,vaNas,Meal / Food (Tulu),ವಣಸ್,Food & Dining
+78,nuppu,Cooked rice (Tulu),ನುಪ್ಪು,Food & Dining
+79,neer,Water,ನೀರ್,Food & Dining
+80,pEr,Milk (Tulu),ಪೇರ್,Food & Dining
+81,taaraayi,Coconut (Tulu),ತಾರಾಯಿ,Food & Dining
+82,meen,Fish,ಮೀನ್,Food & Dining
+83,kOri,Chicken / Fowl (Tulu),ಕೋರಿ,Food & Dining
+84,chaa,Tea,ಚಾ,Food & Dining
+85,bella,Jaggery,ಬೆಲ್ಲ,Food & Dining
+86,uppu,Salt,ಉಪ್ಪು,Food & Dining
+87,saaru,Rasam / Soup,ಸಾರು,Food & Dining
+88,gaMji,Rice porridge / Gruel,ಗಂಜಿ,Food & Dining
+89,chaTni,Chutney,ಚಟ್ನಿ,Food & Dining
+90,bajji,Fritter,ಬಜ್ಜಿ,Food & Dining
+91,bajjeyi,Arecanut (Tulu),ಬಜ್ಜೆಯಿ,Food & Dining
+92,toppu,Greens / Leaves,ತೊಪ್ಪು,Food & Dining
+93,pulchaar,Tamarind gravy (Tulu),ಪುಲ್ಚಾರ್,Food & Dining
+94,kaapi,Coffee,ಕಾಪಿ,Food & Dining
+95,tuppa,Ghee / Clarified butter,ತುಪ್ಪ,Food & Dining
+96,mOru,Buttermilk,ಮೋರು,Food & Dining
+97,mosaru,Curd / Yogurt,ಮೊಸರು,Food & Dining
+98,roTTi,Roti / Flatbread,ರೊಟ್ಟಿ,Food & Dining
+99,dOse,Dosa / Rice pancake,ದೋಸೆ,Food & Dining
+100,iDli,Steamed rice cake,ಇಡ್ಲಿ,Food & Dining
+101,pachchaDi,Pachadi / Side dish,ಪಚ್ಚಡಿ,Food & Dining
+102,barsa,Rain (Tulu),ಬರ್ಸ,Nature & Geography
+103,portu,Sun / Time (Tulu),ಪೊರ್ತು,Nature & Geography
+104,bolpu,Light / Radiance (Tulu),ಬೊಲ್ಪು,Nature & Geography
+105,gaaLi,Wind / Air,ಗಾಳಿ,Nature & Geography
+106,too,Fire (Tulu),ತೂ,Nature & Geography
+107,maNNu,Soil / Earth,ಮಣ್ಣು,Nature & Geography
+108,sude,River (Tulu),ಸುದೆ,Nature & Geography
+109,kaDal,Sea / Ocean (Tulu),ಕಡಲ್,Nature & Geography
+110,beTTa,Mountain / Hill,ಬೆಟ್ಟ,Nature & Geography
+111,mara,Tree,ಮರ,Nature & Geography
+112,poo,Flower,ಪೂ,Nature & Geography
+113,kaayi,Unripe fruit / Nut,ಕಾಯಿ,Nature & Geography
+114,parMdu,Ripe fruit (Tulu),ಪರ್ಂದು,Nature & Geography
+115,kaaDu,Forest / Jungle,ಕಾಡು,Nature & Geography
+116,bhoomi,Earth / Soil,ಭೂಮಿ,Nature & Geography
+117,aakaasha,Sky / Firmament,ಆಕಾಶ,Nature & Geography
+118,mODa,Cloud,ಮೋಡ,Nature & Geography
+119,miMchu,Lightning,ಮಿಂಚು,Nature & Geography
+120,guDugu,Thunder,ಗುಡುಗು,Nature & Geography
+121,irul,Darkness / Night (Tulu),ಇರುಲ್,Nature & Geography
+122,baalke,Water well (Tulu),ಬಾಲ್ಕೆ,Nature & Geography
+123,bailu,Paddy field / Valley,ಬೈಲು,Nature & Geography
+124,kaMDe,Farm plot (Tulu),ಕಂಡೆ,Nature & Geography
+125,kallu,Stone / Rock,ಕಲ್ಲು,Nature & Geography
+126,koMbu,Branch / Horn,ಕೊಂಬು,Nature & Geography
+127,naayi,Dog,ನಾಯಿ,Animals & Birds
+128,puchche,Cat (Tulu),ಪುಚ್ಚೆ,Animals & Birds
+129,petta,Cow (Tulu),ಪೆತ್ತ,Animals & Birds
+130,eru,Bull / Ox (Tulu),ಎರು,Animals & Birds
+131,kudure,Horse,ಕುದುರೆ,Animals & Birds
+132,aane,Elephant,ಆನೆ,Animals & Birds
+133,pili,Tiger (Tulu),ಪಿಲಿ,Animals & Birds
+134,siMha,Lion,ಸಿಂಹ,Animals & Birds
+135,kaage,Crow,ಕಾಗೆ,Animals & Birds
+136,giLi,Parrot,ಗಿಳಿ,Animals & Birds
+137,kOveLu,Koel / Cuckoo (Tulu),ಕೋವೆಳು,Animals & Birds
+138,uchchu,Snake (Tulu),ಉಚ್ಚು,Animals & Birds
+139,aame,Tortoise / Turtle,ಆಮೆ,Animals & Birds
+140,meenu,Fish,ಮೀನು,Animals & Birds
+141,kappe,Frog,ಕಪ್ಪೆ,Animals & Birds
+142,jEnunoNa,Honeybee,ಜೇನುನೊಣ,Animals & Birds
+143,noNa,Housefly,ನೊಣ,Animals & Birds
+144,chiTTe,Butterfly,ಚಿಟ್ಟೆ,Animals & Birds
+145,iruMpu,Ant (Tulu),ಇರುಂಪು,Animals & Birds
+146,kurle,Deer / Fawn (Tulu),ಕುರ್ಲೆ,Animals & Birds
+147,kOti,Monkey,ಕೋತಿ,Animals & Birds
+148,karaDi,Bear,ಕರಡಿ,Animals & Birds
+149,huli,Tiger,ಹುಲಿ,Animals & Birds
+150,eluka,Rat / Rodent,ಎಲುಕ,Animals & Birds
+151,haMsa,Swan,ಹಂಸ,Animals & Birds
+152,tare,Head (Tulu),ತರೆ,Anatomy & Health
+153,kaNNu,Eye,ಕಣ್ಣು,Anatomy & Health
+154,mooku,Nose,ಮೂಕು,Anatomy & Health
+155,baayi,Mouth,ಬಾಯಿ,Anatomy & Health
+156,karbu,Ear (Tulu),ಕರ್ಬು,Anatomy & Health
+157,kai,Hand / Arm,ಕೈ,Anatomy & Health
+158,kaar,Leg / Foot (Tulu),ಕಾರ್,Anatomy & Health
+159,beri,Back (Tulu),ಬೆರಿ,Anatomy & Health
+160,netter,Blood (Tulu),ನೆತ್ತೆರ್,Anatomy & Health
+161,kooli,Tooth (Tulu),ಕೂಲಿ,Anatomy & Health
+162,naalaayi,Tongue (Tulu),ನಾಲಾಯಿ,Anatomy & Health
+163,biral,Finger (Tulu),ಬಿರಲ್,Anatomy & Health
+164,guMDi,Heart / Pit,ಗುಂಡಿ,Anatomy & Health
+165,hoTTe,Belly / Stomach,ಹೊಟ್ಟೆ,Anatomy & Health
+166,elubu,Bone,ಎಲುಬು,Anatomy & Health
+167,tODu,Stream / Vein,ತೋಡು,Anatomy & Health
+168,jeeva,Life / Vitality,ಜೀವ,Anatomy & Health
+169,manassu,Mind / Heart,ಮನಸ್ಸು,Anatomy & Health
+170,usiru,Breath,ಉಸಿರು,Anatomy & Health
+171,dhvani,Voice / Sound,ಧ್ವನಿ,Anatomy & Health
+172,bhavaani,Divine energy,ಭವಾನಿ,Anatomy & Health
+173,shakti,Power / Strength,ಶಕ್ತಿ,Anatomy & Health
+174,roopa,Form / Beauty,ರೂಪ,Anatomy & Health
+175,buddhi,Intellect / Wit,ಬುದ್ಧಿ,Anatomy & Health
+176,nidre,Sleep / Slumber,ನಿದ್ರೆ,Anatomy & Health
+177,illa,House / Residence (Tulu),ಇಲ್ಲ,House & Objects
+178,baakil,Door (Tulu),ಬಾಕಿಲ್,House & Objects
+179,jannel,Window (Tulu),ಜನ್ನೆಲ್,House & Objects
+180,maNe,Wooden seat / Stool,ಮಣೆ,House & Objects
+181,deepa,Oil lamp,ದೀಪ,House & Objects
+182,maMcha,Bed / Cot,ಮಂಚ,House & Objects
+183,katti,Knife / Sword,ಕತ್ತಿ,House & Objects
+184,kannaDi,Mirror,ಕನ್ನಡಿ,House & Objects
+185,baTTalu,Bowl / Vessel,ಬಟ್ಟಲು,House & Objects
+186,ooru,Village / Hometown,ಊರು,House & Objects
+187,aMgaDi,Shop / Store,ಅಂಗಡಿ,House & Objects
+188,shaale,School,ಶಾಲೆ,House & Objects
+189,guDi,Shrine / Temple,ಗುಡಿ,House & Objects
+190,beedi,Street / Avenue,ಬೀದಿ,House & Objects
+191,daari,Road / Path,ದಾರಿ,House & Objects
+192,gaaDi,Cart / Carriage,ಗಾಡಿ,House & Objects
+193,duDDu,Money / Wealth,ದುಡ್ಡು,House & Objects
+194,kaas,Coin / Cash (Tulu),ಕಾಸ್,House & Objects
+195,pustaka,Book,ಪುಸ್ತಕ,House & Objects
+196,kaagada,Paper / Letter,ಕಾಗದ,House & Objects
+197,baMDi,Wagon / Cart,ಬಂಡಿ,House & Objects
+198,ele,Betel leaf / Plant leaf,ಎಲೆ,House & Objects
+199,paatre,Cooking vessel,ಪಾತ್ರೆ,House & Objects
+200,kuppi,Glass bottle,ಕುಪ್ಪಿ,House & Objects
+201,chippu,Shell / Coconut shell,ಚಿಪ್ಪು,House & Objects
+202,ini,Today (Tulu),ಇನಿ,Time & Numbers
+203,elle,Tomorrow (Tulu),ಎಲ್ಲೆ,Time & Numbers
+204,kaaMDe,Morning (Tulu),ಕಾಂಡೆ,Time & Numbers
+205,bayya,Evening (Tulu),ಬಯ್ಯ,Time & Numbers
+206,raatre,Night,ರಾತ್ರೆ,Time & Numbers
+207,pagal,Daylight hours,ಪಗಲ್,Time & Numbers
+208,varSha,Year,ವರ್ಷ,Time & Numbers
+209,tiMgoLu,Month / Moon,ತಿಂಗೊಳು,Time & Numbers
+210,vaara,Week / Day of week,ವಾರ,Time & Numbers
+211,oMji,One 1 (Tulu),ಒಂಜಿ,Time & Numbers
+212,raDD,Two 2 (Tulu),ರಡ್ಡ್,Time & Numbers
+213,mooji,Three 3 (Tulu),ಮೂಜಿ,Time & Numbers
+214,naal,Four 4 (Tulu),ನಾಲ್,Time & Numbers
+215,ain,Five 5 (Tulu),ಐನ್,Time & Numbers
+216,aaji,Six 6 (Tulu),ಆಜಿ,Time & Numbers
+217,EL,Seven 7 (Tulu),ಏಳ್,Time & Numbers
+218,enma,Eight 8 (Tulu),ಎನ್ಮ,Time & Numbers
+219,oruMba,Nine 9 (Tulu),ಒರುಂಬ,Time & Numbers
+220,patt,Ten 10 (Tulu),ಪತ್ತ್,Time & Numbers
+221,irva,Twenty 20 (Tulu),ಇರ್ವ,Time & Numbers
+222,muppa,Thirty 30 (Tulu),ಮುಪ್ಪ,Time & Numbers
+223,nalpa,Forty 40 (Tulu),ನಲ್ಪ,Time & Numbers
+224,aiva,Fifty 50 (Tulu),ಐವ,Time & Numbers
+225,noodu,One hundred 100 (Tulu),ನೂದು,Time & Numbers
+226,saavira,One thousand 1000,ಸಾವಿರ,Time & Numbers
+227,bale,Come (polite Tulu),ಬಲೆ,Verbs & Actions
+228,bala,Come (informal Tulu),ಬಲ,Verbs & Actions
+229,pOle,Go (polite Tulu),ಪೋಲೆ,Verbs & Actions
+230,pO,Go (informal Tulu),ಪೋ,Verbs & Actions
+231,tinle,Eat (Tulu),ತಿನ್ಲೆ,Verbs & Actions
+232,parle,Drink (Tulu),ಪರ್ಲೆ,Verbs & Actions
+233,toole,See / Look (Tulu),ತೂಲೆ,Verbs & Actions
+234,kEnle,Ask / Hear (Tulu),ಕೇನ್ಲೆ,Verbs & Actions
+235,paaterle,Speak / Converse (Tulu),ಪಾತೆರ್ಲೆ,Verbs & Actions
+236,kulle,Sit down (Tulu),ಕುಲ್ಲೆ,Verbs & Actions
+237,uMtule,Stand up / Halt (Tulu),ಉಂತುಲೆ,Verbs & Actions
+238,jepule,Sleep / Lie down (Tulu),ಜೆಪುಲೆ,Verbs & Actions
+239,korle,Give (Tulu),ಕೊರ್ಲೆ,Verbs & Actions
+240,detonle,Receive / Take (Tulu),ದೆತೊನ್ಲೆ,Verbs & Actions
+241,malpule,Do / Perform (Tulu),ಮಲ್ಪುಲೆ,Verbs & Actions
+242,kalpule,Study / Learn (Tulu),ಕಲ್ಪುಲೆ,Verbs & Actions
+243,panle,Tell / Narrate (Tulu),ಪನ್ಲೆ,Verbs & Actions
+244,ODule,Run (Tulu),ಓಡುಲೆ,Verbs & Actions
+245,nalipule,Dance (Tulu),ನಲಿಪುಲೆ,Verbs & Actions
+246,paaDule,Put / Place (Tulu),ಪಾಡುಲೆ,Verbs & Actions
+247,barepule,Write (Tulu),ಬರೆಪುಲೆ,Verbs & Actions
+248,Odule,Read (Tulu),ಓದುಲೆ,Verbs & Actions
+249,kaapule,Wait / Guard (Tulu),ಕಾಪುಲೆ,Verbs & Actions
+250,teriyule,Understand / Know (Tulu),ತೆರಿಯುಲೆ,Verbs & Actions
+251,gelipule,Win / Prevail (Tulu),ಗೆಲಿಪುಲೆ,Verbs & Actions
+252,eDDe,Good / Fine (Tulu),ಎಡ್ಡೆ,Adjectives & Special Ligatures
+253,haaL,Bad / Ruined,ಹಾಳ್,Adjectives & Special Ligatures
+254,malla,Big / Grand (Tulu),ಮಲ್ಲ,Adjectives & Special Ligatures
+255,elya,Small / Little (Tulu),ಎಲ್ಯ,Adjectives & Special Ligatures
+256,porlu,Beautiful / Splendid (Tulu),ಪೊರ್ಲು,Adjectives & Special Ligatures
+257,kappu,Black / Dark,ಕಪ್ಪು,Adjectives & Special Ligatures
+258,boLdu,White / Fair (Tulu),ಬೊಳ್ದು,Adjectives & Special Ligatures
+259,keMpu,Red color,ಕೆಂಪು,Adjectives & Special Ligatures
+260,maMjolu,Yellow / Turmeric (Tulu),ಮಂಜೊಲು,Adjectives & Special Ligatures
+261,pachche,Green / Emerald,ಪಚ್ಚೆ,Adjectives & Special Ligatures
+262,cheepe,Sweet taste,ಚೀಪೆ,Adjectives & Special Ligatures
+263,khaara,Hot / Pungent / Spicy,ಖಾರ,Adjectives & Special Ligatures
+264,kODae,Yesterday (distinct Tulu open ae sound),ಕೋಡೆ್,Adjectives & Special Ligatures
+265,bElae,Work (Tulu open ae ending),ಬೇಲೆ್,Adjectives & Special Ligatures
+266,poDae,Fear (Tulu open ae ending),ಪೊಡೆ್,Adjectives & Special Ligatures
+267,kaNN,Eye (with dead final halant virama),ಕಣ್ಣ್,Adjectives & Special Ligatures
+268,akShara,Letter / Alphabet (cluster ksh),ಅಕ್ಷರ,Adjectives & Special Ligatures
+269,vijnjaana,Science / Knowledge (cluster jn),ವಿಜ್ಞಾನ,Adjectives & Special Ligatures
+270,vidyaalaya,School / Academy (cluster dy),ವಿದ್ಯಾಲಯ,Adjectives & Special Ligatures
+271,raaShTra,Nation / Country (cluster Sh-T-r),ರಾಷ್ಟ್ರ,Adjectives & Special Ligatures
+272,brahma,"Creator / Brahman (clusters br, hm)",ಬ್ರಹ್ಮ,Adjectives & Special Ligatures
+273,praarthane,"Prayer (clusters pr, rth)",ಪ್ರಾರ್ಥನೆ,Adjectives & Special Ligatures
+274,dEvasthaana,Temple / Holy place (cluster sth),ದೇವಸ್ಥಾನ,Adjectives & Special Ligatures
+275,dharma,Righteous duty / Dharma (cluster rm),ಧರ್ಮ,Adjectives & Special Ligatures
+276,karnaaTaka,Karnataka (cluster rn),ಕರ್ನಾಟಕ,Adjectives & Special Ligatures
+277,kuDla,Mangaluru in Tulu,ಕುಡ್ಲ,Places & Geography of Tulunadu
+278,maMgaLooru,Mangaluru city,ಮಂಗಳೂರು,Places & Geography of Tulunadu
+279,uDupi,Udupi city,ಉಡುಪಿ,Places & Geography of Tulunadu
+280,kaarkaLa,Karkala town,ಕಾರ್ಕಳ,Places & Geography of Tulunadu
+281,kuMdaapura,Kundapura town,ಕುಂದಾಪುರ,Places & Geography of Tulunadu
+282,baMTvaaLa,Bantwala town,ಬಂಟ್ವಾಳ,Places & Geography of Tulunadu
+283,puttooru,Puttur town,ಪುತ್ತೂರು,Places & Geography of Tulunadu
+284,beLtaMgaDi,Belthangady town,ಬೆಳ್ತಂಗಡಿ,Places & Geography of Tulunadu
+285,suLya,Sullia town,ಸುಳ್ಯ,Places & Geography of Tulunadu
+286,mooDubidire,Moodbidri town,ಮೂಡುಬಿದಿರೆ,Places & Geography of Tulunadu
+287,kaasaragODu,Kasaragod town,ಕಾಸರಗೋಡು,Places & Geography of Tulunadu
+288,maMjEshvara,Manjeshwar town,ಮಂಜೇಶ್ವರ,Places & Geography of Tulunadu
+289,kaTeelu,Kateel temple town,ಕಟೀಲು,Places & Geography of Tulunadu
+290,dharmasthaLa,Dharmasthala pilgrimage town,ಧರ್ಮಸ್ಥಳ,Places & Geography of Tulunadu
+291,subrahmaNya,Subrahmanya town,ಸುಬ್ರಹ್ಮಣ್ಯ,Places & Geography of Tulunadu
+292,kollooru,Kollur temple town,ಕೊಲ್ಲೂರು,Places & Geography of Tulunadu
+293,gOkarNa,Gokarna pilgrimage town,ಗೋಕರ್ಣ,Places & Geography of Tulunadu
+294,moorDEshvara,Murdeshwar town,ಮೂರ್ಡೇಶ್ವರ,Places & Geography of Tulunadu
+295,shRuMgEri,Sringeri holy town,ಶೃಂಗೇರಿ,Places & Geography of Tulunadu
+296,uLLaala,Ullal coastal town,ಉಳ್ಳಾಲ,Places & Geography of Tulunadu
+297,sOmEshvara,Someshwar beach area,ಸೋಮೇಶ್ವರ,Places & Geography of Tulunadu
+298,paNaMbooru,Panambur port area,ಪಣಂಬೂರು,Places & Geography of Tulunadu
+299,kaavooru,Kavoor locality,ಕಾವೂರು,Places & Geography of Tulunadu
+300,suratkal,Surathkal academic town,ಸುರತ್ಕಲ್,Places & Geography of Tulunadu
+301,mulki,Mulki town,ಮುಲ್ಕಿ,Places & Geography of Tulunadu
+302,bajape,Bajpe airport area,ಬಜಪೆ,Places & Geography of Tulunadu
+303,malpe,Malpe beach port,ಮಲ್ಪೆ,Places & Geography of Tulunadu
+304,brahmaavara,Brahmavara town,ಬ್ರಹ್ಮಾವರ,Places & Geography of Tulunadu
+305,saaligraama,Saligrama village,ಸಾಲಿಗ್ರಾಮ,Places & Geography of Tulunadu
+306,kOTa,Kota village,ಕೋಟ,Places & Geography of Tulunadu
+307,baiMdooru,Byndoor coastal town,ಬೈಂದೂರು,Places & Geography of Tulunadu
+308,shaMkaranaaraayaNa,Shankaranarayana village,ಶಂಕರನಾರಾಯಣ,Places & Geography of Tulunadu
+309,nEtraavati,Netravati river,ನೇತ್ರಾವತಿ,Places & Geography of Tulunadu
+310,kumaaradhaara,Kumaradhara river,ಕುಮಾರಧಾರ,Places & Geography of Tulunadu
+311,shaaMbhavi,Shambhavi river,ಶಾಂಭವಿ,Places & Geography of Tulunadu
+312,naMdini,Nandini river,ನಂದಿನಿ,Places & Geography of Tulunadu
+313,suvarNa,Suvarna river,ಸುವರ್ಣ,Places & Geography of Tulunadu
+314,seetaa,Sitha river,ಸೀತಾ,Places & Geography of Tulunadu
+315,gaMgoLLi,Gangolli river estuary,ಗಂಗೊಳ್ಳಿ,Places & Geography of Tulunadu
+316,vaaraahi,Varahi river,ವಾರಾಹಿ,Places & Geography of Tulunadu
+317,sauparNikaa,Souparnika holy river,ಸೌಪರ್ಣಿಕಾ,Places & Geography of Tulunadu
+318,pashchimaghaTTa,Western Ghats range,ಪಶ್ಚಿಮಘಟ್ಟ,Places & Geography of Tulunadu
+319,kaDalateera,Seashore / Coastline,ಕಡಲತೀರ,Places & Geography of Tulunadu
+320,tuLunaaDu,Tulunadu homeland,ತುಳುನಾಡು,Places & Geography of Tulunadu
+321,karaavaLi,Coastal Karnataka,ಕರಾವಳಿ,Places & Geography of Tulunadu
+322,malenaaDu,Hill country / Malenadu,ಮಲೆನಾಡು,Places & Geography of Tulunadu
+323,bayaluseeme,Plains region of Karnataka,ಬಯಲುಸೀಮೆ,Places & Geography of Tulunadu
+324,beMgaLooru,Bengaluru metropolis,ಬೆಂಗಳೂರು,Places & Geography of Tulunadu
+325,maisooru,Mysuru cultural capital,ಮೈಸೂರು,Places & Geography of Tulunadu
+326,shivamogga,Shivamogga city,ಶಿವಮೊಗ್ಗ,Places & Geography of Tulunadu
+327,haasana,Hassan city,ಹಾಸನ,Places & Geography of Tulunadu
+328,chikkamagaLooru,Chikkamagaluru coffee city,ಚಿಕ್ಕಮಗಳೂರು,Places & Geography of Tulunadu
+329,dhaaravaaDa,Dharwad city,ಧಾರವಾಡ,Places & Geography of Tulunadu
+330,hubbaLLi,Hubballi city,ಹುಬ್ಬಳ್ಳಿ,Places & Geography of Tulunadu
+331,beLagaavi,Belagavi border city,ಬೆಳಗಾವಿ,Places & Geography of Tulunadu
+332,vijayapura,Vijayapura historic city,ವಿಜಯಪುರ,Places & Geography of Tulunadu
+333,baagalakOTe,Bagalakote district,ಬಾಗಲಕೋಟೆ,Places & Geography of Tulunadu
+334,kalaburagi,Kalaburagi city,ಕಲಬುರಗಿ,Places & Geography of Tulunadu
+335,baLLaari,Ballari city,ಬಳ್ಳಾರಿ,Places & Geography of Tulunadu
+336,raayachooru,Raichur doab city,ರಾಯಚೂರು,Places & Geography of Tulunadu
+337,koppaLa,Koppal district,ಕೊಪ್ಪಳ,Places & Geography of Tulunadu
+338,gadaga,Gadag city,ಗದಗ,Places & Geography of Tulunadu
+339,haavEri,Haveri town,ಹಾವೇರಿ,Places & Geography of Tulunadu
+340,uttarakannaDa,Uttara Kannada district,ಉತ್ತರಕನ್ನಡ,Places & Geography of Tulunadu
+341,dakShiNakannaDa,Dakshina Kannada district,ದಕ್ಷಿಣಕನ್ನಡ,Places & Geography of Tulunadu
+342,koDagu,Kodagu / Coorg,ಕೊಡಗು,Places & Geography of Tulunadu
+343,maDikEri,Madikeri town,ಮಡಿಕೇರಿ,Places & Geography of Tulunadu
+344,maMDya,Mandya city,ಮಂಡ್ಯ,Places & Geography of Tulunadu
+345,tumakooru,Tumakuru city,ತುಮಕೂರು,Places & Geography of Tulunadu
+346,kOlaara,Kolar city,ಕೋಲಾರ,Places & Geography of Tulunadu
+347,chitradurga,Chitradurga fort city,ಚಿತ್ರದುರ್ಗ,Places & Geography of Tulunadu
+348,daavaNagere,Davanagere textile city,ದಾವಣಗೆರೆ,Places & Geography of Tulunadu
+349,chaamaraajanagara,Chamarajanagara border city,ಚಾಮರಾಜನಗರ,Places & Geography of Tulunadu
+350,yaadagiri,Yadgiri city,ಯಾದಗಿರಿ,Places & Geography of Tulunadu
+351,beedar,Bidar historic city,ಬೀದರ್,Places & Geography of Tulunadu
+352,barpe,I come (Tulu),ಬರ್ಪೆ,Tulu Verb Conjugations
+353,barpar,They come (Tulu),ಬರ್ಪರ್,Tulu Verb Conjugations
+354,battMD,It arrived (Tulu),ಬತ್ತ್ಂಡ್,Tulu Verb Conjugations
+355,batter,They arrived (Tulu),ಬತ್ತೆರ್,Tulu Verb Conjugations
+356,bannaga,While arriving (Tulu),ಬನ್ನಗ,Tulu Verb Conjugations
+357,bariyere,To arrive (Tulu),ಬರಿಯೆರೆ,Tulu Verb Conjugations
+358,pOpe,I go (Tulu),ಪೋಪೆ,Tulu Verb Conjugations
+359,pOpar,They go (Tulu),ಪೋಪರ್,Tulu Verb Conjugations
+360,pOye,I went (Tulu),ಪೋಯೆ,Tulu Verb Conjugations
+361,pOyer,They went (Tulu),ಪೋಯೆರ್,Tulu Verb Conjugations
+362,pOnaga,While going (Tulu),ಪೋನಗ,Tulu Verb Conjugations
+363,tinpe,I eat (Tulu),ತಿನ್ಪೆ,Tulu Verb Conjugations
+364,tinpar,They eat (Tulu),ತಿನ್ಪರ್,Tulu Verb Conjugations
+365,tiMde,I ate (Tulu),ತಿಂದೆ,Tulu Verb Conjugations
+366,tiMder,They ate (Tulu),ತಿಂದೆರ್,Tulu Verb Conjugations
+367,parpe,I drink (Tulu),ಪರ್ಪೆ,Tulu Verb Conjugations
+368,parpar,They drink (Tulu),ಪರ್ಪರ್,Tulu Verb Conjugations
+369,parte,I drank (Tulu),ಪರ್ತೆ,Tulu Verb Conjugations
+370,toope,I look (Tulu),ತೂಪೆ,Tulu Verb Conjugations
+371,tooye,I looked (Tulu),ತೂಯೆ,Tulu Verb Conjugations
+372,tooyer,They looked (Tulu),ತೂಯೆರ್,Tulu Verb Conjugations
+373,kEnpe,I inquire (Tulu),ಕೇನ್ಪೆ,Tulu Verb Conjugations
+374,kEMDe,I heard (Tulu),ಕೇಂಡೆ,Tulu Verb Conjugations
+375,kEMDer,They heard (Tulu),ಕೇಂಡೆರ್,Tulu Verb Conjugations
+376,paaterpe,I talk (Tulu),ಪಾತೆರ್ಪೆ,Tulu Verb Conjugations
+377,paaterye,I talked (Tulu),ಪಾತೆರ್ಯೆ,Tulu Verb Conjugations
+378,kuLLuve,I sit (Tulu),ಕುಳ್ಳುವೆ,Tulu Verb Conjugations
+379,kuLLiye,I sat down (Tulu),ಕುಳ್ಳಿಯೆ,Tulu Verb Conjugations
+380,uMtuve,I stand (Tulu),ಉಂತುವೆ,Tulu Verb Conjugations
+381,uMtiye,I stood (Tulu),ಉಂತಿಯೆ,Tulu Verb Conjugations
+382,jeppuve,I lie down (Tulu),ಜೆಪ್ಪುವೆ,Tulu Verb Conjugations
+383,jette,I slept (Tulu),ಜೆತ್ತೆ,Tulu Verb Conjugations
+384,jetter,They slept (Tulu),ಜೆತ್ತೆರ್,Tulu Verb Conjugations
+385,korpe,I present (Tulu),ಕೊರ್ಪೆ,Tulu Verb Conjugations
+386,koriye,I gave (Tulu),ಕೊರಿಯೆ,Tulu Verb Conjugations
+387,detonpe,I accept (Tulu),ದೆತೊನ್ಪೆ,Tulu Verb Conjugations
+388,detoMDe,I took (Tulu),ದೆತೊಂಡೆ,Tulu Verb Conjugations
+389,malpuve,I perform (Tulu),ಮಲ್ಪುವೆ,Tulu Verb Conjugations
+390,malte,I did (Tulu),ಮಲ್ತೆ,Tulu Verb Conjugations
+391,malter,They did (Tulu),ಮಲ್ತೆರ್,Tulu Verb Conjugations
+392,kalpuve,I study (Tulu),ಕಲ್ಪುವೆ,Tulu Verb Conjugations
+393,kalte,I learned (Tulu),ಕಲ್ತೆ,Tulu Verb Conjugations
+394,panpe,I recite (Tulu),ಪನ್ಪೆ,Tulu Verb Conjugations
+395,paMDe,I stated (Tulu),ಪಂಡೆ,Tulu Verb Conjugations
+396,paMDer,They stated (Tulu),ಪಂಡೆರ್,Tulu Verb Conjugations
+397,ODuve,I run fast (Tulu),ಓಡುವೆ,Tulu Verb Conjugations
+398,ODiye,I ran (Tulu),ಓಡಿಯೆ,Tulu Verb Conjugations
+399,nalipuve,I dance joyfully (Tulu),ನಲಿಪುವೆ,Tulu Verb Conjugations
+400,nalite,I danced (Tulu),ನಲಿತೆ,Tulu Verb Conjugations
+401,paaDuve,I pour (Tulu),ಪಾಡುವೆ,Tulu Verb Conjugations
+402,paaDiye,I placed (Tulu),ಪಾಡಿಯೆ,Tulu Verb Conjugations
+403,barepe,I inscribe (Tulu),ಬರೆಪೆ,Tulu Verb Conjugations
+404,barete,I wrote down (Tulu),ಬರೆತೆ,Tulu Verb Conjugations
+405,Oduve,I read aloud (Tulu),ಓದುವೆ,Tulu Verb Conjugations
+406,Odiye,I read (Tulu),ಓದಿಯೆ,Tulu Verb Conjugations
+407,kaapuve,I watch over (Tulu),ಕಾಪುವೆ,Tulu Verb Conjugations
+408,kaaye,I waited (Tulu),ಕಾಯೆ,Tulu Verb Conjugations
+409,teriyuMDu,It is understood (Tulu),ತೆರಿಯುಂಡು,Tulu Verb Conjugations
+410,teriyiji,Not understood (Tulu),ತೆರಿಯಿಜಿ,Tulu Verb Conjugations
+411,bODu,Required (Tulu),ಬೋಡು,Tulu Verb Conjugations
+412,boDchi,Not desired (Tulu),ಬೊಡ್ಚಿ,Tulu Verb Conjugations
+413,tikkuMDu,Obtainable (Tulu),ತಿಕ್ಕುಂಡು,Tulu Verb Conjugations
+414,tikkiji,Unavailable (Tulu),ತಿಕ್ಕಿಜಿ,Tulu Verb Conjugations
+415,aapuMDu,It takes place (Tulu),ಆಪುಂಡು,Tulu Verb Conjugations
+416,aayiji,Did not occur (Tulu),ಆಯಿಜಿ,Tulu Verb Conjugations
+417,uMDu,It exists (Tulu),ಉಂಡು,Tulu Verb Conjugations
+418,ijji,Does not exist (Tulu),ಇಜ್ಜಿ,Tulu Verb Conjugations
+419,ulle,I exist (Tulu),ಉಲ್ಲೆ,Tulu Verb Conjugations
+420,ullar,You are present (Tulu),ಉಲ್ಲರ್,Tulu Verb Conjugations
+421,toovoDu,Must view (Tulu),ತೂವೊಡು,Tulu Verb Conjugations
+422,pOvoDu,Must depart (Tulu),ಪೋವೊಡು,Tulu Verb Conjugations
+423,baravoDu,Must attend (Tulu),ಬರವೊಡು,Tulu Verb Conjugations
+424,tinnoDu,Must consume (Tulu),ತಿನ್ನೊಡು,Tulu Verb Conjugations
+425,parvoDu,Must drink (Tulu),ಪರ್ವೊಡು,Tulu Verb Conjugations
+426,kElvoDu,Must request (Tulu),ಕೇಲ್ವೊಡು,Tulu Verb Conjugations
+427,ka,Akshara ಕ with vowel sign inherent a,ಕ,Aksharamale & Gunintagalu Matrix
+428,kaa,Akshara ಕ with vowel sign ಾ,ಕಾ,Aksharamale & Gunintagalu Matrix
+429,ki,Akshara ಕ with vowel sign ಿ,ಕಿ,Aksharamale & Gunintagalu Matrix
+430,kee,Akshara ಕ with vowel sign ೀ,ಕೀ,Aksharamale & Gunintagalu Matrix
+431,ku,Akshara ಕ with vowel sign ು,ಕು,Aksharamale & Gunintagalu Matrix
+432,koo,Akshara ಕ with vowel sign ೂ,ಕೂ,Aksharamale & Gunintagalu Matrix
+433,kRu,Akshara ಕ with vowel sign ೃ,ಕೃ,Aksharamale & Gunintagalu Matrix
+434,ke,Akshara ಕ with vowel sign ೆ,ಕೆ,Aksharamale & Gunintagalu Matrix
+435,kE,Akshara ಕ with vowel sign ೇ,ಕೇ,Aksharamale & Gunintagalu Matrix
+436,kai,Akshara ಕ with vowel sign ೈ,ಕೈ,Aksharamale & Gunintagalu Matrix
+437,ko,Akshara ಕ with vowel sign ೊ,ಕೊ,Aksharamale & Gunintagalu Matrix
+438,kO,Akshara ಕ with vowel sign ೋ,ಕೋ,Aksharamale & Gunintagalu Matrix
+439,kau,Akshara ಕ with vowel sign ೌ,ಕೌ,Aksharamale & Gunintagalu Matrix
+440,kaM,Akshara ಕ with vowel sign ಂ,ಕಂ,Aksharamale & Gunintagalu Matrix
+441,kaH,Akshara ಕ with vowel sign ಃ,ಕಃ,Aksharamale & Gunintagalu Matrix
+442,ga,Akshara ಗ with vowel sign inherent a,ಗ,Aksharamale & Gunintagalu Matrix
+443,gaa,Akshara ಗ with vowel sign ಾ,ಗಾ,Aksharamale & Gunintagalu Matrix
+444,gi,Akshara ಗ with vowel sign ಿ,ಗಿ,Aksharamale & Gunintagalu Matrix
+445,gee,Akshara ಗ with vowel sign ೀ,ಗೀ,Aksharamale & Gunintagalu Matrix
+446,gu,Akshara ಗ with vowel sign ು,ಗು,Aksharamale & Gunintagalu Matrix
+447,goo,Akshara ಗ with vowel sign ೂ,ಗೂ,Aksharamale & Gunintagalu Matrix
+448,gRu,Akshara ಗ with vowel sign ೃ,ಗೃ,Aksharamale & Gunintagalu Matrix
+449,ge,Akshara ಗ with vowel sign ೆ,ಗೆ,Aksharamale & Gunintagalu Matrix
+450,gE,Akshara ಗ with vowel sign ೇ,ಗೇ,Aksharamale & Gunintagalu Matrix
+451,gai,Akshara ಗ with vowel sign ೈ,ಗೈ,Aksharamale & Gunintagalu Matrix
+452,go,Akshara ಗ with vowel sign ೊ,ಗೊ,Aksharamale & Gunintagalu Matrix
+453,gO,Akshara ಗ with vowel sign ೋ,ಗೋ,Aksharamale & Gunintagalu Matrix
+454,gau,Akshara ಗ with vowel sign ೌ,ಗೌ,Aksharamale & Gunintagalu Matrix
+455,gaM,Akshara ಗ with vowel sign ಂ,ಗಂ,Aksharamale & Gunintagalu Matrix
+456,gaH,Akshara ಗ with vowel sign ಃ,ಗಃ,Aksharamale & Gunintagalu Matrix
+457,cha,Akshara ಚ with vowel sign inherent a,ಚ,Aksharamale & Gunintagalu Matrix
+458,chaa,Akshara ಚ with vowel sign ಾ,ಚಾ,Aksharamale & Gunintagalu Matrix
+459,chi,Akshara ಚ with vowel sign ಿ,ಚಿ,Aksharamale & Gunintagalu Matrix
+460,chee,Akshara ಚ with vowel sign ೀ,ಚೀ,Aksharamale & Gunintagalu Matrix
+461,chu,Akshara ಚ with vowel sign ು,ಚು,Aksharamale & Gunintagalu Matrix
+462,choo,Akshara ಚ with vowel sign ೂ,ಚೂ,Aksharamale & Gunintagalu Matrix
+463,chRu,Akshara ಚ with vowel sign ೃ,ಚೃ,Aksharamale & Gunintagalu Matrix
+464,che,Akshara ಚ with vowel sign ೆ,ಚೆ,Aksharamale & Gunintagalu Matrix
+465,chE,Akshara ಚ with vowel sign ೇ,ಚೇ,Aksharamale & Gunintagalu Matrix
+466,chai,Akshara ಚ with vowel sign ೈ,ಚೈ,Aksharamale & Gunintagalu Matrix
+467,cho,Akshara ಚ with vowel sign ೊ,ಚೊ,Aksharamale & Gunintagalu Matrix
+468,chO,Akshara ಚ with vowel sign ೋ,ಚೋ,Aksharamale & Gunintagalu Matrix
+469,chau,Akshara ಚ with vowel sign ೌ,ಚೌ,Aksharamale & Gunintagalu Matrix
+470,chaM,Akshara ಚ with vowel sign ಂ,ಚಂ,Aksharamale & Gunintagalu Matrix
+471,chaH,Akshara ಚ with vowel sign ಃ,ಚಃ,Aksharamale & Gunintagalu Matrix
+472,ja,Akshara ಜ with vowel sign inherent a,ಜ,Aksharamale & Gunintagalu Matrix
+473,jaa,Akshara ಜ with vowel sign ಾ,ಜಾ,Aksharamale & Gunintagalu Matrix
+474,ji,Akshara ಜ with vowel sign ಿ,ಜಿ,Aksharamale & Gunintagalu Matrix
+475,jee,Akshara ಜ with vowel sign ೀ,ಜೀ,Aksharamale & Gunintagalu Matrix
+476,ju,Akshara ಜ with vowel sign ು,ಜು,Aksharamale & Gunintagalu Matrix
+477,joo,Akshara ಜ with vowel sign ೂ,ಜೂ,Aksharamale & Gunintagalu Matrix
+478,jRu,Akshara ಜ with vowel sign ೃ,ಜೃ,Aksharamale & Gunintagalu Matrix
+479,je,Akshara ಜ with vowel sign ೆ,ಜೆ,Aksharamale & Gunintagalu Matrix
+480,jE,Akshara ಜ with vowel sign ೇ,ಜೇ,Aksharamale & Gunintagalu Matrix
+481,jai,Akshara ಜ with vowel sign ೈ,ಜೈ,Aksharamale & Gunintagalu Matrix
+482,jo,Akshara ಜ with vowel sign ೊ,ಜೊ,Aksharamale & Gunintagalu Matrix
+483,jO,Akshara ಜ with vowel sign ೋ,ಜೋ,Aksharamale & Gunintagalu Matrix
+484,jau,Akshara ಜ with vowel sign ೌ,ಜೌ,Aksharamale & Gunintagalu Matrix
+485,jaM,Akshara ಜ with vowel sign ಂ,ಜಂ,Aksharamale & Gunintagalu Matrix
+486,jaH,Akshara ಜ with vowel sign ಃ,ಜಃ,Aksharamale & Gunintagalu Matrix
+487,Ta,Akshara ಟ with vowel sign inherent a,ಟ,Aksharamale & Gunintagalu Matrix
+488,Taa,Akshara ಟ with vowel sign ಾ,ಟಾ,Aksharamale & Gunintagalu Matrix
+489,Ti,Akshara ಟ with vowel sign ಿ,ಟಿ,Aksharamale & Gunintagalu Matrix
+490,Tee,Akshara ಟ with vowel sign ೀ,ಟೀ,Aksharamale & Gunintagalu Matrix
+491,Tu,Akshara ಟ with vowel sign ು,ಟು,Aksharamale & Gunintagalu Matrix
+492,Too,Akshara ಟ with vowel sign ೂ,ಟೂ,Aksharamale & Gunintagalu Matrix
+493,TRu,Akshara ಟ with vowel sign ೃ,ಟೃ,Aksharamale & Gunintagalu Matrix
+494,Te,Akshara ಟ with vowel sign ೆ,ಟೆ,Aksharamale & Gunintagalu Matrix
+495,TE,Akshara ಟ with vowel sign ೇ,ಟೇ,Aksharamale & Gunintagalu Matrix
+496,Tai,Akshara ಟ with vowel sign ೈ,ಟೈ,Aksharamale & Gunintagalu Matrix
+497,To,Akshara ಟ with vowel sign ೊ,ಟೊ,Aksharamale & Gunintagalu Matrix
+498,TO,Akshara ಟ with vowel sign ೋ,ಟೋ,Aksharamale & Gunintagalu Matrix
+499,Tau,Akshara ಟ with vowel sign ೌ,ಟೌ,Aksharamale & Gunintagalu Matrix
+500,TaM,Akshara ಟ with vowel sign ಂ,ಟಂ,Aksharamale & Gunintagalu Matrix
+501,TaH,Akshara ಟ with vowel sign ಃ,ಟಃ,Aksharamale & Gunintagalu Matrix
+502,Da,Akshara ಡ with vowel sign inherent a,ಡ,Aksharamale & Gunintagalu Matrix
+503,Daa,Akshara ಡ with vowel sign ಾ,ಡಾ,Aksharamale & Gunintagalu Matrix
+504,Di,Akshara ಡ with vowel sign ಿ,ಡಿ,Aksharamale & Gunintagalu Matrix
+505,Dee,Akshara ಡ with vowel sign ೀ,ಡೀ,Aksharamale & Gunintagalu Matrix
+506,Du,Akshara ಡ with vowel sign ು,ಡು,Aksharamale & Gunintagalu Matrix
+507,Doo,Akshara ಡ with vowel sign ೂ,ಡೂ,Aksharamale & Gunintagalu Matrix
+508,DRu,Akshara ಡ with vowel sign ೃ,ಡೃ,Aksharamale & Gunintagalu Matrix
+509,De,Akshara ಡ with vowel sign ೆ,ಡೆ,Aksharamale & Gunintagalu Matrix
+510,DE,Akshara ಡ with vowel sign ೇ,ಡೇ,Aksharamale & Gunintagalu Matrix
+511,Dai,Akshara ಡ with vowel sign ೈ,ಡೈ,Aksharamale & Gunintagalu Matrix
+512,Do,Akshara ಡ with vowel sign ೊ,ಡೊ,Aksharamale & Gunintagalu Matrix
+513,DO,Akshara ಡ with vowel sign ೋ,ಡೋ,Aksharamale & Gunintagalu Matrix
+514,Dau,Akshara ಡ with vowel sign ೌ,ಡೌ,Aksharamale & Gunintagalu Matrix
+515,DaM,Akshara ಡ with vowel sign ಂ,ಡಂ,Aksharamale & Gunintagalu Matrix
+516,DaH,Akshara ಡ with vowel sign ಃ,ಡಃ,Aksharamale & Gunintagalu Matrix
+517,ta,Akshara ತ with vowel sign inherent a,ತ,Aksharamale & Gunintagalu Matrix
+518,taa,Akshara ತ with vowel sign ಾ,ತಾ,Aksharamale & Gunintagalu Matrix
+519,ti,Akshara ತ with vowel sign ಿ,ತಿ,Aksharamale & Gunintagalu Matrix
+520,tee,Akshara ತ with vowel sign ೀ,ತೀ,Aksharamale & Gunintagalu Matrix
+521,tu,Akshara ತ with vowel sign ು,ತು,Aksharamale & Gunintagalu Matrix
+522,too,Akshara ತ with vowel sign ೂ,ತೂ,Aksharamale & Gunintagalu Matrix
+523,tRu,Akshara ತ with vowel sign ೃ,ತೃ,Aksharamale & Gunintagalu Matrix
+524,te,Akshara ತ with vowel sign ೆ,ತೆ,Aksharamale & Gunintagalu Matrix
+525,tE,Akshara ತ with vowel sign ೇ,ತೇ,Aksharamale & Gunintagalu Matrix
+526,tai,Akshara ತ with vowel sign ೈ,ತೈ,Aksharamale & Gunintagalu Matrix
+527,to,Akshara ತ with vowel sign ೊ,ತೊ,Aksharamale & Gunintagalu Matrix
+528,tO,Akshara ತ with vowel sign ೋ,ತೋ,Aksharamale & Gunintagalu Matrix
+529,tau,Akshara ತ with vowel sign ೌ,ತೌ,Aksharamale & Gunintagalu Matrix
+530,taM,Akshara ತ with vowel sign ಂ,ತಂ,Aksharamale & Gunintagalu Matrix
+531,taH,Akshara ತ with vowel sign ಃ,ತಃ,Aksharamale & Gunintagalu Matrix
+532,da,Akshara ದ with vowel sign inherent a,ದ,Aksharamale & Gunintagalu Matrix
+533,daa,Akshara ದ with vowel sign ಾ,ದಾ,Aksharamale & Gunintagalu Matrix
+534,di,Akshara ದ with vowel sign ಿ,ದಿ,Aksharamale & Gunintagalu Matrix
+535,dee,Akshara ದ with vowel sign ೀ,ದೀ,Aksharamale & Gunintagalu Matrix
+536,du,Akshara ದ with vowel sign ು,ದು,Aksharamale & Gunintagalu Matrix
+537,doo,Akshara ದ with vowel sign ೂ,ದೂ,Aksharamale & Gunintagalu Matrix
+538,dRu,Akshara ದ with vowel sign ೃ,ದೃ,Aksharamale & Gunintagalu Matrix
+539,de,Akshara ದ with vowel sign ೆ,ದೆ,Aksharamale & Gunintagalu Matrix
+540,dE,Akshara ದ with vowel sign ೇ,ದೇ,Aksharamale & Gunintagalu Matrix
+541,dai,Akshara ದ with vowel sign ೈ,ದೈ,Aksharamale & Gunintagalu Matrix
+542,do,Akshara ದ with vowel sign ೊ,ದೊ,Aksharamale & Gunintagalu Matrix
+543,dO,Akshara ದ with vowel sign ೋ,ದೋ,Aksharamale & Gunintagalu Matrix
+544,dau,Akshara ದ with vowel sign ೌ,ದೌ,Aksharamale & Gunintagalu Matrix
+545,daM,Akshara ದ with vowel sign ಂ,ದಂ,Aksharamale & Gunintagalu Matrix
+546,daH,Akshara ದ with vowel sign ಃ,ದಃ,Aksharamale & Gunintagalu Matrix
+547,pa,Akshara ಪ with vowel sign inherent a,ಪ,Aksharamale & Gunintagalu Matrix
+548,paa,Akshara ಪ with vowel sign ಾ,ಪಾ,Aksharamale & Gunintagalu Matrix
+549,pi,Akshara ಪ with vowel sign ಿ,ಪಿ,Aksharamale & Gunintagalu Matrix
+550,pee,Akshara ಪ with vowel sign ೀ,ಪೀ,Aksharamale & Gunintagalu Matrix
+551,pu,Akshara ಪ with vowel sign ು,ಪು,Aksharamale & Gunintagalu Matrix
+552,poo,Akshara ಪ with vowel sign ೂ,ಪೂ,Aksharamale & Gunintagalu Matrix
+553,pRu,Akshara ಪ with vowel sign ೃ,ಪೃ,Aksharamale & Gunintagalu Matrix
+554,pe,Akshara ಪ with vowel sign ೆ,ಪೆ,Aksharamale & Gunintagalu Matrix
+555,pE,Akshara ಪ with vowel sign ೇ,ಪೇ,Aksharamale & Gunintagalu Matrix
+556,pai,Akshara ಪ with vowel sign ೈ,ಪೈ,Aksharamale & Gunintagalu Matrix
+557,po,Akshara ಪ with vowel sign ೊ,ಪೊ,Aksharamale & Gunintagalu Matrix
+558,pO,Akshara ಪ with vowel sign ೋ,ಪೋ,Aksharamale & Gunintagalu Matrix
+559,pau,Akshara ಪ with vowel sign ೌ,ಪೌ,Aksharamale & Gunintagalu Matrix
+560,paM,Akshara ಪ with vowel sign ಂ,ಪಂ,Aksharamale & Gunintagalu Matrix
+561,paH,Akshara ಪ with vowel sign ಃ,ಪಃ,Aksharamale & Gunintagalu Matrix
+562,ba,Akshara ಬ with vowel sign inherent a,ಬ,Aksharamale & Gunintagalu Matrix
+563,baa,Akshara ಬ with vowel sign ಾ,ಬಾ,Aksharamale & Gunintagalu Matrix
+564,bi,Akshara ಬ with vowel sign ಿ,ಬಿ,Aksharamale & Gunintagalu Matrix
+565,bee,Akshara ಬ with vowel sign ೀ,ಬೀ,Aksharamale & Gunintagalu Matrix
+566,bu,Akshara ಬ with vowel sign ು,ಬು,Aksharamale & Gunintagalu Matrix
+567,boo,Akshara ಬ with vowel sign ೂ,ಬೂ,Aksharamale & Gunintagalu Matrix
+568,bRu,Akshara ಬ with vowel sign ೃ,ಬೃ,Aksharamale & Gunintagalu Matrix
+569,be,Akshara ಬ with vowel sign ೆ,ಬೆ,Aksharamale & Gunintagalu Matrix
+570,bE,Akshara ಬ with vowel sign ೇ,ಬೇ,Aksharamale & Gunintagalu Matrix
+571,bai,Akshara ಬ with vowel sign ೈ,ಬೈ,Aksharamale & Gunintagalu Matrix
+572,bo,Akshara ಬ with vowel sign ೊ,ಬೊ,Aksharamale & Gunintagalu Matrix
+573,bO,Akshara ಬ with vowel sign ೋ,ಬೋ,Aksharamale & Gunintagalu Matrix
+574,bau,Akshara ಬ with vowel sign ೌ,ಬೌ,Aksharamale & Gunintagalu Matrix
+575,baM,Akshara ಬ with vowel sign ಂ,ಬಂ,Aksharamale & Gunintagalu Matrix
+576,baH,Akshara ಬ with vowel sign ಃ,ಬಃ,Aksharamale & Gunintagalu Matrix
+577,arka,Sun / Ray,ಅರ್ಕ,Complex Clusters & Ottakshara
+578,khaDga,Sword,ಖಡ್ಗ,Complex Clusters & Ottakshara
+579,saMgha,Association,ಸಂಘ,Complex Clusters & Ottakshara
+580,aajnje,Command,ಆಜ್ಞೆ,Complex Clusters & Ottakshara
+581,shatru,Enemy,ಶತ್ರು,Complex Clusters & Ottakshara
+582,mitra,Friend,ಮಿತ್ರ,Complex Clusters & Ottakshara
+583,patra,Letter,ಪತ್ರ,Complex Clusters & Ottakshara
+584,kShEtra,Holy field,ಕ್ಷೇತ್ರ,Complex Clusters & Ottakshara
+585,nakShatra,Star,ನಕ್ಷತ್ರ,Complex Clusters & Ottakshara
+586,sapta,Seven,ಸಪ್ತ,Complex Clusters & Ottakshara
+587,aShTa,Eight,ಅಷ್ಟ,Complex Clusters & Ottakshara
+588,kaShTa,Difficulty,ಕಷ್ಟ,Complex Clusters & Ottakshara
+589,naShTa,Loss,ನಷ್ಟ,Complex Clusters & Ottakshara
+590,dRuShTi,Vision,ದೃಷ್ಟಿ,Complex Clusters & Ottakshara
+591,sRuShTi,Creation,ಸೃಷ್ಟಿ,Complex Clusters & Ottakshara
+592,shrEShTha,Eminent,ಶ್ರೇಷ್ಠ,Complex Clusters & Ottakshara
+593,spaShTa,Clear,ಸ್ಪಷ್ಟ,Complex Clusters & Ottakshara
+594,iShTa,Desire,ಇಷ್ಟ,Complex Clusters & Ottakshara
+595,shiShya,Disciple,ಶಿಷ್ಯ,Complex Clusters & Ottakshara
+596,puShpa,Flower,ಪುಷ್ಪ,Complex Clusters & Ottakshara
+597,bhasma,Sacred ash,ಭಸ್ಮ,Complex Clusters & Ottakshara
+598,vishva,Universe,ವಿಶ್ವ,Complex Clusters & Ottakshara
+599,eeshvara,Supreme deity,ಈಶ್ವರ,Complex Clusters & Ottakshara
+600,pashchima,West,ಪಶ್ಚಿಮ,Complex Clusters & Ottakshara
+601,aashcharya,Wonder,ಆಶ್ಚರ್ಯ,Complex Clusters & Ottakshara
+602,nishchaya,Certainty,ನಿಶ್ಚಯ,Complex Clusters & Ottakshara
+603,utsava,Festival,ಉತ್ಸವ,Complex Clusters & Ottakshara
+604,matsya,Fish,ಮತ್ಸ್ಯ,Complex Clusters & Ottakshara
+605,vatsala,Affectionate,ವತ್ಸಲ,Complex Clusters & Ottakshara
+606,tatva,Principle,ತತ್ವ,Complex Clusters & Ottakshara
+607,satva,Essence,ಸತ್ವ,Complex Clusters & Ottakshara
+608,mahatva,Importance,ಮಹತ್ವ,Complex Clusters & Ottakshara
+609,vidvaaMsa,Scholar,ವಿದ್ವಾಂಸ,Complex Clusters & Ottakshara
+610,dvaara,Entrance,ದ್ವಾರ,Complex Clusters & Ottakshara
+611,dveepa,Island,ದ್ವೀಪ,Complex Clusters & Ottakshara
+612,advaita,Non-dualism,ಅದ್ವೈತ,Complex Clusters & Ottakshara
+613,brahmaaMDa,Cosmos,ಬ್ರಹ್ಮಾಂಡ,Complex Clusters & Ottakshara
+614,chihne,Emblem,ಚಿಹ್ನೆ,Complex Clusters & Ottakshara
+615,jihve,Tongue,ಜಿಹ್ವೆ,Complex Clusters & Ottakshara
+616,madhyaahna,Noon,ಮಧ್ಯಾಹ್ನ,Complex Clusters & Ottakshara
+617,aparaahna,Afternoon,ಅಪರಾಹ್ನ,Complex Clusters & Ottakshara
+618,shlOka,Verse,ಶ್ಲೋಕ,Complex Clusters & Ottakshara
+619,shvEta,Pure white,ಶ್ವೇತ,Complex Clusters & Ottakshara
+620,shukla,Bright fortnight,ಶುಕ್ಲ,Complex Clusters & Ottakshara
+621,kRuShNa,Lord Krishna,ಕೃಷ್ಣ,Complex Clusters & Ottakshara
+622,viShNu,Lord Vishnu,ವಿಷ್ಣು,Complex Clusters & Ottakshara
+623,jiShNu,Triumphant,ಜಿಷ್ಣು,Complex Clusters & Ottakshara
+624,uShNa,Heat,ಉಷ್ಣ,Complex Clusters & Ottakshara
+625,tRuShNe,Thirst,ತೃಷ್ಣೆ,Complex Clusters & Ottakshara
+626,dhanussu,Bow,ಧನುಸ್ಸು,Complex Clusters & Ottakshara
+627,tapassu,Penance,ತಪಸ್ಸು,Complex Clusters & Ottakshara
+628,vayassu,Age,ವಯಸ್ಸು,Complex Clusters & Ottakshara
+629,yashassu,Fame,ಯಶಸ್ಸು,Complex Clusters & Ottakshara
+630,prashasti,Award,ಪ್ರಶಸ್ತಿ,Complex Clusters & Ottakshara
+631,vistaara,Vastness,ವಿಸ್ತಾರ,Complex Clusters & Ottakshara
+632,pustaka,Tome,ಪುಸ್ತಕ,Complex Clusters & Ottakshara
+633,mastaka,Forehead,ಮಸ್ತಕ,Complex Clusters & Ottakshara
+634,prastuta,Present time,ಪ್ರಸ್ತುತ,Complex Clusters & Ottakshara
+635,stOtra,Hymn,ಸ್ತೋತ್ರ,Complex Clusters & Ottakshara
+636,sthiti,Condition,ಸ್ಥಿತಿ,Complex Clusters & Ottakshara
+637,sthaLa,Place,ಸ್ಥಳ,Complex Clusters & Ottakshara
+638,sthaapane,Establishment,ಸ್ಥಾಪನೆ,Complex Clusters & Ottakshara
+639,astitva,Existence,ಅಸ್ತಿತ್ವ,Complex Clusters & Ottakshara
+640,svastha,Healthy,ಸ್ವಸ್ಥ,Complex Clusters & Ottakshara
+641,svaadiShTa,Savory,ಸ್ವಾದಿಷ್ಟ,Complex Clusters & Ottakshara
+642,sphoorti,Inspiration,ಸ್ಫೂರ್ತಿ,Complex Clusters & Ottakshara
+643,sphaTika,Crystal,ಸ್ಫಟಿಕ,Complex Clusters & Ottakshara
+644,smaraNe,Remembrance,ಸ್ಮರಣೆ,Complex Clusters & Ottakshara
+645,smita,Smile,ಸ್ಮಿತ,Complex Clusters & Ottakshara
+646,snaana,Bath,ಸ್ನಾನ,Complex Clusters & Ottakshara
+647,snEha,Affection,ಸ್ನೇಹ,Complex Clusters & Ottakshara
+648,sparsha,Touch,ಸ್ಪರ್ಶ,Complex Clusters & Ottakshara
+649,staMbha,Pillar,ಸ್ತಂಭ,Complex Clusters & Ottakshara
+650,shravaNa,Listening,ಶ್ರವಣ,Complex Clusters & Ottakshara
+651,shreemaMta,Prosperous,ಶ್ರೀಮಂತ,Complex Clusters & Ottakshara
+652,shrama,Labor,ಶ್ರಮ,Complex Clusters & Ottakshara
+653,aashrama,Hermitage,ಆಶ್ರಮ,Complex Clusters & Ottakshara
+654,vishraaMti,Respite,ವಿಶ್ರಾಂತಿ,Complex Clusters & Ottakshara
+655,vajra,Diamond,ವಜ್ರ,Complex Clusters & Ottakshara
+656,chakra,Wheel,ಚಕ್ರ,Complex Clusters & Ottakshara
+657,vakra,Curved,ವಕ್ರ,Complex Clusters & Ottakshara
+658,agra,Foremost,ಅಗ್ರ,Complex Clusters & Ottakshara
+659,vyagra,Engaged,ವ್ಯಗ್ರ,Complex Clusters & Ottakshara
+660,sheeghra,Prompt,ಶೀಘ್ರ,Complex Clusters & Ottakshara
+661,Chatra,Canopy,ಛತ್ರ,Complex Clusters & Ottakshara
+662,rudra,Fierce form,ರುದ್ರ,Complex Clusters & Ottakshara
+663,nidraa,Slumber,ನಿದ್ರಾ,Complex Clusters & Ottakshara
+664,saagra,Complete,ಸಾಗ್ರ,Complex Clusters & Ottakshara
+665,namra,Humble,ನಮ್ರ,Complex Clusters & Ottakshara
+666,tivra,Intense,ತಿವ್ರ,Complex Clusters & Ottakshara
+667,kShipra,Rapid,ಕ್ಷಿಪ್ರ,Complex Clusters & Ottakshara
+668,saumya,Gentle,ಸೌಮ್ಯ,Complex Clusters & Ottakshara
+669,ramya,Charming,ರಮ್ಯ,Complex Clusters & Ottakshara
+670,kaavya,Poesy,ಕಾವ್ಯ,Complex Clusters & Ottakshara
+671,divya,Celestial,ದಿವ್ಯ,Complex Clusters & Ottakshara
+672,bhavya,Magnificent,ಭವ್ಯ,Complex Clusters & Ottakshara
+673,shraavya,Audible,ಶ್ರಾವ್ಯ,Complex Clusters & Ottakshara
+674,dhanya,Grateful,ಧನ್ಯ,Complex Clusters & Ottakshara
+675,puNya,Virtue,ಪುಣ್ಯ,Complex Clusters & Ottakshara
+676,araNya,Wildwood,ಅರಣ್ಯ,Complex Clusters & Ottakshara
+677,daivaaraadhane,Worship of protector spirits in Tulunadu,ದೈವಾರಾಧನೆ,Tulu Cultural Heritage
+678,bhootakOla,Spirit ritual dance of Tulunadu,ಭೂತಕೋಲ,Tulu Cultural Heritage
+679,kaMbaLa,Traditional buffalo slush race of Tulunadu,ಕಂಬಳ,Tulu Cultural Heritage
+680,kOla,Spirit worship festival ritual,ಕೋಲ,Tulu Cultural Heritage
+681,nEma,Solemn periodic spirit ritual,ನೇಮ,Tulu Cultural Heritage
+682,jaalaaTa,Water sport ritual celebration,ಜಾಲಾಟ,Tulu Cultural Heritage
+683,aTTevara,Traditional loft storage ceremony,ಅಟ್ಟೆವರ,Tulu Cultural Heritage
+684,naagamaMDala,Serpent worship ritual dance of Tulunadu,ನಾಗಮಂಡಲ,Tulu Cultural Heritage
+685,siri,Legendary epic heroine of Tulunadu,ಸಿರಿ,Tulu Cultural Heritage
+686,sirijaatre,Annual Siri possession pilgrimage,ಸಿರಿಜಾತ್ರೆ,Tulu Cultural Heritage
+687,kOTichennaya,Legendary twin twin warrior heroes,ಕೋಟಿಚೆನ್ನಯ,Tulu Cultural Heritage
+688,kaaMtaabaare,Folk twin warrior hero of Tulunadu,ಕಾಂತಾಬಾರೆ,Tulu Cultural Heritage
+689,boodaabaare,Folk warrior hero of Tulunadu,ಬೂದಾಬಾರೆ,Tulu Cultural Heritage
+690,abbagadaaraga,Twin maiden folk deities of Tulunadu,ಅಬ್ಬಗದಾರಗ,Tulu Cultural Heritage
+691,kallurTi,Architect maiden spirit of Tulunadu,ಕಲ್ಲುರ್ಟಿ,Tulu Cultural Heritage
+692,paMjurli,Boar spirit deity of Tulunadu,ಪಂಜುರ್ಲಿ,Tulu Cultural Heritage
+693,guLige,Fierce guardian kshetrapala spirit,ಗುಳಿಗೆ,Tulu Cultural Heritage
+694,jumaadi,Royal spirit deity of Tulunadu,ಜುಮಾದಿ,Tulu Cultural Heritage
+695,pilichaamuMDi,Tiger-mounted mother spirit deity,ಪಿಲಿಚಾಮುಂಡಿ,Tulu Cultural Heritage
+696,baMTa,Attendant spirit warrior of Tulunadu,ಬಂಟ,Tulu Cultural Heritage
+697,babbarya,Guardian seafaring deity of fishermen,ಬಬ್ಬರ್ಯ,Tulu Cultural Heritage
+698,maisaMdaaya,Buffalo deity protector of pastures,ಮೈಸಂದಾಯ,Tulu Cultural Heritage
+699,koDamaNittaaya,Royal ancestral spirit of Tulunadu,ಕೊಡಮಣಿತ್ತಾಯ,Tulu Cultural Heritage
+700,uLLaalti,Mother goddess deity of Tulunadu,ಉಳ್ಳಾಲ್ತಿ,Tulu Cultural Heritage
+701,maaNikya,Precious ruby gem,ಮಾಣಿಕ್ಯ,Tulu Cultural Heritage
+702,paaDDana,Oral narrative epic folk ballads of Tulunadu,ಪಾಡ್ಡನ,Tulu Cultural Heritage
+703,kabaDDi,Traditional rural wrestling tag sport,ಕಬಡ್ಡಿ,Tulu Cultural Heritage
+704,chennemaNe,Traditional Tulunadu board game,ಚೆನ್ನೆಮಣೆ,Tulu Cultural Heritage
+705,aaTi,Monsoon month of July-August in Tulu calendar,ಆಟಿ,Tulu Cultural Heritage
+706,aaTikaLaMja,Ritual folk healer spirit during Aati,ಆಟಿಕಳಂಜ,Tulu Cultural Heritage
+707,sONa,Auspicious month of August-September in Tulu,ಸೋಣ,Tulu Cultural Heritage
+708,nirnaaLa,Tulu calendar month,ನಿರ್ನಾಳ,Tulu Cultural Heritage
+709,bisu,Tulu New Year celebration day,ಬಿಸು,Tulu Cultural Heritage
+710,bisuparba,Tulu New Year festival,ಬಿಸುಪರ್ಬ,Tulu Cultural Heritage
+711,kaul,Sacred divine sanction / Oracle of spirit,ಕೌಲ್,Tulu Cultural Heritage
+712,jaatre,Annual village fair and temple festival,ಜಾತ್ರೆ,Tulu Cultural Heritage
+713,taMbila,Household ancestral offering ritual,ತಂಬಿಲ,Tulu Cultural Heritage
+714,agel,Annual domestic ancestral feast,ಅಗೆಲ್,Tulu Cultural Heritage
+715,kOlasEve,Devotional offering of Kola ritual,ಕೋಲಸೇವೆ,Tulu Cultural Heritage
+716,gaggara,Sacred anklet bells worn by spirit medium,ಗಗ್ಗರ,Tulu Cultural Heritage
+717,aNi,Towering halo aureole worn by spirit medium,ಅಣಿ,Tulu Cultural Heritage
+718,muga,Sacred silver or bronze mask of spirit,ಮುಗ,Tulu Cultural Heritage
+719,maDyoLu,Traditional washerman community,ಮಡ್ಯೊಳು,Tulu Cultural Heritage
+720,nalike,Traditional ritual spirit performer community,ನಲಿಕೆ,Tulu Cultural Heritage
+721,parava,Traditional spirit ritual performer community,ಪರವ,Tulu Cultural Heritage
+722,paMbada,Traditional spirit ritual performer community,ಪಂಬದ,Tulu Cultural Heritage
+723,dEvaaDiga,Traditional temple musician community,ದೇವಾಡಿಗ,Tulu Cultural Heritage
+724,billava,Prominent martial and agricultural community,ಬಿಲ್ಲವ,Tulu Cultural Heritage
+725,mogaveera,Coastal fishing community of Tulunadu,ಮೊಗವೀರ,Tulu Cultural Heritage
+726,baMT,Landed warrior community of Tulunadu,ಬಂಟ್,Tulu Cultural Heritage
+727,gauDa,Agricultural community of Sullia and foothills,ಗೌಡ,Tulu Cultural Heritage
+728,braahmaNa,Priestly community of Tulunadu,ಬ್ರಾಹ್ಮಣ,Tulu Cultural Heritage
+729,koMkaNi,Konkani linguistic community of coastal belt,ಕೊಂಕಣಿ,Tulu Cultural Heritage
+730,byaari,Beary linguistic community of coastal belt,ಬ್ಯಾರಿ,Tulu Cultural Heritage
+731,tuLuver,People of Tulu heritage,ತುಳುವೆರ್,Tulu Cultural Heritage
+732,tuLukooTa,Tulu cultural community association,ತುಳುಕೂಟ,Tulu Cultural Heritage
+733,tuLusammELana,Tulu language literary convention,ತುಳುಸಮ್ಮೇಳನ,Tulu Cultural Heritage
+734,tuLuakaaDemi,Karnataka Tulu Sahitya Academy,ತುಳುಅಕಾಡೆಮಿ,Tulu Cultural Heritage
+735,akhilabhaarata,All-India cultural forum,ಅಖಿಲಭಾರತ,Tulu Cultural Heritage
+736,aaTa,Play / Game / Yakshagana performance,ಆಟ,Tulu Cultural Heritage
+737,yakShagaana,Classical dance drama theatre of Tulunadu,ಯಕ್ಷಗಾನ,Tulu Cultural Heritage
+738,bhaagavata,Lead singer-director of Yakshagana,ಭಾಗವತ,Tulu Cultural Heritage
+739,maddaLe,Traditional hand drum of Yakshagana,ಮದ್ದಳೆ,Tulu Cultural Heritage
+740,cheMDe,Fierce percussion drum of coastal theatre,ಚೆಂಡೆ,Tulu Cultural Heritage
+741,vESha,Costume and dramatic character disguise,ವೇಷ,Tulu Cultural Heritage
+742,baNNa,Face paint and makeup of artist,ಬಣ್ಣ,Tulu Cultural Heritage
+743,raMgasthaLa,Performance stage area of Yakshagana,ರಂಗಸ್ಥಳ,Tulu Cultural Heritage
+744,prasaMga,Dramatic story episode performed,ಪ್ರಸಂಗ,Tulu Cultural Heritage
+745,teMkutiTTu,Southern style of Yakshagana theatre,ತೆಂಕುತಿಟ್ಟು,Tulu Cultural Heritage
+746,baDagutiTTu,Northern style of Yakshagana theatre,ಬಡಗುತಿಟ್ಟು,Tulu Cultural Heritage
+747,himmELa,Background vocal and instrumental ensemble,ಹಿಮ್ಮೇಳ,Tulu Cultural Heritage
+748,mummELa,Front stage actors and dancing performers,ಮುಮ್ಮೇಳ,Tulu Cultural Heritage
+749,kireeTa,Royal headgear crown of actor,ಕಿರೀಟ,Tulu Cultural Heritage
+750,oDDOlaga,Grand entrance entry of royal character,ಒಡ್ಡೋಲಗ,Tulu Cultural Heritage
+751,poorvaraMga,Preliminary worship prelude of performance,ಪೂರ್ವರಂಗ,Tulu Cultural Heritage
+752,oDae,Where (Tulu open ae ending),ಒಡೆ್,Tulu Distinctive Phonetics
+753,muDae,Rice parcel tied in straw (Tulu),ಮುಡೆ್,Tulu Distinctive Phonetics
+754,neDae,Plant / Sowing (Tulu),ನೆಡೆ್,Tulu Distinctive Phonetics
+755,padae,Song / Verse (Tulu),ಪದೆ್,Tulu Distinctive Phonetics
+756,badae,Low earthen ridge in paddy field (Tulu),ಬದೆ್,Tulu Distinctive Phonetics
+757,eDae,Spacious place (Tulu),ಎಡೆ್,Tulu Distinctive Phonetics
+758,taDae,Delay / Obstruction (Tulu),ತಡೆ್,Tulu Distinctive Phonetics
+759,kaDae,Grind on stone (Tulu),ಕಡೆ್,Tulu Distinctive Phonetics
+760,paDae,Gathering / Troop (Tulu),ಪಡೆ್,Tulu Distinctive Phonetics
+761,maDae,Impure / Sullied (Tulu),ಮಡೆ್,Tulu Distinctive Phonetics
+762,giDae,Stunted plant (Tulu),ಗಿಡೆ್,Tulu Distinctive Phonetics
+763,chiDae,Flying spark (Tulu),ಚಿಡೆ್,Tulu Distinctive Phonetics
+764,kiDae,Small opening wicket (Tulu),ಕಿಡೆ್,Tulu Distinctive Phonetics
+765,biDae,Shed / Temporary camp (Tulu),ಬಿಡೆ್,Tulu Distinctive Phonetics
+766,jiDae,Grease / Oiliness (Tulu),ಜಿಡೆ್,Tulu Distinctive Phonetics
+767,hiDae,Handle / Grip (Tulu),ಹಿಡೆ್,Tulu Distinctive Phonetics
+768,siDae,Crackle / Burst (Tulu),ಸಿಡೆ್,Tulu Distinctive Phonetics
+769,aDae,There in that direction (Tulu),ಅಡೆ್,Tulu Distinctive Phonetics
+770,iDae,Here in this direction (Tulu),ಇಡೆ್,Tulu Distinctive Phonetics
+771,oDae,Whither / Which direction (Tulu),ಒಡೆ್,Tulu Distinctive Phonetics
+772,EDae,Female goat / How (Tulu),ಏಡೆ್,Tulu Distinctive Phonetics
+773,baaDae,Meat curry / Rent (Tulu),ಬಾಡೆ್,Tulu Distinctive Phonetics
+774,gaaDae,Country cart (Tulu),ಗಾಡೆ್,Tulu Distinctive Phonetics
+775,jaaDae,Footpath trail (Tulu),ಜಾಡೆ್,Tulu Distinctive Phonetics
+776,naaDae,Native soil / Territory (Tulu),ನಾಡೆ್,Tulu Distinctive Phonetics
+777,paaDae,Sea rock / Rocky ledge (Tulu),ಪಾಡೆ್,Tulu Distinctive Phonetics
+778,vaaDae,Courtyard compound (Tulu),ವಾಡೆ್,Tulu Distinctive Phonetics
+779,saaDae,Simple folk (Tulu),ಸಾಡೆ್,Tulu Distinctive Phonetics
+780,kaNN,Eye (with dead final halant),ಕಣ್ಣ್,Tulu Distinctive Phonetics
+781,maNN,Earth (with dead final halant),ಮಣ್ಣ್,Tulu Distinctive Phonetics
+782,beNN,Work labour (with dead final halant),ಬೆಣ್ಣ್,Tulu Distinctive Phonetics
+783,eNN,Count think (with dead final halant),ಎಣ್ಣ್,Tulu Distinctive Phonetics
+784,baNN,Hue pigment (with dead final halant),ಬಣ್ಣ್,Tulu Distinctive Phonetics
+785,puNN,Ulcer sore (with dead final halant),ಪುಣ್ಣ್,Tulu Distinctive Phonetics
+786,boNN,White ash (with dead final halant),ಬೊಣ್ಣ್,Tulu Distinctive Phonetics
+787,suNN,Lime plaster (with dead final halant),ಸುಣ್ಣ್,Tulu Distinctive Phonetics
+788,tiNN,Consume solid (with dead final halant),ತಿಣ್ಣ್,Tulu Distinctive Phonetics
+789,uNN,Dine meal (with dead final halant),ಉಣ್ಣ್,Tulu Distinctive Phonetics
+790,kaNNneer,Tears flowing from eye,ಕಣ್ಣ್ನೀರ್,Tulu Distinctive Phonetics
+791,poNNu,Young girl / Maiden (Tulu),ಪೊಣ್ಣು,Tulu Distinctive Phonetics
+792,kaNNi,Rope cord of coir (Tulu),ಕಣ್ಣಿ,Tulu Distinctive Phonetics
+793,maNNi,Mud snake (Tulu),ಮಣ್ಣಿ,Tulu Distinctive Phonetics
+794,eNNe,Oil,ಎಣ್ಣೆ,Tulu Distinctive Phonetics
+795,beNNe,Fresh butter,ಬೆಣ್ಣೆ,Tulu Distinctive Phonetics
+796,soNNe,Zero / Cipher,ಸೊಣ್ಣೆ,Tulu Distinctive Phonetics
+797,doNNe,Cudgel staff,ದೊಣ್ಣೆ,Tulu Distinctive Phonetics
+798,giNNu,Colostrum pudding,ಗಿಣ್ಣು,Tulu Distinctive Phonetics
+799,juNNu,Curdled milk cheese,ಜುಣ್ಣು,Tulu Distinctive Phonetics
+800,nuNNage,Finely smooth,ನುಣ್ಣಗೆ,Tulu Distinctive Phonetics
+801,beNNi,Paddy cultivation (Tulu),ಬೆಣ್ಣಿ,Tulu Distinctive Phonetics
+802,uNNi,Small cattle tick,ಉಣ್ಣಿ,Tulu Distinctive Phonetics
+803,chiNNi,Little child,ಚಿಣ್ಣಿ,Tulu Distinctive Phonetics
+804,kiNNi,Little infant baby (Tulu),ಕಿಣ್ಣಿ,Tulu Distinctive Phonetics
+805,puNName,Full moon night,ಪುಣ್ಣಮೆ,Tulu Distinctive Phonetics
+806,baNNada,Of vibrant colors,ಬಣ್ಣದ,Tulu Distinctive Phonetics
+807,kaNNumuchche,Blindfold game,ಕಣ್ಣುಮುಚ್ಚೆ,Tulu Distinctive Phonetics
+808,maNNina,Made of earth,ಮಣ್ಣಿನ,Tulu Distinctive Phonetics
+809,eNNeya,Of fragrant oil,ಎಣ್ಣೆಯ,Tulu Distinctive Phonetics
+810,kaNNige,Unto the eye,ಕಣ್ಣಿಗೆ,Tulu Distinctive Phonetics
+811,maNNige,Unto the soil,ಮಣ್ಣಿಗೆ,Tulu Distinctive Phonetics
+812,eNNedeepa,Traditional oil lamp,ಎಣ್ಣೆದೀಪ,Tulu Distinctive Phonetics
+813,kaNNeera,Of bitter tears,ಕಣ್ಣೀರ,Tulu Distinctive Phonetics
+814,maNNupaatre,Earthen cooking vessel,ಮಣ್ಣುಪಾತ್ರೆ,Tulu Distinctive Phonetics
+815,beNNehOLige,Butter sweet flatbread,ಬೆಣ್ಣೆಹೋಳಿಗೆ,Tulu Distinctive Phonetics
+816,kaNNOTa,Loving glance,ಕಣ್ಣೋಟ,Tulu Distinctive Phonetics
+817,maNNaagu,Turn to dust,ಮಣ್ಣಾಗು,Tulu Distinctive Phonetics
+818,eNNegaaNa,Traditional oil press mill,ಎಣ್ಣೆಗಾಣ,Tulu Distinctive Phonetics
+819,kaNNaare,Witnessed with own eyes,ಕಣ್ಣಾರೆ,Tulu Distinctive Phonetics
+820,kaNNore,Wipe off tears,ಕಣ್ಣೊರೆ,Tulu Distinctive Phonetics
+821,maNNumaDi,Sacred earthen purificatory cloth,ಮಣ್ಣುಮಡಿ,Tulu Distinctive Phonetics
+822,kaNNuhaasi,Casting eyes far and wide,ಕಣ್ಣುಹಾಸಿ,Tulu Distinctive Phonetics
+823,beNNemadu,Melting like soft butter,ಬೆಣ್ಣೆಮದು,Tulu Distinctive Phonetics
+824,oMji,Cardinal 1 in Tulu,ಒಂಜಿ,Numbers & Numerals
+825,raDD,Cardinal 2 in Tulu,ರಡ್ಡ್,Numbers & Numerals
+826,mooji,Cardinal 3 in Tulu,ಮೂಜಿ,Numbers & Numerals
+827,naal,Cardinal 4 in Tulu,ನಾಲ್,Numbers & Numerals
+828,ain,Cardinal 5 in Tulu,ಐನ್,Numbers & Numerals
+829,aaji,Cardinal 6 in Tulu,ಆಜಿ,Numbers & Numerals
+830,EL,Cardinal 7 in Tulu,ಏಳ್,Numbers & Numerals
+831,enma,Cardinal 8 in Tulu,ಎನ್ಮ,Numbers & Numerals
+832,oruMba,Cardinal 9 in Tulu,ಒರುಂಬ,Numbers & Numerals
+833,patt,Cardinal 10 in Tulu,ಪತ್ತ್,Numbers & Numerals
+834,pattoMji,Cardinal 11 in Tulu,ಪತ್ತೊಂಜಿ,Numbers & Numerals
+835,padraaDD,Cardinal 12 in Tulu,ಪದ್ರಾಡ್ಡ್,Numbers & Numerals
+836,padinooji,Cardinal 13 in Tulu,ಪದಿನೂಜಿ,Numbers & Numerals
+837,padnaal,Cardinal 14 in Tulu,ಪದ್ನಾಲ್,Numbers & Numerals
+838,padnain,Cardinal 15 in Tulu,ಪದ್ನೈನ್,Numbers & Numerals
+839,padnaaji,Cardinal 16 in Tulu,ಪದ್ನಾಜಿ,Numbers & Numerals
+840,padinEL,Cardinal 17 in Tulu,ಪದಿನೇಳ್,Numbers & Numerals
+841,padinenma,Cardinal 18 in Tulu,ಪದಿನೆನ್ಮ,Numbers & Numerals
+842,pattoruMba,Cardinal 19 in Tulu,ಪತ್ತೊರುಂಬ,Numbers & Numerals
+843,irva,Cardinal 20 in Tulu,ಇರ್ವ,Numbers & Numerals
+844,irvattoMji,Cardinal 21 in Tulu,ಇರ್ವತ್ತೊಂಜಿ,Numbers & Numerals
+845,irvattaraDD,Cardinal 22 in Tulu,ಇರ್ವತ್ತರಡ್ಡ್,Numbers & Numerals
+846,muppa,Cardinal 30 in Tulu,ಮುಪ್ಪ,Numbers & Numerals
+847,muppattoMji,Cardinal 31 in Tulu,ಮುಪ್ಪತ್ತೊಂಜಿ,Numbers & Numerals
+848,nalpa,Cardinal 40 in Tulu,ನಲ್ಪ,Numbers & Numerals
+849,nalpattoMji,Cardinal 41 in Tulu,ನಲ್ಪತ್ತೊಂಜಿ,Numbers & Numerals
+850,aiva,Cardinal 50 in Tulu,ಐವ,Numbers & Numerals
+851,aivattoMji,Cardinal 51 in Tulu,ಐವತ್ತೊಂಜಿ,Numbers & Numerals
+852,ajipa,Cardinal 60 in Tulu,ಅಜಿಪ,Numbers & Numerals
+853,eLuva,Cardinal 70 in Tulu,ಎಳುವ,Numbers & Numerals
+854,enpa,Cardinal 80 in Tulu,ಎನ್ಪ,Numbers & Numerals
+855,toMbo,Cardinal 90 in Tulu,ತೊಂಬೊ,Numbers & Numerals
+856,noodu,Cardinal 100 in Tulu,ನೂದು,Numbers & Numerals
+857,irnoodu,Cardinal 200 in Tulu,ಇರ್ನೂದು,Numbers & Numerals
+858,munnoodu,Cardinal 300 in Tulu,ಮುನ್ನೂದು,Numbers & Numerals
+859,naanooru,Cardinal 400,ನಾನೂರು,Numbers & Numerals
+860,ainooru,Cardinal 500,ಐನೂರು,Numbers & Numerals
+861,aajinoodu,Cardinal 600 in Tulu,ಆಜಿನೂದು,Numbers & Numerals
+862,ELunoodu,Cardinal 700 in Tulu,ಏಳುನೂದು,Numbers & Numerals
+863,eNnoodu,Cardinal 800 in Tulu,ಎಣ್ನೂದು,Numbers & Numerals
+864,oruMbanoodu,Cardinal 900 in Tulu,ಒರುಂಬನೂದು,Numbers & Numerals
+865,saavira,Cardinal 1000,ಸಾವಿರ,Numbers & Numerals
+866,raDD saavira,Cardinal 2000 in Tulu,ರಡ್ಡ್ ಸಾವಿರ,Numbers & Numerals
+867,patt saavira,Cardinal 10000 in Tulu,ಪತ್ತ್ ಸಾವಿರ,Numbers & Numerals
+868,lakSha,One hundred thousand 100000,ಲಕ್ಷ,Numbers & Numerals
+869,kOTi,Ten million 10000000,ಕೋಟಿ,Numbers & Numerals
+870,oMjane,Ordinal First (Tulu),ಒಂಜನೆ,Numbers & Numerals
+871,raDDane,Ordinal Second (Tulu),ರಡ್ಡನೆ,Numbers & Numerals
+872,moojane,Ordinal Third (Tulu),ಮೂಜನೆ,Numbers & Numerals
+873,ardha,Fraction half,ಅರ್ಧ,Numbers & Numerals
+874,eerena pudar daane,What is your respected name? (Tulu),ಈರೆನ ಪುದರ್ ದಾನೆ,Tulu Conversational Sentences
+875,enna pudar jayaMta,My name is Jayanth (Tulu),ಎನ್ನ ಪುದರ್ ಜಯಂತ,Tulu Conversational Sentences
+876,eer olpa ullar,Where are you situated? (Tulu),ಈರ್ ಒಲ್ಪ ಉಲ್ಲರ್,Tulu Conversational Sentences
+877,yaan illaD ulle,I am at home (Tulu),ಯಾನ್ ಇಲ್ಲಡ್ ಉಲ್ಲೆ,Tulu Conversational Sentences
+878,ini barsa barpuMDu,Today it will rain (Tulu),ಇನಿ ಬರ್ಸ ಬರ್ಪುಂಡು,Tulu Conversational Sentences
+879,kODae malla barsa battMD,Yesterday heavy rain arrived (Tulu),ಕೋಡೆ್ ಮಲ್ಲ ಬರ್ಸ ಬತ್ತ್ಂಡ್,Tulu Conversational Sentences
+880,elle bEle ijji,Tomorrow there is no work (Tulu),ಎಲ್ಲೆ ಬೇಲೆ ಇಜ್ಜಿ,Tulu Conversational Sentences
+881,naMk vaNas aaMD,Our meal has concluded (Tulu),ನಂಕ್ ವಣಸ್ ಆಂಡ್,Tulu Conversational Sentences
+882,neer parle,Drink clean water (Tulu),ನೀರ್ ಪರ್ಲೆ,Tulu Conversational Sentences
+883,chaa pariyeraa,Did you take hot tea? (Tulu),ಚಾ ಪರಿಯೆರಾ,Tulu Conversational Sentences
+884,kaaMDe bEga lakle,Wake up early in morning (Tulu),ಕಾಂಡೆ ಬೇಗ ಲಕ್ಲೆ,Tulu Conversational Sentences
+885,bayyag bale,Come by this evening (Tulu),ಬಯ್ಯಗ್ ಬಲೆ,Tulu Conversational Sentences
+886,aaye eDDe naramaani,He is a fine good human (Tulu),ಆಯೆ ಎಡ್ಡೆ ನರಮಾನಿ,Tulu Conversational Sentences
+887,aal baaree porlu,She is exceedingly charming (Tulu),ಆಲ್ ಬಾರೀ ಪೊರ್ಲು,Tulu Conversational Sentences
+888,tuLu baase baaree chaMda,The Tulu tongue is most beautiful (Tulu),ತುಳು ಬಾಸೆ ಬಾರೀ ಚಂದ,Tulu Conversational Sentences
+889,nama tuLuver,We are proud Tulu people (Tulu),ನಮ ತುಳುವೆರ್,Tulu Conversational Sentences
+890,kuDlag pOpina daari,The roadway leading to Mangaluru (Tulu),ಕುಡ್ಲಗ್ ಪೋಪಿನ ದಾರಿ,Tulu Conversational Sentences
+891,illag bale,Welcome home to our abode (Tulu),ಇಲ್ಲಗ್ ಬಲೆ,Tulu Conversational Sentences
+892,daane vishESha,What is the auspicious news? (Tulu),ದಾನೆ ವಿಶೇಷ,Tulu Conversational Sentences
+893,maata eDDe uMDu,All affairs are well (Tulu),ಮಾತ ಎಡ್ಡೆ ಉಂಡು,Tulu Conversational Sentences
+894,Erlaa ijji,No one is present (Tulu),ಏರ್ಲಾ ಇಜ್ಜಿ,Tulu Conversational Sentences
+895,maaterlaa batter,Everyone arrived together (Tulu),ಮಾತೆರ್ಲಾ ಬತ್ತೆರ್,Tulu Conversational Sentences
+896,oMji gaMTeg,At one sharp hour (Tulu),ಒಂಜಿ ಗಂಟೆಗ್,Tulu Conversational Sentences
+897,kaas korle,Pay out the coins (Tulu),ಕಾಸ್ ಕೊರ್ಲೆ,Tulu Conversational Sentences
+898,duDDu detonle,Receive the money (Tulu),ದುಡ್ಡು ದೆತೊನ್ಲೆ,Tulu Conversational Sentences
+899,pudar barele,Inscribe your signature name (Tulu),ಪುದರ್ ಬರೆಲೆ,Tulu Conversational Sentences
+900,paatera kEnle,Hark to the spoke words (Tulu),ಪಾತೆರ ಕೇನ್ಲೆ,Tulu Conversational Sentences
+901,satya panle,Speak the unblemished truth (Tulu),ಸತ್ಯ ಪನ್ಲೆ,Tulu Conversational Sentences
+902,eMk teridijji,I have no knowledge of it (Tulu),ಎಂಕ್ ತೆರಿದಿಜ್ಜಿ,Tulu Conversational Sentences
+903,nikk gottuMDaa,Dost thou comprehend it? (Tulu),ನಿಕ್ಕ್ ಗೊತ್ತುಂಡಾ,Tulu Conversational Sentences
+904,yaan kalpuve,I shall study diligently (Tulu),ಯಾನ್ ಕಲ್ಪುವೆ,Tulu Conversational Sentences
+905,pEr konale,Bring fresh milk (Tulu),ಪೇರ್ ಕೊನಲೆ,Tulu Conversational Sentences
+906,meen kaayile,Fry the freshly caught fish (Tulu),ಮೀನ್ ಕಾಯಿಲೆ,Tulu Conversational Sentences
+907,taaraayi murile,Split the ripe coconut (Tulu),ತಾರಾಯಿ ಮುರಿಲೆ,Tulu Conversational Sentences
+908,nuppu paaDle,Serve the steaming hot rice (Tulu),ನುಪ್ಪು ಪಾಡ್ಲೆ,Tulu Conversational Sentences
+909,barsa uMtuMDu,The monsoon rain has ceased (Tulu),ಬರ್ಸ ಉಂತುಂಡು,Tulu Conversational Sentences
+910,gaaLi beesuMDu,Fresh coastal breeze bloweth (Tulu),ಗಾಳಿ ಬೀಸುಂಡು,Tulu Conversational Sentences
+911,portu mooDuMDu,The golden dawn sun riseth (Tulu),ಪೊರ್ತು ಮೂಡುಂಡು,Tulu Conversational Sentences
+912,bolpu battMD,Morning light hath arrived (Tulu),ಬೊಲ್ಪು ಬತ್ತ್ಂಡ್,Tulu Conversational Sentences
+913,kaDalda bariT,Along the ocean beach shore (Tulu),ಕಡಲ್ದ ಬರಿಟ್,Tulu Conversational Sentences
+914,sudeT meeyere,To bathe in the clear river (Tulu),ಸುದೆಟ್ ಮೀಯೆರೆ,Tulu Conversational Sentences
+915,beTTa mittare,To climb atop the high hill (Tulu),ಬೆಟ್ಟ ಮಿತ್ತರೆ,Tulu Conversational Sentences
+916,maratt koMbu,Branch of the shady tree (Tulu),ಮರತ್ತ್ ಕೊಂಬು,Tulu Conversational Sentences
+917,poo toole,Admire the blooming flower (Tulu),ಪೂ ತೂಲೆ,Tulu Conversational Sentences
+918,kaMDoDu bEle,Tilling labor in paddy fields (Tulu),ಕಂಡೊಡು ಬೇಲೆ,Tulu Conversational Sentences
+919,naayi bogaLuMDu,The watch dog barketh (Tulu),ನಾಯಿ ಬೊಗಳುಂಡು,Tulu Conversational Sentences
+920,puchche jettMD,The domestic cat hath slept (Tulu),ಪುಚ್ಚೆ ಜೆತ್ತ್ಂಡ್,Tulu Conversational Sentences
+921,petta pEr korpuMDu,The milch cow giveth milk (Tulu),ಪೆತ್ತ ಪೇರ್ ಕೊರ್ಪುಂಡು,Tulu Conversational Sentences
+922,kOri kelepuMDu,The early rooster croweth (Tulu),ಕೋರಿ ಕೆಲೆಪುಂಡು,Tulu Conversational Sentences
+923,aane barpuMDu,The temple tusker arriveth (Tulu),ಆನೆ ಬರ್ಪುಂಡು,Tulu Conversational Sentences
+924,siMha gharjisuMDu,The mighty lion roareth (Tulu),ಸಿಂಹ ಘರ್ಜಿಸುಂಡು,Tulu Conversational Sentences
+925,meen neerD uMDu,Fish swimmeth in water (Tulu),ಮೀನ್ ನೀರ್ಡ್ ಉಂಡು,Tulu Conversational Sentences
+926,giLi paateruMDu,The green parrot speaketh (Tulu),ಗಿಳಿ ಪಾತೆರುಂಡು,Tulu Conversational Sentences
+927,kaage kaa kaa panpuMDu,The crow calleth caw caw (Tulu),ಕಾಗೆ ಕಾ ಕಾ ಪನ್ಪುಂಡು,Tulu Conversational Sentences
+928,baale aLuMDu,The little baby crieth (Tulu),ಬಾಲೆ ಅಳುಂಡು,Tulu Conversational Sentences
+929,appe baalen toopar,Mother tenderly watcheth baby (Tulu),ಅಪ್ಪೆ ಬಾಲೆನ್ ತೂಪರ್,Tulu Conversational Sentences
+930,ammer kaagada bareper,Father writeth an epistolary letter (Tulu),ಅಮ್ಮೆರ್ ಕಾಗದ ಬರೆಪೆರ್,Tulu Conversational Sentences
+931,aNNe Oduve,Elder brother readeth books (Tulu),ಅಣ್ಣೆ ಓದುವೆ,Tulu Conversational Sentences
+932,akka nalipuval,Elder sister danceth gracefully (Tulu),ಅಕ್ಕ ನಲಿಪುವಲ್,Tulu Conversational Sentences
+933,megye ODuve,Younger brother runneth race (Tulu),ಮೆಗ್ಯೆ ಓಡುವೆ,Tulu Conversational Sentences
+934,megdi telipuval,Younger sister smileth brightly (Tulu),ಮೆಗ್ದಿ ತೆಲಿಪುವಲ್,Tulu Conversational Sentences
+935,dOsti batte,My dear comrade friend arrived (Tulu),ದೋಸ್ತಿ ಬತ್ತೆ,Tulu Conversational Sentences
+936,illada baakil muchchile,Shut the front doorway door (Tulu),ಇಲ್ಲದ ಬಾಕಿಲ್ ಮುಚ್ಚಿಲೆ,Tulu Conversational Sentences
+937,jannel deppule,Open wide the window frame (Tulu),ಜನ್ನೆಲ್ ದೆಪ್ಪುಲೆ,Tulu Conversational Sentences
+938,deepa pottaale,Kindle the sacred oil flame (Tulu),ದೀಪ ಪೊತ್ತಾಲೆ,Tulu Conversational Sentences
+939,maMchoDu jepule,Rest upon the wooden cot (Tulu),ಮಂಚೊಡು ಜೆಪುಲೆ,Tulu Conversational Sentences
+940,kannaDi toole,Gaze into the clear mirror (Tulu),ಕನ್ನಡಿ ತೂಲೆ,Tulu Conversational Sentences
+941,pustaka Odule,Read through the wisdom book (Tulu),ಪುಸ್ತಕ ಓದುಲೆ,Tulu Conversational Sentences
+942,aMgaDig pOle,Proceed unto the marketplace (Tulu),ಅಂಗಡಿಗ್ ಪೋಲೆ,Tulu Conversational Sentences
+943,shaaleg kalpere,Unto school for learning (Tulu),ಶಾಲೆಗ್ ಕಲ್ಪೆರೆ,Tulu Conversational Sentences
+944,dEvasthaanoDu praarthane,Devout prayer in sanctum (Tulu),ದೇವಸ್ಥಾನೊಡು ಪ್ರಾರ್ಥನೆ,Tulu Conversational Sentences
+945,daiva kOTe,Sanctuary court of guardian spirit (Tulu),ದೈವ ಕೋಟೆ,Tulu Conversational Sentences
+946,bisaale poovu,Offering garland of fresh blooms (Tulu),ಬಿಸಾಲೆ ಪೂವು,Tulu Conversational Sentences
+947,nEma sEve,Sacred annual spirit service (Tulu),ನೇಮ ಸೇವೆ,Tulu Conversational Sentences
+948,solmelu maaterglaa,Warm heart greetings unto all! (Tulu),ಸೊಲ್ಮೆಲು ಮಾತೆರ್ಗ್ಲಾ,Tulu Conversational Sentences
+949,aanaMda,Blissful joy,ಆನಂದ,Classical Kannada Vocabulary
+950,utsaaha,Zestful enthusiasm,ಉತ್ಸಾಹ,Classical Kannada Vocabulary
+951,anubhava,Lived experience,ಅನುಭವ,Classical Kannada Vocabulary
+952,saMskRuti,Refined culture,ಸಂಸ್ಕೃತಿ,Classical Kannada Vocabulary
+953,paraMpare,Heritage lineage,ಪರಂಪರೆ,Classical Kannada Vocabulary
+954,itihaasa,Chronicle history,ಇತಿಹಾಸ,Classical Kannada Vocabulary
+955,saahitya,Belles-lettres literature,ಸಾಹಿತ್ಯ,Classical Kannada Vocabulary
+956,saMgeeta,Classical melody music,ಸಂಗೀತ,Classical Kannada Vocabulary
+957,naaTaka,Theatrical drama,ನಾಟಕ,Classical Kannada Vocabulary
+958,chitrakale,Painting fine art,ಚಿತ್ರಕಲೆ,Classical Kannada Vocabulary
+959,shilpakale,Sculpture architecture,ಶಿಲ್ಪಕಲೆ,Classical Kannada Vocabulary
+960,vaastushilpa,Monumental architecture,ವಾಸ್ತುಶಿಲ್ಪ,Classical Kannada Vocabulary
+961,kaavyanaaTaka,Poetic drama,ಕಾವ್ಯನಾಟಕ,Classical Kannada Vocabulary
+962,ChaMdassu,Poetic metrical prosody,ಛಂದಸ್ಸು,Classical Kannada Vocabulary
+963,alaMkaara,Figure of literary ornament,ಅಲಂಕಾರ,Classical Kannada Vocabulary
+964,vyaakaraNa,Linguistic grammar,ವ್ಯಾಕರಣ,Classical Kannada Vocabulary
+965,shabdakOsha,Lexicon vocabulary,ಶಬ್ದಕೋಶ,Classical Kannada Vocabulary
+966,vishvavidyaalaya,Alma mater university,ವಿಶ್ವವಿದ್ಯಾಲಯ,Classical Kannada Vocabulary
+967,saMshOdhane,Scholarly research,ಸಂಶೋಧನೆ,Classical Kannada Vocabulary
+968,graMthaalaya,Archival library,ಗ್ರಂಥಾಲಯ,Classical Kannada Vocabulary
+969,upanyaasa,Scholarly lecture,ಉಪನ್ಯಾಸ,Classical Kannada Vocabulary
+970,praadhyaapaka,Academic professor,ಪ್ರಾಧ್ಯಾಪಕ,Classical Kannada Vocabulary
+971,vidyaarthi,Inquiring student,ವಿದ್ಯಾರ್ಥಿ,Classical Kannada Vocabulary
+972,pareekShe,Academic examination,ಪರೀಕ್ಷೆ,Classical Kannada Vocabulary
+973,phalitaaMsha,Exam result outcome,ಫಲಿತಾಂಶ,Classical Kannada Vocabulary
+974,prashastipatra,Honorary citation parchment,ಪ್ರಶಸ್ತಿಪತ್ರ,Classical Kannada Vocabulary
+975,padavi,Academic degree rank,ಪದವಿ,Classical Kannada Vocabulary
+976,samaaraMbha,Ceremonial convocation,ಸಮಾರಂಭ,Classical Kannada Vocabulary
+977,sabhaaMgaNa,Assembly auditorium,ಸಭಾಂಗಣ,Classical Kannada Vocabulary
+978,sammELana,Grand conference summit,ಸಮ್ಮೇಳನ,Classical Kannada Vocabulary
+979,samiti,Standing committee,ಸಮಿತಿ,Classical Kannada Vocabulary
+980,adhyakSha,Honorable president,ಅಧ್ಯಕ್ಷ,Classical Kannada Vocabulary
+981,kaaryadarshi,Executive secretary,ಕಾರ್ಯದರ್ಶಿ,Classical Kannada Vocabulary
+982,sadasya,Accredited member,ಸದಸ್ಯ,Classical Kannada Vocabulary
+983,saMghaTane,Federation organization,ಸಂಘಟನೆ,Classical Kannada Vocabulary
+984,samudaaya,Fraternal community,ಸಮುದಾಯ,Classical Kannada Vocabulary
+985,samaaja,Civil society,ಸಮಾಜ,Classical Kannada Vocabulary
+986,sarkaara,Sovereign government,ಸರ್ಕಾರ,Classical Kannada Vocabulary
+987,saMvidhaana,Supreme constitution,ಸಂವಿಧಾನ,Classical Kannada Vocabulary
+988,nyaayaalaya,Judicial court of law,ನ್ಯಾಯಾಲಯ,Classical Kannada Vocabulary
+989,nyaayaadheesha,Presiding magistrate judge,ನ್ಯಾಯಾಧೀಶ,Classical Kannada Vocabulary
+990,kaanoonu,Statutory legal code,ಕಾನೂನು,Classical Kannada Vocabulary
+991,shaasakaaMga,Elected legislature,ಶಾಸಕಾಂಗ,Classical Kannada Vocabulary
+992,kaaryaaMga,State executive branch,ಕಾರ್ಯಾಂಗ,Classical Kannada Vocabulary
+993,patrikOdyama,Fourth estate journalism,ಪತ್ರಿಕೋದ್ಯಮ,Classical Kannada Vocabulary
+994,saMpaadaka,Chief editor,ಸಂಪಾದಕ,Classical Kannada Vocabulary
+995,varadigaara,Special correspondent reporter,ವರದಿಗಾರ,Classical Kannada Vocabulary
+996,prakaashana,Publishing house imprint,ಪ್ರಕಾಶನ,Classical Kannada Vocabulary
+997,mudraNa,Press typography printing,ಮುದ್ರಣ,Classical Kannada Vocabulary
+998,saMpuTa,Archival volume tome,ಸಂಪುಟ,Classical Kannada Vocabulary
+999,lEkhana,Analytical treatise essay,ಲೇಖನ,Classical Kannada Vocabulary
+1000,lEkhaka,Literary author writer,ಲೇಖಕ,Classical Kannada Vocabulary
+1001,kavi,Poet laureate,ಕವಿ,Classical Kannada Vocabulary
+1002,kavayitri,Distinguished poetess,ಕವಯಿತ್ರಿ,Classical Kannada Vocabulary
+1003,vimarshaka,Literary critic reviewer,ವಿಮರ್ಶಕ,Classical Kannada Vocabulary
+1004,kaadaMbari,Literary fiction novel,ಕಾದಂಬರಿ,Classical Kannada Vocabulary
+1005,kathaasaMkalana,Anthology of short tales,ಕಥಾಸಂಕಲನ,Classical Kannada Vocabulary
+1006,naaTakakaara,Eminent playwright dramatist,ನಾಟಕಕಾರ,Classical Kannada Vocabulary
+1007,geetarachane,Lyric hymn songwriting,ಗೀತರಚನೆ,Classical Kannada Vocabulary
+1008,gaayaka,Classical vocal singer,ಗಾಯಕ,Classical Kannada Vocabulary
+1009,vaadyavRuMda,Musical orchestra symphony,ವಾದ್ಯವೃಂದ,Classical Kannada Vocabulary
+1010,naaTyaraMga,Classical choreography arena,ನಾಟ್ಯರಂಗ,Classical Kannada Vocabulary
+1011,kalaavida,Visual performing artist,ಕಲಾವಿದ,Classical Kannada Vocabulary
+1012,chitraraMga,Cinematic motion picture arena,ಚಿತ್ರರಂಗ,Classical Kannada Vocabulary
+1013,raMgabhoomi,Live dramatic stage theatre,ರಂಗಭೂಮಿ,Classical Kannada Vocabulary
+1014,janapada,Folk lore cultural tradition,ಜನಪದ,Classical Kannada Vocabulary
+1015,yakShagaanalOka,World of coastal dance drama,ಯಕ್ಷಗಾನಲೋಕ,Classical Kannada Vocabulary
+1016,taaLamaddaLe,Spoken verse debate format of Yakshagana,ತಾಳಮದ್ದಳೆ,Classical Kannada Vocabulary
+1017,harikathe,Traditional musical storytelling,ಹರಿಕಥೆ,Classical Kannada Vocabulary
+1018,puraaNa,Ancient mythological lore,ಪುರಾಣ,Classical Kannada Vocabulary
+1019,raamaayaNa,Epic saga Ramayana,ರಾಮಾಯಣ,Classical Kannada Vocabulary
+1020,mahaabhaarata,Epic saga Mahabharata,ಮಹಾಭಾರತ,Classical Kannada Vocabulary
+1021,bhaagavatapuraaNa,Sacred Bhagavata Purana,ಭಾಗವತಪುರಾಣ,Classical Kannada Vocabulary
+1022,bhagavadgeetaa,Sacred Song of Divine,ಭಗವದ್ಗೀತಾ,Classical Kannada Vocabulary
+1023,vEdOpaniShat,Sacred Vedic Upanishadic treatises,ವೇದೋಪನಿಷತ್,Classical Kannada Vocabulary

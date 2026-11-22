@@ -39,3 +39,4 @@ Icon
 kannada_tigalari_converter/downloads/
 datasets/.scraper_checkpoint.json
 datasets/paired_speech_data/
+*.pdf

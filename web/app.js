@@ -182,7 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
         transDirection.textContent = `English ➔ Tulu (${data.engine_used === 'neural_slm' ? 'Neural SLM' : 'SOV Grammar'})`;
         transPrimaryText.textContent = data.translated_text;
         transPrimaryText.className = 'trans-primary kannada';
-        transPhoneticText.textContent = data.tulu_latin ? `/${data.tulu_latin}/` : '';
+        const romText = data.tulu_romanized || data.tulu_latin || '';
+        transPhoneticText.textContent = romText ? `[ASCII Romanized: ${romText}]` : '';
         transSecondaryText.innerHTML = `<strong>Tulu-Tigalari (Unicode 16.0):</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari || ''}</span>`;
         lastSpokenText = data.translated_text;
         lastSpokenScript = 'kannada';
@@ -195,7 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
         transDirection.textContent = `Tulu ➔ English (${data.engine_used === 'neural_slm' ? 'Neural SLM' : 'Grammar Syntax'})`;
         transPrimaryText.textContent = data.translated_text;
         transPrimaryText.className = 'trans-primary';
-        transPhoneticText.textContent = `${data.tulu_kannada || ''} (${data.tulu_latin || ''})`;
+        const romText = data.tulu_romanized || data.tulu_latin || '';
+        transPhoneticText.textContent = `[ASCII Romanized: ${romText}] • Cosmetic: ${data.tulu_kannada || ''}`;
         transSecondaryText.innerHTML = `<strong>Tulu-Tigalari:</strong> <span class="tigalari-font" style="font-size:1.15rem; color:#0f766e;">${data.tulu_tigalari || ''}</span>`;
         lastSpokenText = data.tulu_kannada || text;
         lastSpokenScript = 'kannada';

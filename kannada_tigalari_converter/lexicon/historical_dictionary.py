@@ -2049,6 +2049,9 @@ HISTORICAL_TULU_CORPUS: List[Dict[str, any]] = [
   }
 ]
 
+for _entry in HISTORICAL_TULU_CORPUS:
+    _entry["tulu_romanized"] = _entry["tulu_latin"]
+
 def search_historical_dictionary(query: str, domain: Optional[str] = None, pos: Optional[str] = None) -> List[Dict[str, any]]:
     """
     Searches the 1886 Basel Mission Tulu-English Dictionary corpus.

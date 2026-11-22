@@ -16,6 +16,8 @@ TULU_DICTIONARY: List[Dict[str, str]] = [
         "kannada_meaning": item["kannada"],
         "tulu_kannada": item["kannada"],
         "tulu_latin": item["latin_phonetic"],
+        "tulu_romanized": item.get("tulu_romanized", item["latin_phonetic"]),
+        "kannada_romanized": item.get("kannada_romanized", item["latin_phonetic"]),
         "tulu_tigalari": item["expected_tigalari"],
         "category": item["category"]
     }

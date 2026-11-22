@@ -43,20 +43,30 @@ from kannada_tigalari_converter.lexicon.tulu_dictionary import lookup_tulu
 class TranslationResult:
     """Detailed result of sentence translation."""
     source_text: str
-    source_lang: str               # "tulu" or "english"
+    source_lang: str               # "tulu", "kannada", or "english"
     translated_text: str           # Target translation
-    tulu_kannada: str              # Canonical Tulu in Kannada script
-    tulu_tigalari: str             # Official Unicode 16.0 Tigalari script
-    tulu_latin: str                # Phonetic Latin
+    tulu_kannada: str              # Canonical Tulu in Kannada script (cosmetic)
+    tulu_tigalari: str             # Official Unicode 16.0 Tigalari script (cosmetic)
+    tulu_latin: str                # Phonetic Latin / Canonical Romanized
     tokens: List[Dict[str, Any]]   # Morphological breakdown of tokens
     confidence: float              # 0.0 to 1.0 confidence score
     grammar_notes: List[str]       # Explanatory linguistic notes
+    tulu_romanized: str = ""       # Canonical ASCII Romanized Tulu
+    kannada_romanized: str = ""    # Canonical ASCII Romanized Kannada
+
+    def __post_init__(self):
+        if not self.tulu_romanized:
+            self.tulu_romanized = self.tulu_latin
+        if not self.kannada_romanized:
+            self.kannada_romanized = self.tulu_latin
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "source_text": self.source_text,
             "source_lang": self.source_lang,
             "translated_text": self.translated_text,
+            "tulu_romanized": self.tulu_romanized,
+            "kannada_romanized": self.kannada_romanized,
             "tulu_kannada": self.tulu_kannada,
             "tulu_tigalari": self.tulu_tigalari,
             "tulu_latin": self.tulu_latin,
@@ -540,6 +550,168 @@ class FullSentenceTranslator:
             tokens=[{"word": w} for w in tokens],
             confidence=0.90,
             grammar_notes=grammar_notes or ["Rule-based English SVO -> Tulu SOV transformation."],
+        )
+
+    @classmethod
+    def translate_tulu_to_kannada(cls, text: str, romanized_output: bool = True) -> TranslationResult:
+        """
+        Translates Tulu sentence into Kannada (end-to-end Romanized pipeline).
+        Examples:
+          - 'yaan illag barpe' -> 'naanu manege baruttEne'
+          - 'eer olpa poopar' -> 'neevu ellige hooguttaare'
+        """
+        raw = (text or "").strip()
+        if not raw:
+            return TranslationResult(
+                source_text="", source_lang="tulu", translated_text="",
+                tulu_kannada="", tulu_tigalari="", tulu_latin="",
+                tulu_romanized="", kannada_romanized="",
+                tokens=[], confidence=0.0, grammar_notes=["Empty input."]
+            )
+
+        from kannada_tigalari_converter.lexicon.romanization_scheme import to_canonical_roman, from_canonical_roman
+        tulu_rom = to_canonical_roman(raw)
+        words = tulu_rom.split()
+
+        PRONOUN_MAP_TULU_KN = {
+            "yaan": "naanu", "yana": "naanu", "emk": "nanage", "enna": "nanna",
+            "nama": "naavu", "namk": "namage", "namma": "namma",
+            "ee": "neenu", "eena": "ninna", "nikk": "ninage", "ninna": "ninna",
+            "eer": "neevu", "eereg": "nimage", "eerena": "nimma",
+            "aaye": "avanu", "aayag": "avanige", "aayana": "avana",
+            "aal": "avaLu", "aaleg": "avaLige", "aalena": "avaLa",
+            "akulu": "avaru", "akuleg": "avarige", "akulena": "avara",
+            "avu": "adu", "ayikk": "adakke", "ayita": "adara",
+            "undu": "idu", "undek": "idakke", "undeta": "idara"
+        }
+
+        NOUN_ROOT_MAP = {
+            "illa": "mane", "ill": "mane",
+            "kuDla": "mangaLooru",
+            "mara": "mara", "kaNDo": "hola", "kaNDa": "hola",
+            "baasae": "bhaaShe", "baase": "bhaaShe",
+            "barsa": "maLe",
+            "pudar": "hesaru",
+            "neeru": "neeru", "peer": "haalu",
+            "chaaha": "chaaha", "vanas": "ooTa",
+            "dina": "dina", "bEle": "kelasa", "bele": "kelasa"
+        }
+
+        CASE_MAP_TULU_KN = [
+            ("oTTugu", "oMdiGe"),
+            ("ard", "inda"),
+            ("erd", "inda"),
+            ("rd", "inda"),
+            ("aD", "alli"),
+            ("eD", "alli"),
+            ("D", "alli"),
+            ("T", "dalli"),
+            ("ag", "ge"),
+            ("eg", "ge"),
+            ("g", "ge"),
+            ("k", "kke"),
+            ("da", "da"),
+            ("na", "na"),
+            ("n", "annu"),
+        ]
+
+        INTERROGATIVE_MAP = {
+            "olpa": "ellige", "oodeg": "ellige",
+            "daada": "eenu", "daaye": "yaake",
+            "eMcha": "hege", "eet": "eShTu", "eer": "yaaru"
+        }
+
+        kn_tokens = []
+        subj = "naanu"
+
+        for w in words:
+            w_clean = re.sub(r"[^\w]", "", w).lower()
+            if not w_clean:
+                continue
+
+            if w_clean in PRONOUN_MAP_TULU_KN:
+                kn_p = PRONOUN_MAP_TULU_KN[w_clean]
+                kn_tokens.append(kn_p)
+                if kn_p in ("naanu", "naavu", "neenu", "neevu", "avanu", "avaLu", "avaru", "adu"):
+                    subj = kn_p
+                continue
+
+            if w_clean in INTERROGATIVE_MAP:
+                kn_tokens.append(INTERROGATIVE_MAP[w_clean])
+                continue
+
+            matched_noun = False
+            for suf_tu, suf_kn in CASE_MAP_TULU_KN:
+                if w_clean.endswith(suf_tu.lower()) and len(w_clean) > len(suf_tu):
+                    stem = w_clean[:-len(suf_tu)]
+                    kn_stem = NOUN_ROOT_MAP.get(stem, stem)
+                    kn_tokens.append(f"{kn_stem}{suf_kn}")
+                    matched_noun = True
+                    break
+            if matched_noun:
+                continue
+
+            if w_clean in NOUN_ROOT_MAP:
+                kn_tokens.append(NOUN_ROOT_MAP[w_clean])
+                continue
+
+            # Verb stem conjugations
+            if w_clean.startswith("barp") or w_clean.startswith("bar"):
+                if w_clean.endswith("e"):
+                    kn_tokens.append("baruttEne")
+                elif w_clean.endswith("ar") or w_clean.endswith("er"):
+                    kn_tokens.append("baruttaare")
+                elif w_clean.endswith("uNDu") or w_clean.endswith("u"):
+                    kn_tokens.append("baruttade")
+                elif "tt" in w_clean or "tte" in w_clean:
+                    kn_tokens.append("baMde" if subj == "naanu" else "baMdaru")
+                else:
+                    kn_tokens.append("baruttEne")
+                continue
+
+            if w_clean.startswith("poop") or w_clean.startswith("pOp") or w_clean.startswith("poo"):
+                if w_clean.endswith("e"):
+                    kn_tokens.append("hooguttEne")
+                elif w_clean.endswith("ar") or w_clean.endswith("er"):
+                    kn_tokens.append("hooguttaare")
+                elif "ye" in w_clean or "te" in w_clean:
+                    kn_tokens.append("hOode" if subj == "naanu" else "hOodaru")
+                else:
+                    kn_tokens.append("hooguttEne")
+                continue
+
+            if w_clean.startswith("tinp") or w_clean.startswith("tin"):
+                kn_tokens.append("tinnuttEne" if w_clean.endswith("e") else "tinnuttaare")
+                continue
+
+            if w_clean.startswith("malp") or w_clean.startswith("malt"):
+                kn_tokens.append("maaDuttEne" if w_clean.endswith("e") else "maaDuttaare")
+                continue
+
+            kn_tokens.append(w_clean)
+
+        kn_romanized = " ".join(kn_tokens)
+        if raw.endswith("?"):
+            kn_romanized += "?"
+        elif not kn_romanized.endswith((".", "!", "?")):
+            kn_romanized += "."
+
+        kn_cosmetic = from_canonical_roman(kn_romanized, to_script="kannada")
+        tulu_cosmetic_kn = from_canonical_roman(tulu_rom, to_script="kannada")
+        tulu_cosmetic_tg = from_canonical_roman(tulu_rom, to_script="tigalari")
+
+        return TranslationResult(
+            source_text=raw,
+            source_lang="tulu",
+            translated_text=kn_romanized if romanized_output else kn_cosmetic,
+            tulu_kannada=tulu_cosmetic_kn,
+            tulu_tigalari=tulu_cosmetic_tg,
+            tulu_latin=tulu_rom,
+            tulu_romanized=tulu_rom,
+            kannada_romanized=kn_romanized,
+            tokens=[{"word": w} for w in words],
+            confidence=0.95,
+            grammar_notes=["End-to-end Romanized Tulu -> Kannada MT rule transformation."]
         )
 
     @classmethod
