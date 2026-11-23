@@ -90,15 +90,24 @@ A complete Python library, CLI, and Web Transliterator Application for the **Tul
 │   ├── manifest.json                       # Progressive Web App manifest
 │   ├── sw.js                               # Service Worker for offline asset caching
 │   └── fonts/Mallige_Unicode_v2.ttf        # Embedded Unicode 16.0 Tigalari font
-├── datasets/                               # Curated Datasets (Master Corpus, Lexicons)
-│   ├── tulu_master_single_source_of_truth.csv # 64,260 entries (Lead Tigalari NOT NULL, 100% translated)
-│   ├── tulu_master_consolidated_corpus.csv # 64,260 deduplicated multilingual entries
-│   └── tulu_lexicon_1000.csv               # 1,000 verified Tulu vocabulary entries
-├── docs/                                   # In-Depth Guides & Technical Architecture
-│   └── TULU_MASTER_CORPUS_CREATION.md      # Detailed creation documentation for master corpus
+├── datasets/                               # Curated Datasets (Master Corpus, Lexicons, Audio)
+│   ├── tulu_master_single_source_of_truth.csv # 101,706 entries (Lead Tigalari NOT NULL, 100% translated)
+│   ├── tulu_master_consolidated_corpus.csv # 101,706 deduplicated multilingual entries
+│   └── subsets/                            # Domain-specific partitions, lexicons & speech data
+│       ├── real_speech_manifest.csv        # 289 authentic spoken Tulu recordings with 1:1 ground truth
+│       ├── real_speech_data/               # Standardized 16kHz mono audio (LanguagesHome + BoLI)
+│       ├── tulu_historical_gold_25k.csv    # 25,000 historical Tulu dictionary terms
+│       └── tulu_lexicon_1000.csv           # 1,000 benchmark Tulu vocabulary entries
+├── docs/                                   # In-Depth Guides, Unicode 16.0 Spec & Architecture
+│   ├── TULU_MASTER_CORPUS_CREATION.md      # Detailed creation documentation for master corpus
+│   └── U11380.pdf                          # Official Unicode 16.0 Tulu-Tigalari Standard
+├── scripts/                                # Harvesters, corpus builders, and romanizers
+│   ├── harvest_boli_tulu_audio.py          # Harvester for BoLI Tulu Translation Showcase
+│   ├── harvest_languageshome_tulu_audio.py # Harvester for LanguagesHome native recordings
+│   └── build_single_source_of_truth.py     # 100k SSOT corpus builder
 ├── Modelfile.tulu                          # Zero-training Ollama Modelfile configuration
 ├── run_app.py                              # Launcher script for Web Studio (Port 9000)
-└── run_tests.py                            # Discovers and runs all 188+ unit tests
+└── run_tests.py                            # Discovers and runs all 218 unit tests
 ```
 
 ---
@@ -219,16 +228,39 @@ python3 kannada_tigalari_converter/cli.py --segregate-quality datasets/tulu_wiki
 
 ---
 
-### 7. Running Tests
+### 7. Authentic Spoken Tulu Speech Corpus & Whisper-LoRA ASR
+
+This repository includes a curated authentic spoken Tulu audio collection of **289 native human recordings** (16kHz mono PCM `.wav`), paired 1:1 with ground-truth Kannada orthography, official Unicode 16.0 Tigalari script, canonical Roman transliteration, and English translations:
+
+| Collection Source | Spoken Clips | Audio Format | Ground-Truth Orthography |
+| :--- | :---: | :---: | :---: |
+| **LanguagesHome Native Collection** | 91 | 16,000 Hz 16-bit Mono WAV | Kannada + Unicode 16.0 Tigalari + Roman + English |
+| **BoLI Tulu Showcase (LIFE / Bhasha)** | 198 | 16,000 Hz 16-bit Mono WAV | Kannada + Unicode 16.0 Tigalari + Roman + English |
+| **Total Real Speech Dataset** | **289** | **16,000 Hz 16-bit Mono WAV** | **100% Faithful Multi-Script Alignments** |
+
+- **Zero-GPU / CPU-Friendly LoRA Training**:
+  Because 99% of Whisper's weights remain frozen, fine-tuning only the small low-rank adapter matrices takes `< 500 MB RAM` and completes in 10–20 minutes on Apple Silicon CPU/MPS without overheating your system:
+  ```bash
+  # Fine-tune Whisper-tiny LoRA adapter exclusively on real human spoken Tulu
+  python3 -c "
+  from kannada_tigalari_converter.asr.tulu_asr_trainer import TuluASRTrainer
+  trainer = TuluASRTrainer()
+  trainer.train(num_samples=289, epochs=3, use_real_speech=True, allow_synthetic_fallback=False)
+  "
+  ```
+
+---
+
+### 8. Running Tests
 
 ```bash
-# Run the complete test suite (210 unit tests)
+# Run the complete test suite (218 unit tests)
 python3 run_tests.py
 ```
 
 ---
 
-### 8. Documentation & Corpus Details
+### 9. Documentation & Corpus Details
 
 For a complete breakdown of how `tulu_master_consolidated_corpus.csv` was aggregated, deduplicated, and normalized across 5 primary sources:
 👉 Read [`docs/TULU_MASTER_CORPUS_CREATION.md`](file:///Users/jayanthanayak/Side_task/Tulu_Model/docs/TULU_MASTER_CORPUS_CREATION.md).

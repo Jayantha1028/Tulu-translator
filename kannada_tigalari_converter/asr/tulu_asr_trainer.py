@@ -217,77 +217,115 @@ class TuluASRTrainer:
         self,
         num_samples: int = 100,
         val_split: float = 0.1,
+        use_real_speech: bool = True,
+        allow_synthetic_fallback: bool = False,
     ) -> Tuple[TuluSpeechDataset, TuluSpeechDataset]:
         """
-        Gathers sentences from corpus and creates training and validation sets.
+        Gathers sentences from authentic real speech recordings or corpus and creates
+        training and validation sets. Prioritizes real speech audio if use_real_speech=True.
         """
-        from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000
-
         audio_cache_dir = os.path.join(ROOT_DIR, "datasets", "paired_speech_data")
         os.makedirs(audio_cache_dir, exist_ok=True)
 
         samples = []
-        # 1. Use curated vocabulary and phrases first
-        for idx, item in enumerate(WORDS_DATASET_1000):
-            if len(samples) >= num_samples:
-                break
-            kn = item["kannada"].strip()
-            if not kn:
-                continue
-            wav_name = f"sample_{idx:05d}.wav"
-            wav_path = os.path.join(audio_cache_dir, wav_name)
-            rom = item.get("tulu_romanized", item.get("latin_phonetic", ""))
-            samples.append({
-                "id": str(idx),
-                "text_kannada": kn,
-                "text_romanized": rom,
-                "audio_path": wav_path,
-            })
 
-        # 2. Add from master corpus if more samples requested
-        if len(samples) < num_samples:
-            master_csv = os.path.join(ROOT_DIR, "datasets", "tulu_master_corpus_romanized.csv")
-            if not os.path.isfile(master_csv):
-                master_csv = os.path.join(ROOT_DIR, "datasets", "tulu_master_consolidated_corpus.csv")
-            if os.path.isfile(master_csv):
-                import csv
-                with open(master_csv, "r", encoding="utf-8") as f:
-                    reader = csv.DictReader(f)
-                    for idx, row in enumerate(reader, start=len(samples)):
-                        if len(samples) >= num_samples:
-                            break
-                        kn = (row.get("tulu_kannada_raw") or row.get("tulu_kannada") or row.get("kannada") or "").strip()
-                        rom = (row.get("tulu_romanized") or "").strip()
-                        if not rom and kn:
-                            from kannada_tigalari_converter.lexicon.romanization_scheme import to_canonical_roman
-                            rom = to_canonical_roman(kn)
-                        if 3 <= len(kn) <= 60:
-                            wav_name = f"master_{idx:05d}.wav"
-                            wav_path = os.path.join(audio_cache_dir, wav_name)
-                            samples.append({
-                                "id": str(idx),
-                                "text_kannada": kn,
-                                "text_romanized": rom,
-                                "audio_path": wav_path,
-                            })
+        # 1. Prioritize authentic real-world spoken Tulu audio from manifest
+        if use_real_speech:
+            manifest_candidates = [
+                os.path.join(ROOT_DIR, "datasets", "subsets", "real_speech_manifest.csv"),
+                os.path.join(ROOT_DIR, "datasets", "real_speech_manifest.csv"),
+            ]
+            for manifest_path in manifest_candidates:
+                if os.path.isfile(manifest_path):
+                    import csv
+                    with open(manifest_path, "r", encoding="utf-8") as f:
+                        reader = csv.DictReader(f)
+                        for row in reader:
+                            if len(samples) >= num_samples:
+                                break
+                            raw_audio_path = row.get("audio_path", "")
+                            audio_full_path = raw_audio_path if os.path.isabs(raw_audio_path) else os.path.join(ROOT_DIR, raw_audio_path)
+                            if os.path.isfile(audio_full_path):
+                                kn = (row.get("tulu_kannada") or "").strip()
+                                rom = (row.get("tulu_latin") or "").strip()
+                                if not rom and kn:
+                                    from kannada_tigalari_converter.lexicon.romanization_scheme import to_canonical_roman
+                                    rom = to_canonical_roman(kn)
+                                samples.append({
+                                    "id": row.get("audio_id", f"real_{len(samples)}"),
+                                    "text_kannada": kn,
+                                    "text_romanized": rom,
+                                    "text_tigalari": row.get("tulu_tigalari", ""),
+                                    "english_translation": row.get("english_translation", ""),
+                                    "audio_path": audio_full_path,
+                                    "source": row.get("source", "real_speech_manifest"),
+                                })
+                    if samples:
+                        print(f"[Tulu Trainer] Loaded {len(samples)} authentic spoken Tulu audio recordings from {os.path.basename(manifest_path)}.")
+                        break
+
+        # 2. If allow_synthetic_fallback is True and more samples needed:
+        if allow_synthetic_fallback and len(samples) < num_samples:
+            from kannada_tigalari_converter.lexicon.words_dataset_1000 import WORDS_DATASET_1000
+            for idx, item in enumerate(WORDS_DATASET_1000):
+                if len(samples) >= num_samples:
+                    break
+                kn = item["kannada"].strip()
+                if not kn:
+                    continue
+                wav_name = f"sample_{idx:05d}.wav"
+                wav_path = os.path.join(audio_cache_dir, wav_name)
+                rom = item.get("tulu_romanized", item.get("latin_phonetic", ""))
+                samples.append({
+                    "id": str(idx),
+                    "text_kannada": kn,
+                    "text_romanized": rom,
+                    "audio_path": wav_path,
+                })
+
+            if len(samples) < num_samples:
+                master_csv = os.path.join(ROOT_DIR, "datasets", "tulu_master_corpus_romanized.csv")
+                if not os.path.isfile(master_csv):
+                    master_csv = os.path.join(ROOT_DIR, "datasets", "tulu_master_consolidated_corpus.csv")
+                if os.path.isfile(master_csv):
+                    import csv
+                    with open(master_csv, "r", encoding="utf-8") as f:
+                        reader = csv.DictReader(f)
+                        for idx, row in enumerate(reader, start=len(samples)):
+                            if len(samples) >= num_samples:
+                                break
+                            kn = (row.get("tulu_kannada_raw") or row.get("tulu_kannada") or row.get("kannada") or "").strip()
+                            rom = (row.get("tulu_romanized") or "").strip()
+                            if not rom and kn:
+                                from kannada_tigalari_converter.lexicon.romanization_scheme import to_canonical_roman
+                                rom = to_canonical_roman(kn)
+                            if 3 <= len(kn) <= 60:
+                                wav_name = f"master_{idx:05d}.wav"
+                                wav_path = os.path.join(audio_cache_dir, wav_name)
+                                samples.append({
+                                    "id": str(idx),
+                                    "text_kannada": kn,
+                                    "text_romanized": rom,
+                                    "audio_path": wav_path,
+                                })
+
+            # Parallel pre-synthesis of missing audio samples
+            missing = [s for s in samples if not os.path.isfile(s["audio_path"])]
+            if missing:
+                workers = 2 if getattr(self, "low_power", False) else 4
+                print(f"[Tulu Trainer] Synthesizing {len(missing)} missing audio samples ({workers} workers, thermal-optimized)...")
+                from concurrent.futures import ThreadPoolExecutor
+                def _synth(item):
+                    rate = random.choice([150, 175, 205])
+                    SyntheticTuluAudioGenerator.synthesize_to_wav(
+                        item["text_kannada"], item["audio_path"], rate=rate, allow_tone_fallback=False
+                    )
+
+                with ThreadPoolExecutor(max_workers=workers) as pool:
+                    list(pool.map(_synth, missing))
+                print(f"[Tulu Trainer] Audio pre-synthesis complete ({len(samples)} total audio clips ready).")
 
         print(f"[Tulu Trainer] Prepared {len(samples)} paired speech samples.")
-
-        # Parallel pre-synthesis of missing audio samples
-        missing = [s for s in samples if not os.path.isfile(s["audio_path"])]
-        if missing:
-            workers = 2 if getattr(self, "low_power", False) else 4
-            print(f"[Tulu Trainer] Synthesizing {len(missing)} missing audio samples ({workers} workers, thermal-optimized)...")
-            from concurrent.futures import ThreadPoolExecutor
-            def _synth(item):
-                rate = random.choice([150, 175, 205])
-                SyntheticTuluAudioGenerator.synthesize_to_wav(
-                    item["text_kannada"], item["audio_path"], rate=rate, allow_tone_fallback=False
-                )
-
-            with ThreadPoolExecutor(max_workers=workers) as pool:
-                list(pool.map(_synth, missing))
-            print(f"[Tulu Trainer] Audio pre-synthesis complete ({len(samples)} total audio clips ready).")
 
         random.seed(42)
         random.shuffle(samples)
@@ -307,12 +345,18 @@ class TuluASRTrainer:
         batch_size: int = 4,
         learning_rate: float = 1e-3,
         weight_decay: float = 0.01,
+        use_real_speech: bool = True,
+        allow_synthetic_fallback: bool = False,
     ) -> Dict[str, Any]:
         """
         Executes the LoRA fine-tuning training loop.
         """
         self.setup_model()
-        train_ds, val_ds = self.prepare_dataset(num_samples=num_samples)
+        train_ds, val_ds = self.prepare_dataset(
+            num_samples=num_samples,
+            use_real_speech=use_real_speech,
+            allow_synthetic_fallback=allow_synthetic_fallback,
+        )
 
         train_loader = DataLoader(
             train_ds,

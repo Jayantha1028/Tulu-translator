@@ -184,6 +184,47 @@ class TestTuluSpeechRecognizer(unittest.TestCase):
         self.assertEqual(result.kannada, "")
         self.assertEqual(result.confidence, 0.0)
 
+    def test_real_speech_manifest_and_audio_fidelity(self):
+        import csv
+        manifest_path = os.path.join(BASE_DIR, "datasets", "subsets", "real_speech_manifest.csv")
+        if not os.path.isfile(manifest_path):
+            manifest_path = os.path.join(BASE_DIR, "datasets", "real_speech_manifest.csv")
+        self.assertTrue(os.path.isfile(manifest_path), "real_speech_manifest.csv must exist")
+
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+
+        self.assertGreaterEqual(len(rows), 280)
+        # Check samples from both LanguagesHome and BoLI Tulu collections
+        boli_samples = [r for r in rows if "BoLI" in r["source"]]
+        self.assertGreaterEqual(len(boli_samples), 190)
+
+        for r in rows[:5] + boli_samples[:5]:
+            self.assertTrue(bool(r["tulu_kannada"]))
+            self.assertTrue(bool(r["tulu_tigalari"]))
+            self.assertTrue(bool(r["english_translation"]))
+            # Verify Tigalari Unicode 16.0 range
+            self.assertTrue(any(0x11380 <= ord(c) <= 0x113FF for c in r["tulu_tigalari"]))
+            # Verify audio file exists and is readable
+            audio_full_path = os.path.join(BASE_DIR, r["audio_path"])
+            self.assertTrue(os.path.isfile(audio_full_path), f"Audio file missing: {audio_full_path}")
+            audio = AudioPreprocessor.load_audio(audio_full_path)
+            self.assertGreater(len(audio), 1000)
+            self.assertEqual(audio.dtype, np.float32)
+
+    def test_real_speech_dataset_preparation(self):
+        from kannada_tigalari_converter.asr.tulu_asr_trainer import TuluASRTrainer
+        trainer = TuluASRTrainer()
+        train_ds, val_ds = trainer.prepare_dataset(num_samples=50, val_split=0.2, use_real_speech=True, allow_synthetic_fallback=False)
+        self.assertGreaterEqual(len(train_ds) + len(val_ds), 50)
+        # Check that samples are from authentic collections (LanguagesHome / BoLI)
+        for sample in train_ds.samples:
+            self.assertTrue(os.path.isfile(sample["audio_path"]))
+            self.assertTrue(bool(sample["text_kannada"]))
+            self.assertTrue(bool(sample["text_romanized"]))
+            self.assertTrue(any(src in sample.get("source", "") for src in ["LanguagesHome", "BoLI"]))
+
 
 if __name__ == "__main__":
     unittest.main()
