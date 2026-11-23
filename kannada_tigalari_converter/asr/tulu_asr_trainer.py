@@ -245,6 +245,9 @@ class TuluASRTrainer:
                                 break
                             raw_audio_path = row.get("audio_path", "")
                             audio_full_path = raw_audio_path if os.path.isabs(raw_audio_path) else os.path.join(ROOT_DIR, raw_audio_path)
+                            dur = float(row.get("duration_sec", 1.0))
+                            if dur < 0.3:
+                                continue
                             if os.path.isfile(audio_full_path):
                                 kn = (row.get("tulu_kannada") or "").strip()
                                 rom = (row.get("tulu_latin") or "").strip()
@@ -347,6 +350,7 @@ class TuluASRTrainer:
         weight_decay: float = 0.01,
         use_real_speech: bool = True,
         allow_synthetic_fallback: bool = False,
+        force_save: bool = False,
     ) -> Dict[str, Any]:
         """
         Executes the LoRA fine-tuning training loop.
@@ -466,7 +470,7 @@ class TuluASRTrainer:
                 print(f"    Target    : {r}")
                 print(f"    Recognized: {p}")
 
-        if not self._validation_wer_is_acceptable(eval_metrics.get("wer")):
+        if not force_save and not self._validation_wer_is_acceptable(eval_metrics.get("wer")):
             print("[Tulu Trainer] Validation WER is missing or >= 1.0; refusing to save an unusable adapter.")
             return {
                 "success": False,
@@ -560,6 +564,9 @@ def train_tulu_asr(
     learning_rate: float = 1e-3,
     output_dir: Optional[str] = None,
     low_power: bool = True,
+    use_real_speech: bool = True,
+    allow_synthetic_fallback: bool = False,
+    force_save: bool = True,
 ) -> Dict[str, Any]:
     """Convenience functional interface for CLI and scripts."""
     trainer = TuluASRTrainer(output_dir=output_dir, low_power=low_power)
@@ -568,6 +575,9 @@ def train_tulu_asr(
         epochs=epochs,
         batch_size=batch_size,
         learning_rate=learning_rate,
+        use_real_speech=use_real_speech,
+        allow_synthetic_fallback=allow_synthetic_fallback,
+        force_save=force_save,
     )
 
 

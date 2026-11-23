@@ -1,37 +1,37 @@
 {
   "base_model": "openai/whisper-tiny",
-  "device": "mps",
+  "device": "cpu",
   "lora_r": 16,
   "lora_alpha": 32,
-  "completed_at": "2026-11-05T20:38:07Z",
+  "completed_at": "2026-11-23T20:14:54Z",
   "history": {
     "train_loss": [
-      1.875650357140435,
-      0.7649352408779992,
-      0.40804430329137376
+      3.6602090762211725,
+      1.8106098101689265,
+      1.3141133088331955
     ],
     "val_loss": [
-      1.152055971622467,
-      0.613359022140503,
-      0.4358108842372894
+      2.4346342980861664,
+      2.0297356098890305,
+      2.061395913362503
     ],
     "epoch_times": [
-      204.265123128891,
-      209.89978432655334,
-      198.47274899482727
+      46.17892289161682,
+      47.740612268447876,
+      46.05888080596924
     ],
     "eval_metrics": {
-      "wer": 5.2273,
-      "cer": 3.0386,
+      "wer": 0.48,
+      "cer": 0.4649,
       "sample_pred": [
-        "\u0ba4\u0bcd\u0bae\u0bcd\u0baa\u0bbf\u0bb2\u0bcd",
-        "\u0cae\u0cc1\u0cb2\u0ccd\u0caa\u0cc7\u0cb2\u0cc6",
-        "\u0cae\u0cb2\u0ccd\u0ca4\u0cc6"
+        "aNu daatu porlaaditi",
+        "aMdu kaMdiita",
+        "aklu eMklanu moke maMpuveru"
       ],
       "sample_ref": [
-        "\u0ca4\u0c82\u0cac\u0cbf\u0cb2",
-        "\u0cae\u0cb2\u0ccd\u0caa\u0cc1\u0cb2\u0cc6",
-        "\u0cae\u0cb2\u0ccd\u0ca4\u0cc6"
+        "an uddhat pOrlaa dit",
+        "aMd, khaMDita",
+        "aklu iMklenu moke maNpoovaru"
       ]
     }
   }
