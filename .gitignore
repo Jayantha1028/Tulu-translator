@@ -37,7 +37,13 @@ Icon
 
 # Project specific caches
 kannada_tigalari_converter/downloads/
+datasets/**/.scraper_checkpoint.json
+datasets/**/paired_speech_data/
+datasets/**/manner_1886_raw.txt
 datasets/.scraper_checkpoint.json
 datasets/paired_speech_data/
 datasets/manner_1886_raw.txt
+datasets/subsets/.scraper_checkpoint.json
+datasets/subsets/paired_speech_data/
+datasets/subsets/manner_1886_raw.txt
 *.pdf

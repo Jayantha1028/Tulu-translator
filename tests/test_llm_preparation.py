@@ -42,7 +42,8 @@ class TestLLMPreparation(unittest.TestCase):
 
     def test_trainer_dry_run(self):
         trainer = TuluLLMTrainer()
-        res = trainer.run_dry_run("datasets/tulu_lora_sft_dataset.jsonl")
+        lora_path = "datasets/subsets/tulu_lora_sft_dataset.jsonl" if os.path.exists("datasets/subsets/tulu_lora_sft_dataset.jsonl") else "datasets/tulu_lora_sft_dataset.jsonl"
+        res = trainer.run_dry_run(lora_path)
         self.assertEqual(res["status"], "success")
         self.assertTrue(res["memory_safe"])
         self.assertGreater(res["records_tested"], 0)

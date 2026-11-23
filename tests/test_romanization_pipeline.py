@@ -68,11 +68,18 @@ class TestCanonicalRomanizationScheme(unittest.TestCase):
             self.assertTrue(all(ord(c) < 128 for c in tok), f"Token '{tok}' is not pure ASCII!")
 
 
+def _resolve_dataset(fn):
+    p_sub = os.path.join(BASE_DIR, "datasets", "subsets", fn)
+    if os.path.exists(p_sub):
+        return p_sub
+    return os.path.join(BASE_DIR, "datasets", fn)
+
+
 class TestRomanizedDatasets(unittest.TestCase):
     """Verifies that batch romanization generated valid datasets."""
 
     def test_master_corpus_romanized_exists(self):
-        path = os.path.join(BASE_DIR, "datasets", "tulu_master_corpus_romanized.csv")
+        path = _resolve_dataset("tulu_master_corpus_romanized.csv")
         self.assertTrue(os.path.isfile(path), "tulu_master_corpus_romanized.csv missing")
         with open(path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -82,7 +89,7 @@ class TestRomanizedDatasets(unittest.TestCase):
             self.assertIn("english_translation", rows[0])
 
     def test_kn_en_parallel_romanized_exists(self):
-        path = os.path.join(BASE_DIR, "datasets", "kn_en_parallel_romanized.csv")
+        path = _resolve_dataset("kn_en_parallel_romanized.csv")
         self.assertTrue(os.path.isfile(path), "kn_en_parallel_romanized.csv missing")
         with open(path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -91,7 +98,7 @@ class TestRomanizedDatasets(unittest.TestCase):
             self.assertIn("english", first_row)
 
     def test_historical_gold_25k_dataset_integrity(self):
-        path = os.path.join(BASE_DIR, "datasets", "tulu_historical_gold_25k.csv")
+        path = _resolve_dataset("tulu_historical_gold_25k.csv")
         self.assertTrue(os.path.isfile(path), "tulu_historical_gold_25k.csv missing")
         with open(path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -103,7 +110,7 @@ class TestRomanizedDatasets(unittest.TestCase):
             self.assertEqual(count, 25000)
 
     def test_single_source_of_truth_integrity(self):
-        path = os.path.join(BASE_DIR, "datasets", "tulu_master_single_source_of_truth.csv")
+        path = _resolve_dataset("tulu_master_single_source_of_truth.csv")
         self.assertTrue(os.path.isfile(path), "tulu_master_single_source_of_truth.csv missing")
         with open(path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
@@ -126,7 +133,9 @@ class TestRomanizedDatasets(unittest.TestCase):
                 self.assertTrue(any(0x11380 <= ord(c) <= 0x113FF for c in tig))
                 if sample_count >= 100:
                     break
-            self.assertGreaterEqual(sample_count, 100)
+            # Verify at least 100,000 clean entries
+            total_count = sample_count + sum(1 for _ in reader)
+            self.assertGreaterEqual(total_count, 100000, "Single Source of Truth must contain >= 100,000 entries")
 
 
 class TestRomanizedTokenizer(unittest.TestCase):

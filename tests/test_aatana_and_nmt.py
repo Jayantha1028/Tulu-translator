@@ -99,7 +99,8 @@ class TestAataAndNMT(unittest.TestCase):
     def test_csv_export_integrity(self):
         import csv
         datasets_dir = os.path.join(PARENT_DIR, "datasets")
-        csv_1000 = os.path.join(datasets_dir, "tulu_lexicon_1000.csv")
+        subsets_dir = os.path.join(datasets_dir, "subsets")
+        csv_1000 = os.path.join(subsets_dir, "tulu_lexicon_1000.csv") if os.path.exists(os.path.join(subsets_dir, "tulu_lexicon_1000.csv")) else os.path.join(datasets_dir, "tulu_lexicon_1000.csv")
         self.assertTrue(os.path.isfile(csv_1000))
         with open(csv_1000, "r", encoding="utf-8") as f:
             reader = csv.reader(f)
@@ -108,7 +109,7 @@ class TestAataAndNMT(unittest.TestCase):
             rows = list(reader)
             self.assertEqual(len(rows), 1000)
 
-        csv_hist = os.path.join(datasets_dir, "tulu_historical_dictionary_1886.csv")
+        csv_hist = os.path.join(subsets_dir, "tulu_historical_dictionary_1886.csv") if os.path.exists(os.path.join(subsets_dir, "tulu_historical_dictionary_1886.csv")) else os.path.join(datasets_dir, "tulu_historical_dictionary_1886.csv")
         self.assertTrue(os.path.isfile(csv_hist))
         with open(csv_hist, "r", encoding="utf-8") as f:
             reader = csv.reader(f)

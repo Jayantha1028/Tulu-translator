@@ -59,11 +59,16 @@ class TuluLLMTrainer:
     @classmethod
     def load_dataset_records(cls, dataset_path: str, max_records: int = 200) -> List[Dict[str, str]]:
         """Safely loads a small slice of instruction-tuning records (<5 MB)."""
-        if not os.path.exists(dataset_path):
-            raise FileNotFoundError(f"Dataset file not found: {dataset_path}")
+        resolved_path = dataset_path
+        if not os.path.exists(resolved_path):
+            alt_path = os.path.join(ROOT_DIR, "datasets", "subsets", os.path.basename(dataset_path))
+            if os.path.exists(alt_path):
+                resolved_path = alt_path
+            else:
+                raise FileNotFoundError(f"Dataset file not found: {dataset_path}")
 
         records = []
-        with open(dataset_path, "r", encoding="utf-8") as f:
+        with open(resolved_path, "r", encoding="utf-8") as f:
             for i, line in enumerate(f):
                 if i >= max_records:
                     break

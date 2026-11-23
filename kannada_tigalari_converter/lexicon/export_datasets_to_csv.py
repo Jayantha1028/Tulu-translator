@@ -24,7 +24,8 @@ from kannada_tigalari_converter.tulu_nmt_pipeline import load_nmt_benchmark_corp
 
 def export_all_csvs(output_dir: str = None) -> dict:
     if output_dir is None:
-        output_dir = os.path.join(PARENT_DIR, "datasets")
+        subsets_dir = os.path.join(PARENT_DIR, "datasets", "subsets")
+        output_dir = subsets_dir if os.path.isdir(subsets_dir) else os.path.join(PARENT_DIR, "datasets")
     os.makedirs(output_dir, exist_ok=True)
 
     exported_files = {}

@@ -136,9 +136,10 @@ class KannadaEnglishTranslator:
     }
 
     def __init__(self, parallel_corpus_path: Optional[str] = None):
-        self.corpus_path = parallel_corpus_path or os.path.join(
-            ROOT_DIR, "datasets", "kn_en_parallel_romanized.csv"
-        )
+        subsets_corpus = os.path.join(ROOT_DIR, "datasets", "subsets", "kn_en_parallel_romanized.csv")
+        root_corpus = os.path.join(ROOT_DIR, "datasets", "kn_en_parallel_romanized.csv")
+        default_path = subsets_corpus if os.path.isfile(subsets_corpus) else root_corpus
+        self.corpus_path = parallel_corpus_path or default_path
         self.phrase_dict: Dict[str, str] = dict(self.PHRASE_CACHE)
         self._load_corpus()
 

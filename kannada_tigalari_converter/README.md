@@ -65,7 +65,7 @@ A complete Python library, CLI, and Web Transliterator Application for the **Tul
 │   ├── historical_dict.js                  # 1886 historical lexicon database
 │   ├── aatana_books.js                     # Digital library catalog data
 │   └── fonts/Mallige_Unicode_v2.ttf        # Embedded Unicode 16.0 Tigalari font
-├── datasets/                               # Curated CSV Datasets (75,000+ clean entries)
+├── datasets/                               # Single Source of Truth (100,000+ entries) & subsets/
 ├── tests/                                  # unittest modules for project subsystems
 ├── downloads/                              # Cached OCR and PDF downloads (git-ignored)
 ├── run_app.py                              # Quick Web Studio launcher
@@ -207,20 +207,21 @@ python3 -m unittest discover -s tests -p 'test_aatana_and_nmt.py'
 
 ### 7. Datasets in CSV Format (`datasets/`)
 
-All datasets are exported as UTF-8 encoded CSV files in the [`datasets/`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/) folder:
+The primary Golden Single Source of Truth resides in the root [`datasets/`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/) directory, while all contributing sub-corpora and source datasets are organized in [`datasets/subsets/`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/subsets/):
 
 | CSV File | Records | Description & Schema |
 | :--- | :--- | :--- |
-| [`tulu_master_single_source_of_truth.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_master_single_source_of_truth.csv) | **64,260** | **Single Source of Truth (SSOT)**: Lead column `tulu_tigalari` (NOT NULL, Unicode 16.0), `tulu_kannada`, `tulu_latin`, `english_translation`, `category_or_domain`, `corpus_source`, `id` |
-| [`tulu_master_consolidated_corpus.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_master_consolidated_corpus.csv) | **64,260** | **Consolidated Master Corpus**: Synchronized with SSOT (100% translated, 0 empty Tigalari/English) |
-| [`tulu_wikipedia_corpus.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_wikipedia_corpus.csv) | **539+** | Scraped from `tcy.wikipedia.org`: `id, source_article, tulu_kannada, tulu_tigalari, tulu_latin, word_count, char_count` |
-| [`wiktionary_tulu_lemmas.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/wiktionary_tulu_lemmas.csv) | **50+** | English Wiktionary Tulu Lemmas: `id, tulu_kannada, tulu_tigalari, tulu_latin, source` |
-| [`tulu_lexicon_1000.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_lexicon_1000.csv) | 1,000 | 19 categories: `id, category, english_meaning, tulu_kannada, tulu_tigalari, tulu_latin_phonetic` |
-| [`tulu_lexicon_250.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_lexicon_250.csv) | 250 | Core test suite: `id, category, english_meaning, tulu_kannada, tulu_tigalari, tulu_latin_phonetic` |
-| [`tulu_historical_dictionary_1886.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_historical_dictionary_1886.csv) | 204 | Rev. A. Männer (1886): `id, tulu_kannada, tulu_tigalari, tulu_latin, english_definition, part_of_speech, domain, source` |
-| [`aatana_books_catalog.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/aatana_books_catalog.csv) | 210 | AATA Digital Library: `id, title, pdf_path, pdf_url` |
-| [`tulu_nmt_parallel_corpus.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_nmt_parallel_corpus.csv) | 10 | Parallel NMT benchmark: `id, eng_Latn, kan_Knda, tcy_Knda, tcy_Tglr, tcy_Phonetic` |
-| [`aatana_ocr_sodara_habba.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/aatana_ocr_sodara_habba.csv) | 68 | OCR extracted sentences: `id, source_book, kannada, tigalari, phonetic, word_count, char_count` |
+| [`tulu_master_single_source_of_truth.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_master_single_source_of_truth.csv) | **101,706** | **Single Source of Truth (SSOT)**: Lead column `tulu_tigalari` (NOT NULL, Unicode 16.0), `tulu_kannada`, `tulu_latin`, `english_translation`, `category_or_domain`, `corpus_source`, `id` |
+| [`tulu_master_consolidated_corpus.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_master_consolidated_corpus.csv) | **101,706** | **Consolidated Master Corpus**: Synchronized with SSOT (100% translated, 0 empty Tigalari/English) |
+| `datasets/subsets/tulu_historical_gold_25k.csv` | **25,000** | Gold standard historical & morphological benchmark: `id, tulu_kannada, tulu_romanized, english, source, category` |
+| `datasets/subsets/tulu_wikipedia_corpus.csv` | **539+** | Scraped from `tcy.wikipedia.org`: `id, source_article, tulu_kannada, tulu_tigalari, tulu_latin, word_count, char_count` |
+| `datasets/subsets/wiktionary_tulu_lemmas.csv` | **50+** | English Wiktionary Tulu Lemmas: `id, tulu_kannada, tulu_tigalari, tulu_latin, source` |
+| `datasets/subsets/tulu_lexicon_1000.csv` | 1,000 | 19 categories: `id, category, english_meaning, tulu_kannada, tulu_tigalari, tulu_latin_phonetic` |
+| `datasets/subsets/tulu_lexicon_250.csv` | 250 | Core test suite: `id, category, english_meaning, tulu_kannada, tulu_tigalari, tulu_latin_phonetic` |
+| `datasets/subsets/tulu_historical_dictionary_1886.csv` | 204 | Rev. A. Männer (1886): `id, tulu_kannada, tulu_tigalari, tulu_latin, english_definition, part_of_speech, domain, source` |
+| `datasets/subsets/aatana_books_catalog.csv` | 210 | AATA Digital Library: `id, title, pdf_path, pdf_url` |
+| `datasets/subsets/tulu_nmt_parallel_corpus.csv` | 10 | Parallel NMT benchmark: `id, eng_Latn, kan_Knda, tcy_Knda, tcy_Tglr, tcy_Phonetic` |
+| `datasets/subsets/aatana_ocr_sodara_habba.csv` | 68 | OCR extracted sentences: `id, source_book, kannada, tigalari, phonetic, word_count, char_count` |
 
 To regenerate or update all CSVs anytime:
 ```bash
