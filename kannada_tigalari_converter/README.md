@@ -211,7 +211,8 @@ All datasets are exported as UTF-8 encoded CSV files in the [`datasets/`](file:/
 
 | CSV File | Records | Description & Schema |
 | :--- | :--- | :--- |
-| [`tulu_master_consolidated_corpus.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_master_consolidated_corpus.csv) | **1,793+** | **Consolidated Master Corpus**: `id, source_type, source_name, tulu_kannada, tulu_tigalari, tulu_latin, english_meaning` |
+| [`tulu_master_single_source_of_truth.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_master_single_source_of_truth.csv) | **64,260** | **Single Source of Truth (SSOT)**: Lead column `tulu_tigalari` (NOT NULL, Unicode 16.0), `tulu_kannada`, `tulu_latin`, `english_translation`, `category_or_domain`, `corpus_source`, `id` |
+| [`tulu_master_consolidated_corpus.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_master_consolidated_corpus.csv) | **64,260** | **Consolidated Master Corpus**: Synchronized with SSOT (100% translated, 0 empty Tigalari/English) |
 | [`tulu_wikipedia_corpus.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_wikipedia_corpus.csv) | **539+** | Scraped from `tcy.wikipedia.org`: `id, source_article, tulu_kannada, tulu_tigalari, tulu_latin, word_count, char_count` |
 | [`wiktionary_tulu_lemmas.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/wiktionary_tulu_lemmas.csv) | **50+** | English Wiktionary Tulu Lemmas: `id, tulu_kannada, tulu_tigalari, tulu_latin, source` |
 | [`tulu_lexicon_1000.csv`](file:///Users/jayanthanayak/Side_task/Tulu_Model/datasets/tulu_lexicon_1000.csv) | 1,000 | 19 categories: `id, category, english_meaning, tulu_kannada, tulu_tigalari, tulu_latin_phonetic` |

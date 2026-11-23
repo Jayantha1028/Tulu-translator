@@ -102,6 +102,32 @@ class TestRomanizedDatasets(unittest.TestCase):
             count = sum(1 for _ in reader)
             self.assertEqual(count, 25000)
 
+    def test_single_source_of_truth_integrity(self):
+        path = os.path.join(BASE_DIR, "datasets", "tulu_master_single_source_of_truth.csv")
+        self.assertTrue(os.path.isfile(path), "tulu_master_single_source_of_truth.csv missing")
+        with open(path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            # Verify primary / lead column is tulu_tigalari
+            self.assertEqual(reader.fieldnames[0], "tulu_tigalari")
+            self.assertIn("tulu_kannada", reader.fieldnames)
+            self.assertIn("tulu_latin", reader.fieldnames)
+            self.assertIn("english_translation", reader.fieldnames)
+            self.assertIn("corpus_source", reader.fieldnames)
+
+            # Check 100 sample rows across the dataset
+            sample_count = 0
+            for row in reader:
+                sample_count += 1
+                tig = row["tulu_tigalari"].strip()
+                en = row["english_translation"].strip()
+                self.assertTrue(bool(tig), "tulu_tigalari must not be null or empty")
+                self.assertTrue(bool(en), "english_translation must not be null or empty")
+                # Verify Tigalari codepoints (Unicode 16.0: 0x11380 - 0x113FF)
+                self.assertTrue(any(0x11380 <= ord(c) <= 0x113FF for c in tig))
+                if sample_count >= 100:
+                    break
+            self.assertGreaterEqual(sample_count, 100)
+
 
 class TestRomanizedTokenizer(unittest.TestCase):
     """Verifies that the tokenizer vocabulary contains strictly zero Indic/Tigalari codepoints."""

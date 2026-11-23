@@ -91,7 +91,8 @@ A complete Python library, CLI, and Web Transliterator Application for the **Tul
 │   ├── sw.js                               # Service Worker for offline asset caching
 │   └── fonts/Mallige_Unicode_v2.ttf        # Embedded Unicode 16.0 Tigalari font
 ├── datasets/                               # Curated Datasets (Master Corpus, Lexicons)
-│   ├── tulu_master_consolidated_corpus.csv # 1,793+ deduplicated trilingual entries
+│   ├── tulu_master_single_source_of_truth.csv # 64,260 entries (Lead Tigalari NOT NULL, 100% translated)
+│   ├── tulu_master_consolidated_corpus.csv # 64,260 deduplicated multilingual entries
 │   └── tulu_lexicon_1000.csv               # 1,000 verified Tulu vocabulary entries
 ├── docs/                                   # In-Depth Guides & Technical Architecture
 │   └── TULU_MASTER_CORPUS_CREATION.md      # Detailed creation documentation for master corpus
