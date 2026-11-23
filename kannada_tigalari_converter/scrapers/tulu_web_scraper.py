@@ -224,19 +224,27 @@ class WiktionaryTuluHarvester:
             members = data.get("query", {}).get("categorymembers", [])
 
         results = []
-        for idx, m in enumerate(members, 1):
+        lemma_id = 1
+        for m in members:
             title = m.get("title", "")
-            if not title:
+            if not title or title.startswith("Category:"):
                 continue
+            # Ensure title contains Kannada script and exclude other scripts (e.g. Malayalam)
+            if not any(0x0C80 <= ord(ch) <= 0x0CFF for ch in title):
+                continue
+            if any(0x0D00 <= ord(ch) <= 0x0D7F for ch in title):
+                continue
+
             tig = kannada_to_tigalari(title)
             lat = kannada_to_latin(title)
             results.append({
-                "id": idx,
+                "id": lemma_id,
                 "tulu_kannada": title,
                 "tulu_tigalari": tig,
                 "tulu_latin": lat,
                 "source": "English Wiktionary (Category:Tulu lemmas)"
             })
+            lemma_id += 1
         return results
 
 
