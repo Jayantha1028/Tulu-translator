@@ -367,7 +367,27 @@ function kannadaToLatin(text) {
   return res.join('');
 }
 
-function kannadaToTigalari(text, formConjuncts = true) {
+function unicodeToCustom(text) {
+  return Array.from(text).map(ch => {
+    const cp = ch.codePointAt(0);
+    if (cp >= 0x11380 && cp <= 0x113FF) {
+      return String.fromCodePoint(cp - 0x11380 + 0xE880);
+    }
+    return ch;
+  }).join('');
+}
+
+function customToUnicode(text) {
+  return Array.from(text).map(ch => {
+    const cp = ch.codePointAt(0);
+    if (cp >= 0xE880 && cp <= 0xE8DF) {
+      return String.fromCodePoint(cp - 0xE880 + 0x11380);
+    }
+    return ch;
+  }).join('');
+}
+
+function kannadaToTigalari(text, formConjuncts = true, scriptMode = 'unicode') {
   // Normalize & canonicalize split matras
   text = text.normalize('NFC')
     .replace(/\u0CC6\u0CD5/g, 'ೇ')
@@ -394,10 +414,14 @@ function kannadaToTigalari(text, formConjuncts = true) {
     }
   }
 
-  return result.join('');
+  const uStr = result.join('');
+  return (scriptMode === 'custom') ? unicodeToCustom(uStr) : uStr;
 }
 
 function tigalariToKannada(text) {
+  if (Array.from(text).some(c => c.codePointAt(0) >= 0xE880 && c.codePointAt(0) <= 0xE8DF)) {
+    text = customToUnicode(text);
+  }
   const chars = Array.from(text);
   return chars.map(ch => TIGALARI_TO_KANNADA[ch] || ch).join('');
 }
@@ -406,6 +430,7 @@ function detectScript(text) {
   for (const ch of text) {
     const cp = ch.codePointAt(0);
     if (cp >= 0x11380 && cp <= 0x113FF) return 'tigalari';
+    if (cp >= 0xE880 && cp <= 0xE8DF) return 'tigalari_custom';
     if (cp >= 0x0C80 && cp <= 0x0CFF) return 'kannada';
   }
   return 'latin';
@@ -418,23 +443,33 @@ function inspectCodepoints(text) {
   }));
 }
 
-function transliterate(text, fromScript = 'auto', toScript = 'tigalari') {
+function transliterate(text, fromScript = 'auto', toScript = 'tigalari', scriptMode = 'unicode') {
   if (!text) return '';
-  const src = (fromScript === 'auto') ? detectScript(text) : fromScript.toLowerCase();
-  const tgt = toScript.toLowerCase();
+  let src = (fromScript === 'auto') ? detectScript(text) : fromScript.toLowerCase();
+  let tgt = toScript.toLowerCase();
 
-  if (src === tgt) return text;
+  if (tgt === 'tigalari_custom') {
+    tgt = 'tigalari';
+    scriptMode = 'custom';
+  }
+
+  if (src === tgt && (src !== 'tigalari' || scriptMode === 'unicode')) return text;
 
   if (src === 'latin') {
     if (tgt === 'kannada') return latinToKannada(text);
-    if (tgt === 'tigalari') return kannadaToTigalari(latinToKannada(text));
+    if (tgt === 'tigalari') return kannadaToTigalari(latinToKannada(text), true, scriptMode);
   } else if (src === 'kannada') {
     if (tgt === 'latin') return kannadaToLatin(text);
-    if (tgt === 'tigalari') return kannadaToTigalari(text);
-  } else if (src === 'tigalari') {
+    if (tgt === 'tigalari') return kannadaToTigalari(text, true, scriptMode);
+  } else if (src === 'tigalari' || src === 'tigalari_custom') {
     const kan = tigalariToKannada(text);
     if (tgt === 'kannada') return kan;
     if (tgt === 'latin') return kannadaToLatin(kan);
+    if (tgt === 'tigalari') {
+      if (scriptMode === 'custom' && src === 'tigalari') return unicodeToCustom(text);
+      if (scriptMode === 'unicode' && src === 'tigalari_custom') return customToUnicode(text);
+      return text;
+    }
   }
 
   return text;

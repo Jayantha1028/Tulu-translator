@@ -632,8 +632,13 @@ def main():
     )
     parser.add_argument(
         "-t", "--to", dest="to_script", default="tigalari",
-        choices=["latin", "kannada", "tigalari"],
+        choices=["latin", "kannada", "tigalari", "tigalari_custom"],
         help="Target script (default: tigalari)"
+    )
+    parser.add_argument(
+        "--script-mode", dest="script_mode", default="unicode",
+        choices=["unicode", "custom"],
+        help="Tigalari script standard: 'unicode' (main official Unicode 16.0 standard, default) or 'custom' (Custom PUA scripting)"
     )
     parser.add_argument(
         "-r", "--reverse", action="store_true",
@@ -1101,14 +1106,14 @@ def main():
 
     if args.reverse:
         detected = detect_script(args.text)
-        if detected == "tigalari":
-            from_script, to_script = "tigalari", "kannada"
+        if detected in ("tigalari", "tigalari_custom"):
+            from_script, to_script = detected, "kannada"
         elif detected == "kannada":
             from_script, to_script = "kannada", "latin"
         else:
             from_script, to_script = "latin", "tigalari"
 
-    out = transliterate(args.text, from_script=from_script, to_script=to_script)
+    out = transliterate(args.text, from_script=from_script, to_script=to_script, script_mode=args.script_mode)
     print(out)
 
     if args.debug:

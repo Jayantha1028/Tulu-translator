@@ -29,6 +29,18 @@ from .observability import (
     GLOBAL_TELEMETRY,
 )
 
+from .custom_script import (
+    SCRIPT_MODE_UNICODE,
+    SCRIPT_MODE_CUSTOM,
+    AVAILABLE_SCRIPT_MODES,
+    unicode_to_custom,
+    custom_to_unicode,
+    is_unicode_tigalari,
+    is_custom_tigalari,
+    detect_tigalari_mode,
+    get_available_script_modes,
+)
+
 __all__ = [
     "kannada_to_tigalari",
     "tigalari_to_kannada",
@@ -41,6 +53,15 @@ __all__ = [
     "tigalari_to_latin",
     "KANNADA_TO_TIGALARI",
     "TIGALARI_TO_KANNADA",
+    "SCRIPT_MODE_UNICODE",
+    "SCRIPT_MODE_CUSTOM",
+    "AVAILABLE_SCRIPT_MODES",
+    "unicode_to_custom",
+    "custom_to_unicode",
+    "is_unicode_tigalari",
+    "is_custom_tigalari",
+    "detect_tigalari_mode",
+    "get_available_script_modes",
     "StructuredLogger",
     "TelemetryTracker",
     "GLOBAL_LOGGER",

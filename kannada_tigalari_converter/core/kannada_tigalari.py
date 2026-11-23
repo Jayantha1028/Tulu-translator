@@ -125,15 +125,17 @@ TIGALARI_TO_KANNADA['\U000113C3'] = 'ೆ'  # Tulu-Tigalari archaic vowel sign
 TIGALARI_TO_KANNADA['\U000113CF'] = '್'  # LOOPED VIRAMA
 
 
-def kannada_to_tigalari(text: str, form_conjuncts: bool = True) -> str:
+def kannada_to_tigalari(text: str, form_conjuncts: bool = True, script_mode: str = "unicode") -> str:
     """
-    Converts Kannada script text to Tulu-Tigalari script (Unicode 16.0).
+    Converts Kannada script text to Tulu-Tigalari script.
     
     :param text: Input string in Kannada script.
     :param form_conjuncts: When True, uses TULU-TIGALARI CONJOINER (U+113D0)
                            for consonant clusters / ottakshara;
                            otherwise uses VIRAMA (U+113CE).
-    :return: Transliterated string in Tulu-Tigalari Unicode.
+    :param script_mode: "unicode" for official Unicode 16.0 standard (default & main),
+                        or "custom" for Custom Private Use Area (PUA) scripting.
+    :return: Transliterated string in Tulu-Tigalari.
     """
     # 1. Normalize unicode characters (NFC form)
     text = unicodedata.normalize('NFC', text)
@@ -159,13 +161,21 @@ def kannada_to_tigalari(text: str, form_conjuncts: bool = True) -> str:
         else:
             result.append(KANNADA_TO_TIGALARI.get(ch, ch))
 
-    return ''.join(result)
+    unicode_res = ''.join(result)
+    if script_mode == "custom":
+        from .custom_script import unicode_to_custom
+        return unicode_to_custom(unicode_res)
+    return unicode_res
 
 
 def tigalari_to_kannada(text: str) -> str:
     """
-    Converts Tulu-Tigalari Unicode text back to Kannada script.
+    Converts Tulu-Tigalari text back to Kannada script.
+    Automatically handles both official Unicode 16.0 and Custom PUA encodings.
     """
+    from .custom_script import is_custom_tigalari, custom_to_unicode
+    if is_custom_tigalari(text):
+        text = custom_to_unicode(text)
     return ''.join(TIGALARI_TO_KANNADA.get(ch, ch) for ch in text)
 
 

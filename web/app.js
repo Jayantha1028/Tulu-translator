@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const targetOutput = document.getElementById('targetOutput');
   const fromScriptSelect = document.getElementById('fromScript');
   const toScriptSelect = document.getElementById('toScript');
+  const scriptModeSelect = document.getElementById('scriptMode');
   const swapBtn = document.getElementById('swapBtn');
   const copyBtn = document.getElementById('copyBtn');
   const clearBtn = document.getElementById('clearBtn');
@@ -72,9 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fromScript = fromScriptSelect.value;
     const toScript = toScriptSelect.value;
+    const scriptMode = scriptModeSelect ? scriptModeSelect.value : 'unicode';
 
     try {
-      const converted = transliterate(text, fromScript, toScript);
+      const converted = transliterate(text, fromScript, toScript, scriptMode);
       targetOutput.value = converted;
       targetCount.textContent = `${converted.length} chars`;
       renderCodepoints(converted);
@@ -430,6 +432,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFontClasses();
     doTransliteration();
   });
+
+  if (scriptModeSelect) {
+    scriptModeSelect.addEventListener('change', () => {
+      doTransliteration();
+      showToast(`Switched to ${scriptModeSelect.value === 'custom' ? 'Custom Scripting (PUA)' : 'Unicode 16.0 Standard'}`);
+    });
+  }
 
   swapBtn.addEventListener('click', () => {
     const prevFrom = fromScriptSelect.value;

@@ -22,6 +22,15 @@ from .core import (
     tigalari_to_latin,
     KANNADA_TO_TIGALARI,
     TIGALARI_TO_KANNADA,
+    SCRIPT_MODE_UNICODE,
+    SCRIPT_MODE_CUSTOM,
+    AVAILABLE_SCRIPT_MODES,
+    unicode_to_custom,
+    custom_to_unicode,
+    is_unicode_tigalari,
+    is_custom_tigalari,
+    detect_tigalari_mode,
+    get_available_script_modes,
 )
 
 # 2. Lexicon & Datasets
@@ -118,6 +127,15 @@ __all__ = [
     "tigalari_to_latin",
     "KANNADA_TO_TIGALARI",
     "TIGALARI_TO_KANNADA",
+    "SCRIPT_MODE_UNICODE",
+    "SCRIPT_MODE_CUSTOM",
+    "AVAILABLE_SCRIPT_MODES",
+    "unicode_to_custom",
+    "custom_to_unicode",
+    "is_unicode_tigalari",
+    "is_custom_tigalari",
+    "detect_tigalari_mode",
+    "get_available_script_modes",
     # Lexicon
     "TULU_DICTIONARY",
     "lookup_tulu",
