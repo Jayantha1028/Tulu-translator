@@ -31,6 +31,10 @@ from .core import (
     is_custom_tigalari,
     detect_tigalari_mode,
     get_available_script_modes,
+    TuluPhoneticCodec,
+    TuluSymbol,
+    encode_to_custom_code,
+    decode_from_custom_code,
 )
 
 # 2. Lexicon & Datasets

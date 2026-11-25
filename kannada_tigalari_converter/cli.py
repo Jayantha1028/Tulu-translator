@@ -627,12 +627,12 @@ def main():
     parser.add_argument("text", nargs="?", help="Text to transliterate")
     parser.add_argument(
         "-f", "--from", dest="from_script", default="auto",
-        choices=["auto", "latin", "kannada", "tigalari"],
+        choices=["auto", "latin", "kannada", "tigalari", "custom_code"],
         help="Source script (default: auto detect)"
     )
     parser.add_argument(
         "-t", "--to", dest="to_script", default="tigalari",
-        choices=["latin", "kannada", "tigalari", "tigalari_custom"],
+        choices=["latin", "kannada", "tigalari", "tigalari_custom", "custom_code"],
         help="Target script (default: tigalari)"
     )
     parser.add_argument(
@@ -763,6 +763,19 @@ def main():
     parser.add_argument(
         "--kn-en", action="store_true",
         help="Translate Romanized Kannada sentence into English"
+    )
+    parser.add_argument(
+        "--encode-custom", action="store_true",
+        help="Encode input text to standalone custom discrete phonetic integer IDs and compact byte hex"
+    )
+    parser.add_argument(
+        "--decode-custom", dest="decode_custom_target", nargs="?", const="tigalari",
+        choices=["tigalari", "kannada", "latin"], default=None,
+        help="Decode discrete integer IDs or hex bytes to target script (default: tigalari)"
+    )
+    parser.add_argument(
+        "--custom-stats", action="store_true",
+        help="Display memory compression and discrete symbol breakdown for the input text"
     )
 
     # ── Morphological Analyzer Commands ──
@@ -1086,6 +1099,66 @@ def main():
         print("=" * 65)
         print(f"  Input  : {args.text}")
         print(f"  English: {out}")
+        print("=" * 65)
+        return
+
+    if args.encode_custom:
+        if not args.text:
+            print("Error: Please provide text to encode into custom phonetic codes.")
+            sys.exit(1)
+        from kannada_tigalari_converter.core.tulu_phonetic_codec import TuluPhoneticCodec
+        codes = TuluPhoneticCodec.encode(args.text)
+        byte_arr = TuluPhoneticCodec.to_bytes(codes)
+        ratio = TuluPhoneticCodec.compression_ratio(args.text)
+        print("=" * 65)
+        print("  Tulu Custom Phonetic Codec — Discrete Integer Encoding")
+        print("=" * 65)
+        print(f"  Input Text         : {args.text}")
+        print(f"  Discrete IDs       : {' '.join(str(c) for c in codes)}")
+        print(f"  Total Symbols      : {len(codes)}")
+        print(f"  Compact Hex Bytes  : {byte_arr.hex(' ')}")
+        print(f"  Raw UTF-8 Bytes    : {len(args.text.encode('utf-8'))} bytes")
+        print(f"  Memory Compression : {ratio}x fewer bytes vs UTF-8")
+        print("=" * 65)
+        return
+
+    if args.decode_custom_target is not None:
+        if not args.text:
+            print("Error: Please provide discrete IDs (e.g. '50 30 65 102') or hex bytes to decode.")
+            sys.exit(1)
+        from kannada_tigalari_converter.core.tulu_phonetic_codec import TuluPhoneticCodec
+        clean_input = args.text.strip()
+        tokens = clean_input.replace(",", " ").split()
+        if tokens and all(len(t) == 2 and all(c in "0123456789abcdefABCDEF" for c in t) for t in tokens):
+            codes = list(bytes.fromhex("".join(tokens)))
+        else:
+            codes = [int(t) for t in tokens if t.isdigit()]
+
+        decoded = TuluPhoneticCodec.decode(codes, target_format=args.decode_custom_target)
+        print(decoded)
+        return
+
+    if args.custom_stats:
+        if not args.text:
+            print("Error: Please provide text to analyze.")
+            sys.exit(1)
+        from kannada_tigalari_converter.core.tulu_phonetic_codec import TuluPhoneticCodec, CODE_TO_NAME
+        codes = TuluPhoneticCodec.encode(args.text)
+        ratio = TuluPhoneticCodec.compression_ratio(args.text)
+        utf8_len = len(args.text.encode("utf-8"))
+        print("=" * 65)
+        print("  Tulu Discrete Phonetic Tokenizer & Codec Diagnostics")
+        print("=" * 65)
+        print(f"  Input Text         : {args.text}")
+        print(f"  Symbol Count       : {len(codes)}")
+        print(f"  Custom Bytes       : {len(codes)} bytes (1 byte/token)")
+        print(f"  UTF-8 Bytes        : {utf8_len} bytes")
+        print(f"  Compression Ratio  : {ratio}x")
+        print("  -------------------------------------------------------------")
+        print("  Symbol Stream Breakdown:")
+        for idx, c in enumerate(codes):
+            name = CODE_TO_NAME.get(c, "UNKNOWN")
+            print(f"    [{idx:02d}] ID {c:3d} (0x{c:02X}) -> {name}")
         print("=" * 65)
         return
 

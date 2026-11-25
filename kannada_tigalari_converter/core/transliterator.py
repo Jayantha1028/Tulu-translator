@@ -74,8 +74,8 @@ def transliterate(
     Transliterates text between Latin, Kannada, and Tulu-Tigalari scripts.
 
     :param text: Input string.
-    :param from_script: 'latin', 'kannada', 'tigalari', 'tigalari_custom', or 'auto'.
-    :param to_script: 'latin', 'kannada', 'tigalari', or 'tigalari_custom'.
+    :param from_script: 'latin', 'kannada', 'tigalari', 'tigalari_custom', 'custom_code', or 'auto'.
+    :param to_script: 'latin', 'kannada', 'tigalari', 'tigalari_custom', or 'custom_code'.
     :param form_conjuncts: Uses Tigalari conjoiner U+113D0 if True.
     :param script_mode: 'unicode' (main standard font, default) or 'custom' (custom PUA scripting).
     :return: Transliterated output string.
@@ -85,6 +85,18 @@ def transliterate(
 
     src = detect_script(text) if from_script == 'auto' else from_script.lower()
     tgt = to_script.lower()
+
+    if tgt == 'custom_code':
+        from .tulu_phonetic_codec import TuluPhoneticCodec
+        codes = TuluPhoneticCodec.encode(text)
+        return " ".join(str(c) for c in codes)
+
+    if src == 'custom_code':
+        from .tulu_phonetic_codec import TuluPhoneticCodec
+        tokens = text.replace(',', ' ').split()
+        codes = [int(p) for p in tokens if p.isdigit()]
+        target_fmt = tgt if tgt in ('kannada', 'tigalari', 'latin') else 'kannada'
+        return TuluPhoneticCodec.decode(codes, target_format=target_fmt)
 
     if tgt == 'tigalari_custom':
         tgt = 'tigalari'

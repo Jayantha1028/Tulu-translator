@@ -41,6 +41,13 @@ from .custom_script import (
     get_available_script_modes,
 )
 
+from .tulu_phonetic_codec import (
+    TuluPhoneticCodec,
+    TuluSymbol,
+    encode_to_custom_code,
+    decode_from_custom_code,
+)
+
 __all__ = [
     "kannada_to_tigalari",
     "tigalari_to_kannada",
@@ -48,6 +55,10 @@ __all__ = [
     "latin_to_kannada",
     "kannada_to_latin",
     "transliterate",
+    "TuluPhoneticCodec",
+    "TuluSymbol",
+    "encode_to_custom_code",
+    "decode_from_custom_code",
     "detect_script",
     "latin_to_tigalari",
     "tigalari_to_latin",
