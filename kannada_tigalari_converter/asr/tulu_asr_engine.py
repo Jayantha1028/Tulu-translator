@@ -61,10 +61,17 @@ class TuluASRResult:
     device: str                    # Hardware device used (mps, cuda, cpu)
     audio_duration_sec: float      # Duration of input audio in seconds
     romanized: str = ""            # Explicit canonical ASCII romanization
+    discrete_codes: Optional[List[int]] = None  # Discrete integer IDs (0-255)
+    discrete_hex: str = ""         # Compact hex byte representation
 
     def __post_init__(self):
         if not self.romanized:
             self.romanized = self.latin
+        if self.discrete_codes is None:
+            from kannada_tigalari_converter.core.tulu_phonetic_codec import TuluPhoneticCodec
+            self.discrete_codes = TuluPhoneticCodec.encode(self.kannada or self.latin)
+        if not self.discrete_hex and self.discrete_codes:
+            self.discrete_hex = bytes(self.discrete_codes).hex(" ")
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -73,6 +80,8 @@ class TuluASRResult:
             "tigalari": self.tigalari,
             "latin": self.latin,
             "english": self.english,
+            "discrete_codes": self.discrete_codes or [],
+            "discrete_hex": self.discrete_hex,
             "confidence": round(self.confidence, 4),
             "latency_ms": round(self.latency_ms, 2),
             "device": self.device,

@@ -22,6 +22,11 @@ from .tulu_asr_trainer import (
 from .tulu_tts_engine import (
     TuluTTSEngine,
 )
+from .tulu_phonetic_asr import (
+    TuluPhoneticAcousticModel,
+    TuluPhoneticASRTrainer,
+    TuluPhoneticASRInference,
+)
 
 __all__ = [
     "AudioPreprocessor",
@@ -32,4 +37,7 @@ __all__ = [
     "TuluSpeechDataset",
     "train_tulu_asr",
     "TuluTTSEngine",
+    "TuluPhoneticAcousticModel",
+    "TuluPhoneticASRTrainer",
+    "TuluPhoneticASRInference",
 ]

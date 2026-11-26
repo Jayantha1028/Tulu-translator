@@ -1,0 +1,11 @@
+{
+  "epochs": 15,
+  "duration_sec": 116.83,
+  "final_train_loss": 2.219,
+  "final_val_loss": 2.6272,
+  "best_val_loss": 2.6113,
+  "device": "mps",
+  "num_samples": 289,
+  "model_architecture": "1D-CNN + BiGRU + CTC (256 classes)",
+  "output_dir": "/Users/jayanthanayak/Side_task/Tulu_Model/models/tulu_phonetic_ctc"
+}
