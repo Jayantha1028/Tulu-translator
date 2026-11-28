@@ -109,6 +109,18 @@ KANNADA_TO_TIGALARI: Dict[str, str] = {
     'ಽ': '\U000113B7',  # SIGN AVAGRAHA
     '।': '\U000113D4',  # DANDA
     '॥': '\U000113D5',  # DOUBLE DANDA
+
+    # --- KTSA Modern Tulu Numerals (Proposed U+113F0 - U+113F9, L2/25-063 & L2/25-095) ---
+    '೦': '\U000113F0',  # TULU-TIGALARI DIGIT ZERO
+    '೧': '\U000113F1',  # TULU-TIGALARI DIGIT ONE
+    '೨': '\U000113F2',  # TULU-TIGALARI DIGIT TWO
+    '೩': '\U000113F3',  # TULU-TIGALARI DIGIT THREE
+    '೪': '\U000113F4',  # TULU-TIGALARI DIGIT FOUR
+    '೫': '\U000113F5',  # TULU-TIGALARI DIGIT FIVE
+    '೬': '\U000113F6',  # TULU-TIGALARI DIGIT SIX
+    '೭': '\U000113F7',  # TULU-TIGALARI DIGIT SEVEN
+    '೮': '\U000113F8',  # TULU-TIGALARI DIGIT EIGHT
+    '೯': '\U000113F9',  # TULU-TIGALARI DIGIT NINE
 }
 
 # Bidirectional Reverse Mapping
@@ -123,6 +135,11 @@ TIGALARI_TO_KANNADA['\U000113D0'] = '್'  # CONJOINER
 TIGALARI_TO_KANNADA['\U0001138C'] = 'ಎ'  # Tulu-Tigalari archaic letter
 TIGALARI_TO_KANNADA['\U000113C3'] = 'ೆ'  # Tulu-Tigalari archaic vowel sign
 TIGALARI_TO_KANNADA['\U000113CF'] = '್'  # LOOPED VIRAMA
+
+# KTSA Modern Tulu Proposed Extensions (L2/25-063, L2/25-095, L2/25-096)
+TIGALARI_TO_KANNADA['\U000113CB'] = 'ು್'  # SIGN TULU HALF U (Pu-vowel)
+TIGALARI_TO_KANNADA['\U000113FA'] = '೧೦'  # TULU-TIGALARI NUMBER TEN
+TIGALARI_TO_KANNADA['\U000113FB'] = '೧೦೦' # TULU-TIGALARI NUMBER ONE HUNDRED
 
 
 def kannada_to_tigalari(text: str, form_conjuncts: bool = True, script_mode: str = "unicode") -> str:
@@ -146,6 +163,7 @@ def kannada_to_tigalari(text: str, form_conjuncts: bool = True, script_mode: str
     text = text.replace('\u0CCA\u0CD5', 'ೋ')  # ೊ + ೕ -> ೋ
     text = text.replace('\u0CC6\u0CC2', 'ೊ')  # ೆ + ೂ -> ೊ
     text = text.replace('\u0CC6\u0CCC', 'ೌ')  # ೆ + ೌ -> ೌ
+    text = text.replace('ು್', '\U000113CB')    # Tulu Half-U / Pu-vowel (KTSA U+113CB)
 
     result = []
     n = len(text)

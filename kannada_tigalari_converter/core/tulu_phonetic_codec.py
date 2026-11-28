@@ -114,6 +114,7 @@ class TuluSymbol:
     VISARGA = 101            # ಃ / H
     VIRAMA = 102             # Pure consonant deadener (್ / halant)
     CONJOINER = 103          # Tigalari conjunct stacking conjoiner (U+113D0)
+    TULU_HALF_U = 104        # Tulu Half-U / Pu-vowel (KTSA proposed U+113CB, Kannada ು್)
 
     # Digits (120 - 129)
     DIGIT_0 = 120
@@ -137,6 +138,10 @@ class TuluSymbol:
     PUNCT_HYPHEN = 136
     PUNCT_QUOTE_SINGLE = 137
     PUNCT_QUOTE_DOUBLE = 138
+
+    # Additional Numerical Signs (140 - 149, KTSA L2/25-063, L2/25-095)
+    NUMBER_10 = 140          # Tulu-Tigalari Number Ten (U+113FA)
+    NUMBER_100 = 141         # Tulu-Tigalari Number Hundred (U+113FB)
 
 
 # Symbolic name lookup table
@@ -228,6 +233,7 @@ KANNADA_TO_CODE: Dict[str, int] = {
     'ಂ': TuluSymbol.ANUSVARA,
     'ಃ': TuluSymbol.VISARGA,
     '್': TuluSymbol.VIRAMA,
+    'ು್': TuluSymbol.TULU_HALF_U,  # Tulu Half-U / Pu-vowel (KTSA U+113CB)
 
     # Digits
     '0': TuluSymbol.DIGIT_0, '1': TuluSymbol.DIGIT_1, '2': TuluSymbol.DIGIT_2,
@@ -328,6 +334,21 @@ TIGALARI_TO_CODE: Dict[str, int] = {
     '\U000113C9': TuluSymbol.VISARGA,
     '\U000113CE': TuluSymbol.VIRAMA,
     '\U000113D0': TuluSymbol.CONJOINER,
+    '\U000113CB': TuluSymbol.TULU_HALF_U,  # KTSA U+113CB Tulu Half-U sign
+
+    # Numerals (KTSA U+113F0 - U+113FB)
+    '\U000113F0': TuluSymbol.DIGIT_0,
+    '\U000113F1': TuluSymbol.DIGIT_1,
+    '\U000113F2': TuluSymbol.DIGIT_2,
+    '\U000113F3': TuluSymbol.DIGIT_3,
+    '\U000113F4': TuluSymbol.DIGIT_4,
+    '\U000113F5': TuluSymbol.DIGIT_5,
+    '\U000113F6': TuluSymbol.DIGIT_6,
+    '\U000113F7': TuluSymbol.DIGIT_7,
+    '\U000113F8': TuluSymbol.DIGIT_8,
+    '\U000113F9': TuluSymbol.DIGIT_9,
+    '\U000113FA': TuluSymbol.NUMBER_10,
+    '\U000113FB': TuluSymbol.NUMBER_100,
     ' ': TuluSymbol.SPACE,
     '\n': TuluSymbol.NEWLINE,
 }
@@ -412,6 +433,9 @@ CODE_TO_KANNADA: Dict[int, str] = {
     TuluSymbol.VISARGA: 'ಃ',
     TuluSymbol.VIRAMA: '್',
     TuluSymbol.CONJOINER: '್',  # Maps to virama in Kannada script
+    TuluSymbol.TULU_HALF_U: 'ು್',  # Tulu Half-U / Pu-vowel (KTSA U+113CB)
+    TuluSymbol.NUMBER_10: '೧೦',
+    TuluSymbol.NUMBER_100: '೧೦೦',
 
     # Space & Punctuation
     TuluSymbol.SPACE: ' ',
@@ -505,11 +529,12 @@ CODE_TO_TIGALARI: Dict[int, str] = {
     TuluSymbol.CONS_S: '\U000113B1',
     TuluSymbol.CONS_H: '\U000113B2',
 
-    # Modifiers
+    # Modifiers & KTSA Extensions
     TuluSymbol.ANUSVARA: '\U000113B7',
     TuluSymbol.VISARGA: '\U000113C9',
     TuluSymbol.VIRAMA: '\U000113CE',
     TuluSymbol.CONJOINER: '\U000113D0',
+    TuluSymbol.TULU_HALF_U: '\U000113CB',  # KTSA U+113CB Tulu Half-U sign
 
     # Space & Punctuation
     TuluSymbol.SPACE: ' ',
@@ -523,10 +548,12 @@ CODE_TO_TIGALARI: Dict[int, str] = {
     TuluSymbol.PUNCT_HYPHEN: '-',
     TuluSymbol.PUNCT_QUOTE_SINGLE: "'",
     TuluSymbol.PUNCT_QUOTE_DOUBLE: '"',
-    TuluSymbol.DIGIT_0: '0', TuluSymbol.DIGIT_1: '1', TuluSymbol.DIGIT_2: '2',
-    TuluSymbol.DIGIT_3: '3', TuluSymbol.DIGIT_4: '4', TuluSymbol.DIGIT_5: '5',
-    TuluSymbol.DIGIT_6: '6', TuluSymbol.DIGIT_7: '7', TuluSymbol.DIGIT_8: '8',
-    TuluSymbol.DIGIT_9: '9',
+    TuluSymbol.DIGIT_0: '\U000113F0', TuluSymbol.DIGIT_1: '\U000113F1', TuluSymbol.DIGIT_2: '\U000113F2',
+    TuluSymbol.DIGIT_3: '\U000113F3', TuluSymbol.DIGIT_4: '\U000113F4', TuluSymbol.DIGIT_5: '\U000113F5',
+    TuluSymbol.DIGIT_6: '\U000113F6', TuluSymbol.DIGIT_7: '\U000113F7', TuluSymbol.DIGIT_8: '\U000113F8',
+    TuluSymbol.DIGIT_9: '\U000113F9',
+    TuluSymbol.NUMBER_10: '\U000113FA',
+    TuluSymbol.NUMBER_100: '\U000113FB',
 }
 
 # Canonical Roman representation for internal debugging / ASCII rendering
@@ -570,6 +597,7 @@ CODE_TO_ROMAN: Dict[int, str] = {
 
     TuluSymbol.ANUSVARA: 'M', TuluSymbol.VISARGA: 'H',
     TuluSymbol.VIRAMA: '', TuluSymbol.CONJOINER: '',
+    TuluSymbol.TULU_HALF_U: 'u*',
     TuluSymbol.SPACE: ' ', TuluSymbol.NEWLINE: '\n',
     TuluSymbol.PUNCT_PERIOD: '.', TuluSymbol.PUNCT_COMMA: ',',
     TuluSymbol.PUNCT_EXCLAMATION: '!', TuluSymbol.PUNCT_QUESTION: '?',
@@ -580,6 +608,8 @@ CODE_TO_ROMAN: Dict[int, str] = {
     TuluSymbol.DIGIT_3: '3', TuluSymbol.DIGIT_4: '4', TuluSymbol.DIGIT_5: '5',
     TuluSymbol.DIGIT_6: '6', TuluSymbol.DIGIT_7: '7', TuluSymbol.DIGIT_8: '8',
     TuluSymbol.DIGIT_9: '9',
+    TuluSymbol.NUMBER_10: '10',
+    TuluSymbol.NUMBER_100: '100',
 }
 
 

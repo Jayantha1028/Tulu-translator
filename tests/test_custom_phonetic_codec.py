@@ -155,6 +155,39 @@ class TestTuluPhoneticCodec(unittest.TestCase):
         d = decode_from_custom_code(c, "kannada")
         self.assertEqual(d, "ಬಲೆ")
 
+    def test_ktsa_tulu_half_u(self):
+        """Verify KTSA proposed Tulu Half-U (U+113CB, Kannada ು್)."""
+        # Word 'undu' (is / exists) with Tulu half-u: ಉಂಡು್
+        text = "ಉಂಡು್"
+        codes = TuluPhoneticCodec.encode(text)
+        self.assertIn(TuluSymbol.TULU_HALF_U, codes)
+
+        tig = TuluPhoneticCodec.decode(codes, target_format="tigalari")
+        self.assertIn("\U000113CB", tig)
+
+        # Reverse from Tigalari to Kannada
+        kn = TuluPhoneticCodec.decode(TuluPhoneticCodec.encode(tig), target_format="kannada")
+        self.assertEqual(kn, text)
+
+    def test_ktsa_tulu_numerals(self):
+        """Verify KTSA proposed Tulu digits (U+113F0 - U+113F9) and numbers (10, 100)."""
+        # Check digit conversion
+        kannada_digits = "೦೧೨೩೪೫೬೭೮೯"
+        codes = TuluPhoneticCodec.encode(kannada_digits)
+        self.assertEqual(codes, [TuluSymbol.DIGIT_0 + i for i in range(10)])
+
+        tig_digits = TuluPhoneticCodec.decode(codes, target_format="tigalari")
+        for i in range(10):
+            expected_cp = 0x113F0 + i
+            self.assertIn(chr(expected_cp), tig_digits)
+
+        # Check transliterator module
+        from kannada_tigalari_converter.kannada_tigalari import kannada_to_tigalari, tigalari_to_kannada
+        trans_tig = kannada_to_tigalari(kannada_digits)
+        self.assertEqual(trans_tig, "".join(chr(0x113F0 + i) for i in range(10)))
+        rt_kn = tigalari_to_kannada(trans_tig)
+        self.assertEqual(rt_kn, kannada_digits)
+
 
 if __name__ == "__main__":
     unittest.main()
